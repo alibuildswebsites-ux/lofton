@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { LoadingSpinner } from './common/LoadingSpinner';
 import { Navbar } from './Navbar';
 import { Hero } from './Hero';
 import { SectionErrorBoundary } from './SectionErrorBoundary';
@@ -15,6 +17,16 @@ import { ContactFormSection } from './ContactFormSection';
 import { Footer } from './Footer';
 
 const LoftonRealtyHome = () => {
+  const [showIntro, setShowIntro] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowIntro(false);
+    }, 1500); // 1s animation + 0.5s buffer for smooth transition
+
+    return () => clearTimeout(timer);
+  }, []);
+
   useEffect(() => {
     updateSEO({
       title: "Lofton Realty | Houston Real Estate Broker & Investment Experts",
