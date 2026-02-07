@@ -1,11 +1,41 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SERVICES } from '../data';
 import { SectionHeader } from './common/SectionHeader';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export const ServicesSection = () => {
+  useEffect(() => {
+    const cards = gsap.utils.toArray('.gsap-service-card');
+    cards.forEach((card: any) => {
+      gsap.fromTo(card,
+        { 
+          opacity: 0, 
+          rotationX: -25, 
+          y: 60, 
+          z: -150 
+        },
+        {
+          opacity: 1,
+          rotationX: 0,
+          y: 0,
+          z: 0,
+          scrollTrigger: {
+            trigger: card,
+            start: "top bottom-=50",
+            end: "top center",
+            scrub: 1,
+          }
+        }
+      );
+    });
+  }, []);
+
   return (
     <section className="py-[60px] md:py-[80px] lg:py-[100px] bg-white relative overflow-hidden" id="services">
       
@@ -16,7 +46,7 @@ export const ServicesSection = () => {
           description="Whether you're buying your first home, selling a luxury property, or building an investment portfolio, we provide the expertise to guide you."
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px]" style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
           {SERVICES.map((service, idx) => {
             // Determine link based on service title for better UX
             const linkPath = service.title.includes('Buy') || service.title.includes('Home') ? '/buyers-guide' :
@@ -26,7 +56,7 @@ export const ServicesSection = () => {
             return (
               <div
                 key={idx}
-                className="group relative bg-white border border-gray-100 rounded-[24px] p-[40px] hover:border-brand/30 hover:shadow-[0_20px_40px_-15px_rgba(74,222,128,0.15)] transition-all duration-300 flex flex-col h-full overflow-hidden md:[&:last-child]:col-span-2 lg:[&:last-child]:col-span-1"
+                className="gsap-service-card group relative bg-white border border-gray-100 rounded-[24px] p-[40px] hover:border-brand/30 hover:shadow-[0_20px_40px_-15px_rgba(74,222,128,0.15)] transition-all duration-300 flex flex-col h-full overflow-hidden md:[&:last-child]:col-span-2 lg:[&:last-child]:col-span-1"
               >
                 {/* Hover Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-brand-light/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
