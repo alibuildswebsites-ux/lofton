@@ -39,6 +39,7 @@ const SavedProperties = lazy(() => import('./components/dashboard/SavedPropertie
 
 // Admin Components
 const AdminDashboard = lazy(() => import('./components/admin/AdminDashboard').then(module => ({ default: module.AdminDashboard })));
+const TestPreloader = lazy(() => import('./components/TestPreloader'));
 
 function App() {
   const location = useLocation();
