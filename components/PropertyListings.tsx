@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { PropertyCard } from './PropertyCard';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { getProperties } from '../lib/firebase/firestore';
 import { Property } from '../types';
 import { SlidersHorizontal, ChevronDown, Grid, List, Search, X, RefreshCw } from 'lucide-react';
@@ -11,17 +13,7 @@ import { updateSEO } from '../utils';
 import { PropertySkeleton } from './common/Skeleton';
 import { PAGINATION } from '../lib/constants';
 
-// --- Types ---
-
-interface FilterState {
-  location: string;
-  minPrice: number | '';
-  maxPrice: number | '';
-  beds: number | 'any';
-  baths: number | 'any';
-  types: string[]; // Changed to array for checkboxes
-  status: 'All' | 'For Sale' | 'For Rent' | 'Sold' | 'Rented';
-}
+gsap.registerPlugin(ScrollTrigger);
 
 export const PropertyListings = () => {
   // --- State ---
@@ -35,7 +27,40 @@ export const PropertyListings = () => {
   
   const [searchParams, setSearchParams] = useSearchParams();
 
+  useEffect(() => {
+    if (!loading && currentProperties.length > 0) {
+      // Small timeout to ensure DOM is ready after React render
+      const ctx = gsap.context(() => {
+        const cards = gsap.utils.toArray('.gsap-list-card');
+        cards.forEach((card: any) => {
+          gsap.fromTo(card,
+            { 
+              opacity: 0, 
+              rotationX: -25, 
+              y: 60, 
+              z: -150 
+            },
+            {
+              opacity: 1,
+              rotationX: 0,
+              y: 0,
+              z: 0,
+              scrollTrigger: {
+                trigger: card,
+                start: "top bottom-=50",
+                end: "top center",
+                scrub: 1,
+              }
+            }
+          );
+        });
+      });
+      return () => ctx.revert();
+    }
+  }, [loading, currentProperties, viewMode]);
+
   // Initialize filters from URL params lazy to avoid sync issues
+
   const [filters, setFilters] = useState<FilterState>(() => {
     const locParam = searchParams.get('location');
     const statusParam = searchParams.get('status');
