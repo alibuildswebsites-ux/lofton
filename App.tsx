@@ -41,14 +41,24 @@ const SavedProperties = lazy(() => import('./components/dashboard/SavedPropertie
 const AdminDashboard = lazy(() => import('./components/admin/AdminDashboard').then(module => ({ default: module.AdminDashboard })));
 
 function App() {
+  const location = useLocation();
+
   return (
     <>
       <ScrollToTop />
       <Analytics />
       <SpeedInsights />
-      <Suspense fallback={<LoadingSpinner fullScreen label="Loading Lofton Realty..." />}>
-        <Routes>
-          <Route path="/" element={<LoftonRealtyHome />} />
+      <Suspense fallback={<LoadingSpinner fullScreen label="Lofton Realty" />}>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<LoftonRealtyHome />} />
           <Route path="/property-listings" element={<PropertyListings />} />
           <Route path="/property-listings/:id" element={<PropertyDetailPage />} />
           <Route path="/blog" element={<BlogList />} />
@@ -90,11 +100,14 @@ function App() {
             />
           </Route>
           
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+            <Route path="*" element={<NotFound />} />
+            </Routes>
+          </motion.div>
+        </AnimatePresence>
       </Suspense>
     </>
   );
 }
+
 
 export default App;
