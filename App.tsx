@@ -43,6 +43,8 @@ function App() {
   return (
     <>
       <ScrollToTop />
+      <Analytics />
+      <SpeedInsights />
       <Suspense fallback={<LoadingSpinner fullScreen label="Loading Lofton Realty..." />}>
         <Routes>
           <Route path="/" element={<LoftonRealtyHome />} />
