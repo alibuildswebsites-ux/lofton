@@ -48,7 +48,7 @@ function App() {
       <ScrollToTop />
       <Analytics />
       <SpeedInsights />
-      <Suspense fallback={<LoadingSpinner fullScreen label="Lofton Realty" />}>
+      <Suspense fallback={null}>
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname}

@@ -6,14 +6,12 @@ interface LoadingSpinnerProps {
   fullScreen?: boolean;
   label?: string;
   size?: 'sm' | 'md' | 'lg';
-  loop?: boolean;
 }
 
 export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ 
   fullScreen = false, 
   label = "Lofton Realty",
-  size = 'md',
-  loop = false
+  size = 'md'
 }) => {
   const dimensions = {
     sm: 40,
@@ -27,13 +25,8 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
       pathLength: 1, 
       opacity: 1,
       transition: { 
-        pathLength: { 
-          duration: 1.5, 
-          ease: "easeInOut",
-          repeat: loop ? Infinity : 0,
-          repeatDelay: loop ? 0.5 : 0
-        },
-        opacity: { duration: 0.5 }
+        pathLength: { duration: 1.0, ease: "easeInOut" },
+        opacity: { duration: 0.3 }
       }
     }
   };
@@ -104,7 +97,7 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
           className="text-charcoal font-sans font-bold tracking-[0.2em] uppercase text-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 1 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
         >
           {label}
         </motion.span>
@@ -112,7 +105,7 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
           className="h-[2px] bg-brand mt-2"
           initial={{ width: 0 }}
           animate={{ width: 40 }}
-          transition={{ delay: 1, duration: 0.8, ease: "circOut" }}
+          transition={{ delay: 0.7, duration: 0.5, ease: "circOut" }}
         />
       </div>
     </motion.div>
