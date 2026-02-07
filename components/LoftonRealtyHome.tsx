@@ -71,7 +71,7 @@ const LoftonRealtyHome = () => {
       </AnimatePresence>
 
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
+        initial={showIntro ? { opacity: 0, y: 50 } : { opacity: 1, y: 0 }}
         animate={!showIntro ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
