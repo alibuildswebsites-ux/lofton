@@ -76,6 +76,7 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/admin/login" element={<AdminLoginPage />} />
+          <Route path="/test-preloader" element={<TestPreloader />} />
           
           {/* Dashboard Routes - Protected */}
           <Route
