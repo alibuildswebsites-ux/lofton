@@ -1,15 +1,48 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { getProperties } from '../lib/firebase/firestore';
 import { Property } from '../types';
 import { PropertyCard } from './PropertyCard';
 import { LoadingSpinner } from './common/LoadingSpinner';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export const FeaturedProperties = () => {
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!loading && properties.length > 0) {
+      const cards = gsap.utils.toArray('.gsap-3d-card');
+      cards.forEach((card: any) => {
+        gsap.fromTo(card,
+          { 
+            opacity: 0, 
+            rotationX: -25, 
+            y: 60, 
+            z: -150 
+          },
+          {
+            opacity: 1,
+            rotationX: 0,
+            y: 0,
+            z: 0,
+            scrollTrigger: {
+              trigger: card,
+              start: "top bottom-=50",
+              end: "top center",
+              scrub: 1,
+            }
+          }
+        );
+      });
+    }
+  }, [loading, properties]);
 
   useEffect(() => {
     const fetchFeatured = async () => {
@@ -55,9 +88,11 @@ export const FeaturedProperties = () => {
         {loading ? (
           <LoadingSpinner />
         ) : properties.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[30px]">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[30px]" style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
             {properties.map((property) => (
-              <PropertyCard key={property.id} property={property} />
+              <div key={property.id} className="gsap-3d-card">
+                <PropertyCard property={property} />
+              </div>
             ))}
           </div>
         ) : (

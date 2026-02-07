@@ -1,10 +1,40 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FEATURES } from '../data';
 import { SectionHeader } from './common/SectionHeader';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export const TrustSection = () => {
+  useEffect(() => {
+    const cards = gsap.utils.toArray('.gsap-trust-card');
+    cards.forEach((card: any) => {
+      gsap.fromTo(card,
+        { 
+          opacity: 0, 
+          rotationX: -25, 
+          y: 60, 
+          z: -150 
+        },
+        {
+          opacity: 1,
+          rotationX: 0,
+          y: 0,
+          z: 0,
+          scrollTrigger: {
+            trigger: card,
+            start: "top bottom-=50",
+            end: "top center",
+            scrub: 1,
+          }
+        }
+      );
+    });
+  }, []);
+
   return (
     <section className="py-[60px] md:py-[80px] lg:py-[100px] bg-white overflow-hidden" id="about">
       <div className="max-w-[1280px] mx-auto px-5 md:px-10 lg:px-[40px]">
