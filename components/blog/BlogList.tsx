@@ -7,7 +7,6 @@ import { BlogPost } from '../../types';
 import { BlogCard } from './BlogCard';
 import { Search } from 'lucide-react';
 import { updateSEO } from '../../utils';
-import { LoadingSpinner } from '../common/LoadingSpinner';
 import { BlogSkeleton } from '../common/Skeleton';
 
 export const BlogList = () => {

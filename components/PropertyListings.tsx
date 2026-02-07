@@ -8,7 +8,6 @@ import { SlidersHorizontal, ChevronDown, Grid, List, Search, X, RefreshCw } from
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom';
 import { updateSEO } from '../utils';
-import { LoadingSpinner } from './common/LoadingSpinner';
 import { PropertySkeleton } from './common/Skeleton';
 import { PAGINATION } from '../lib/constants';
 
