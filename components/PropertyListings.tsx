@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom';
 import { updateSEO } from '../utils';
 import { LoadingSpinner } from './common/LoadingSpinner';
+import { PropertySkeleton } from './common/Skeleton';
 import { PAGINATION } from '../lib/constants';
 
 // --- Types ---
@@ -427,7 +428,11 @@ export const PropertyListings = () => {
 
             {/* Content */}
             {loading ? (
-              <LoadingSpinner />
+              <div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1'}`}>
+                {[...Array(itemsPerPage)].map((_, i) => (
+                  <PropertySkeleton key={i} />
+                ))}
+              </div>
             ) : currentProperties.length > 0 ? (
               <div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1'}`}>
                 {currentProperties.map(property => (
