@@ -13,7 +13,16 @@ export const ServicesSection = () => {
   useEffect(() => {
     const cards = gsap.utils.toArray('.gsap-service-card');
     cards.forEach((card: any) => {
-      gsap.fromTo(card,
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: card,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+        }
+      });
+
+      tl.fromTo(card,
         { 
           opacity: 0, 
           rotationX: -25, 
@@ -25,13 +34,20 @@ export const ServicesSection = () => {
           rotationX: 0,
           y: 0,
           z: 0,
-          scrollTrigger: {
-            trigger: card,
-            start: "top bottom-=50",
-            end: "top center",
-            scrub: 1,
-          }
+          duration: 0.2,
+          ease: "none"
         }
+      )
+      .to(card, 
+        { 
+          opacity: 0, 
+          rotationX: 25, 
+          y: -60, 
+          z: -150,
+          duration: 0.2,
+          ease: "none" 
+        }, 
+        0.8
       );
     });
   }, []);
