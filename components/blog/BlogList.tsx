@@ -8,6 +8,7 @@ import { BlogCard } from './BlogCard';
 import { Search } from 'lucide-react';
 import { updateSEO } from '../../utils';
 import { LoadingSpinner } from '../common/LoadingSpinner';
+import { BlogSkeleton } from '../common/Skeleton';
 
 export const BlogList = () => {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);

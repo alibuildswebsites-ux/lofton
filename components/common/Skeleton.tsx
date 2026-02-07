@@ -46,3 +46,17 @@ export const PropertySkeleton = () => {
     </div>
   );
 };
+
+export const BlogSkeleton = () => {
+  return (
+    <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 h-full">
+      <Skeleton className="h-56 w-full rounded-none" />
+      <div className="p-6 space-y-4">
+        <Skeleton className="h-4 w-1/4" />
+        <Skeleton className="h-6 w-3/4" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-full" />
+      </div>
+    </div>
+  );
+};
