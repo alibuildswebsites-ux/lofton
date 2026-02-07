@@ -458,18 +458,19 @@ export const PropertyListings = () => {
                 ))}
               </div>
             ) : currentProperties.length > 0 ? (
-              <div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1'}`}>
+              <div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1'}`} style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
                 {currentProperties.map(property => (
-                  <PropertyCard 
-                    key={property.id} 
-                    property={{
-                      ...property, 
-                      // Convert number price to formatted string for Card compatibility if needed
-                      price: typeof property.price === 'number' ? `$${property.price.toLocaleString()}` : property.price,
-                      sqft: typeof property.sqft === 'number' ? property.sqft.toLocaleString() : property.sqft
-                    } as any} // Type assertion for compatibility during migration
-                    viewMode={viewMode} 
-                  />
+                  <div key={property.id} className="gsap-list-card">
+                    <PropertyCard 
+                      property={{
+                        ...property, 
+                        // Convert number price to formatted string for Card compatibility if needed
+                        price: typeof property.price === 'number' ? `$${property.price.toLocaleString()}` : property.price,
+                        sqft: typeof property.sqft === 'number' ? property.sqft.toLocaleString() : property.sqft
+                      } as any} // Type assertion for compatibility during migration
+                      viewMode={viewMode} 
+                    />
+                  </div>
                 ))}
               </div>
             ) : (
