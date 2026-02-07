@@ -6,12 +6,14 @@ interface LoadingSpinnerProps {
   fullScreen?: boolean;
   label?: string;
   size?: 'sm' | 'md' | 'lg';
+  loop?: boolean;
 }
 
 export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ 
   fullScreen = false, 
   label = "Lofton Realty",
-  size = 'md'
+  size = 'md',
+  loop = false
 }) => {
   const dimensions = {
     sm: 40,
@@ -25,7 +27,12 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
       pathLength: 1, 
       opacity: 1,
       transition: { 
-        pathLength: { duration: 1.5, ease: "easeInOut" },
+        pathLength: { 
+          duration: 1.5, 
+          ease: "easeInOut",
+          repeat: loop ? Infinity : 0,
+          repeatDelay: loop ? 0.5 : 0
+        },
         opacity: { duration: 0.5 }
       }
     }
