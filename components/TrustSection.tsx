@@ -46,9 +46,9 @@ export const TrustSection = () => {
         />
 
         {/* Features Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12" style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
            {FEATURES.map((feature, idx) => (
-             <div key={idx} className="bg-gray-50 p-8 rounded-2xl border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+             <div key={idx} className="gsap-trust-card bg-gray-50 p-8 rounded-2xl border border-gray-100 hover:shadow-lg transition-shadow duration-300">
                 <div className="w-12 h-12 rounded-xl bg-white border border-gray-100 shadow-sm flex items-center justify-center text-brand mb-6">
                    <feature.icon size={24} />
                 </div>
