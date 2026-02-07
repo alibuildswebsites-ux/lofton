@@ -17,15 +17,23 @@ import { ContactFormSection } from './ContactFormSection';
 import { Footer } from './Footer';
 
 const LoftonRealtyHome = () => {
-  const [showIntro, setShowIntro] = useState(true);
+  const [showIntro, setShowIntro] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return !sessionStorage.getItem('lofton_intro_seen');
+    }
+    return true;
+  });
 
   useEffect(() => {
+    if (!showIntro) return;
+
     const timer = setTimeout(() => {
       setShowIntro(false);
+      sessionStorage.setItem('lofton_intro_seen', 'true');
     }, 2000); // 1s animation + 1s brand presence
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [showIntro]);
 
   useEffect(() => {
     updateSEO({
