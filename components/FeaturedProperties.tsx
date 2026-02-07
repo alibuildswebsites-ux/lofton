@@ -20,16 +20,7 @@ export const FeaturedProperties = () => {
     if (!loading && properties.length > 0) {
       const cards = gsap.utils.toArray('.gsap-3d-card');
       cards.forEach((card: any) => {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: card,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
-          }
-        });
-
-        tl.fromTo(card,
+        gsap.fromTo(card,
           { 
             opacity: 0, 
             rotationX: -25, 
@@ -41,20 +32,14 @@ export const FeaturedProperties = () => {
             rotationX: 0,
             y: 0,
             z: 0,
-            duration: 0.2,
-            ease: "none"
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top bottom",
+              end: "top 80%",
+              scrub: 1,
+            }
           }
-        )
-        .to(card, 
-          { 
-            opacity: 0, 
-            rotationX: 25, 
-            y: -60, 
-            z: -150,
-            duration: 0.2,
-            ease: "none" 
-          }, 
-          0.8
         );
       });
     }
