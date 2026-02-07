@@ -22,7 +22,7 @@ const LoftonRealtyHome = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowIntro(false);
-    }, 1500); // 1s animation + 0.5s buffer for smooth transition
+    }, 2000); // 1s animation + 1s brand presence
 
     return () => clearTimeout(timer);
   }, []);
@@ -56,42 +56,54 @@ const LoftonRealtyHome = () => {
 
   return (
     <div className="font-sans text-gray-900 bg-white selection:bg-brand selection:text-white">
-      <Navbar />
-      <main>
-        <Hero />
-        
-        <SectionErrorBoundary>
-          <StatsBar />
-        </SectionErrorBoundary>
+      <AnimatePresence>
+        {showIntro && (
+          <LoadingSpinner fullScreen label="Lofton Realty" />
+        )}
+      </AnimatePresence>
 
-        <SectionErrorBoundary>
-          <ServicesSection />
-        </SectionErrorBoundary>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={!showIntro ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <Navbar />
+        <main>
+          <Hero />
+          
+          <SectionErrorBoundary>
+            <StatsBar />
+          </SectionErrorBoundary>
 
-        <SectionErrorBoundary>
-          <FeaturedProperties />
-        </SectionErrorBoundary>
+          <SectionErrorBoundary>
+            <ServicesSection />
+          </SectionErrorBoundary>
 
-        <SectionErrorBoundary>
-          <TrustSection />
-        </SectionErrorBoundary>
+          <SectionErrorBoundary>
+            <FeaturedProperties />
+          </SectionErrorBoundary>
 
-        <SectionErrorBoundary>
-          <LocationsSection />
-        </SectionErrorBoundary>
+          <SectionErrorBoundary>
+            <TrustSection />
+          </SectionErrorBoundary>
 
-        <SectionErrorBoundary>
-          <TestimonialsSection />
-        </SectionErrorBoundary>
+          <SectionErrorBoundary>
+            <LocationsSection />
+          </SectionErrorBoundary>
 
-        <SectionErrorBoundary>
-          <ContactFormSection />
-        </SectionErrorBoundary>
+          <SectionErrorBoundary>
+            <TestimonialsSection />
+          </SectionErrorBoundary>
 
-        <SectionErrorBoundary>
-          <Footer />
-        </SectionErrorBoundary>
-      </main>
+          <SectionErrorBoundary>
+            <ContactFormSection />
+          </SectionErrorBoundary>
+
+          <SectionErrorBoundary>
+            <Footer />
+          </SectionErrorBoundary>
+        </main>
+      </motion.div>
     </div>
   );
 };

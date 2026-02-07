@@ -113,16 +113,15 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
 
   if (fullScreen) {
     return (
-      <AnimatePresence>
-        <motion.div 
-          key="loader"
-          variants={containerVariants}
-          exit="exit"
-          className="fixed inset-0 bg-white z-[9999] flex items-center justify-center overflow-hidden"
-        >
-          {content}
-        </motion.div>
-      </AnimatePresence>
+      <motion.div 
+        key="loader"
+        variants={containerVariants}
+        initial={{ opacity: 1 }}
+        exit="exit"
+        className="fixed inset-0 bg-white z-[99999] flex items-center justify-center overflow-hidden"
+      >
+        {content}
+      </motion.div>
     );
   }
 
