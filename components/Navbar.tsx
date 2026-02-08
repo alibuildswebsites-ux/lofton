@@ -375,12 +375,12 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                   <motion.div
                     key={link.name}
                     variants={menuItemVariants}
-                    className="flex justify-center"
+                    className="flex justify-start"
                   >
                     <Link 
                         to={link.path}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className={`flex items-center justify-center px-4 py-4 text-lg font-bold transition-all relative w-full text-center ${
+                        className={`flex items-center justify-start px-4 py-4 text-lg font-bold transition-all relative w-fit ${
                         isActive(link.path) ? 'text-charcoal' : 'text-gray-500 hover:text-charcoal'
                         }`}
                     >
@@ -388,7 +388,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                         {isActive(link.path) && (
                           <motion.div 
                             layoutId="mobile-navbar-indicator"
-                            className="absolute bottom-2 left-1/2 -translate-x-1/2 w-12 h-0.5 bg-brand rounded-full"
+                            className="absolute bottom-2 left-4 right-4 h-0.5 bg-brand rounded-full"
                           />
                         )}
                     </Link>
@@ -403,11 +403,13 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                     <button 
                       onClick={() => setIsResourcesOpen(!isResourcesOpen)}
                       aria-expanded={isResourcesOpen}
-                      className={`w-full flex items-center justify-center gap-2 px-4 py-4 text-lg font-bold transition-colors active:scale-[0.98] ${
+                      className={`w-full flex items-center justify-between px-4 py-4 text-lg font-bold transition-colors active:scale-[0.98] ${
                         isResourcesOpen ? 'text-charcoal' : 'text-gray-500 hover:text-charcoal'
                       }`}
                     >
-                    Resources
+                    <div className="flex items-center gap-4">
+                      Resources
+                    </div>
                     <ChevronDown size={20} className={`transition-transform duration-300 ${isResourcesOpen ? 'rotate-180' : ''}`} />
                   </button>
                   
@@ -418,14 +420,14 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
-                        className="overflow-hidden flex flex-col items-center"
+                        className="overflow-hidden flex flex-col items-start"
                       >
                         {resourceLinks.map((link) => (
                           <Link 
                             key={link.name} 
                             to={link.path}
                             onClick={() => setIsMobileMenuOpen(false)}
-                            className={`flex items-center justify-center px-8 py-3 text-base font-semibold transition-colors relative w-full text-center ${
+                            className={`flex items-center justify-start px-8 py-3 text-base font-semibold transition-colors relative w-fit ${
                               isActive(link.path) ? 'text-brand' : 'text-gray-600'
                             }`}
                           >
@@ -433,7 +435,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                             {isActive(link.path) && (
                               <motion.div 
                                 layoutId="mobile-resource-indicator"
-                                className="absolute bottom-1 left-1/2 -translate-x-1/2 w-10 h-0.5 bg-brand rounded-full"
+                                className="absolute bottom-1 left-8 right-0 h-0.5 bg-brand rounded-full"
                               />
                             )}
                           </Link>
