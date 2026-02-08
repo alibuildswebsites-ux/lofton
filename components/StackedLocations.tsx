@@ -23,7 +23,7 @@ export const StackedLocations = () => {
       scrollTrigger: {
         trigger: triggerRef.current,
         start: "top top",
-        end: `+=${totalCards * 300}%`, // Scroll distance proportional to number of cards
+        end: `+=${totalCards * 150}%`, // Reduced from 300% for faster scroll
         pin: true,
         scrub: 1,
         anticipatePin: 1,
@@ -38,7 +38,7 @@ export const StackedLocations = () => {
       // PHASE 1: ENTRY (From Bottom to Center)
       tl.fromTo(card, 
         { y: '120vh', opacity: 0, scale: 0.8, rotationX: -15 },
-        { y: '0%', opacity: 1, scale: 1, rotationX: 0, duration: 1.5, ease: "power2.out" }
+        { y: '0%', opacity: 1, scale: 1, rotationX: 0, duration: 1.0, ease: "power2.out" }
       );
 
       // PHASE 2: EXPANSION (Show Description)
@@ -46,42 +46,39 @@ export const StackedLocations = () => {
         height: 'auto', 
         opacity: 1, 
         marginTop: 24, 
-        duration: 1.5, 
+        duration: 1.0, 
         ease: "power2.inOut" 
       });
       tl.to(infoArea, { 
         opacity: 1, 
         y: 0, 
-        duration: 0.8 
+        duration: 0.6 
       }, "<0.5");
 
       // STAY MOMENT (Pause for readability)
-      tl.to({}, { duration: 1 });
+      tl.to({}, { duration: 0.5 });
 
       // PHASE 3: COLLAPSE (Hide Description)
       tl.to(descArea, { 
         height: 0, 
         opacity: 0, 
         marginTop: 0, 
-        duration: 1.2, 
+        duration: 0.8, 
         ease: "power2.inOut" 
       });
 
       // PHASE 4: EXIT (To Top)
-      // If it's the last card, we don't necessarily need to move it out, 
-      // but following the request to "animate out to above and new card start"
       if (i < totalCards - 1) {
         tl.to(card, { 
           y: '-120vh', 
           opacity: 0, 
           scale: 0.9, 
           rotationX: 15, 
-          duration: 1.5, 
+          duration: 1.0, 
           ease: "power2.in" 
         });
       } else {
-        // For the final card, just a slight fade or shift if we want to end the pin
-        tl.to(card, { opacity: 0, y: -50, duration: 1 });
+        tl.to(card, { opacity: 0, y: -50, duration: 0.8 });
       }
     });
 
