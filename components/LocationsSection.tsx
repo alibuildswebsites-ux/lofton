@@ -53,9 +53,10 @@ export const LocationsSection = () => {
             ease: "power2.out",
             scrollTrigger: {
               trigger: card,
-              start: "top bottom",
-              end: "top 80%",
+              start: "top bottom+=50", // Added offset to ensure it's not already animated
+              end: "top 75%", // Slightly more scroll space to finish
               scrub: 1,
+              immediateRender: false, // Prevents early execution before ScrollTrigger is ready
             }
           }
         );

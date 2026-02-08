@@ -50,6 +50,10 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowIntro(false);
+      // Refresh ScrollTrigger after content is revealed to ensure correct positions
+      setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 100);
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
