@@ -1,5 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { LOCATIONS } from '../data';
@@ -199,8 +200,8 @@ const InteractiveMapDemo = () => {
                 <g key={loc.id}>
                   <circle cx={p.x} cy={p.y} r="4" fill="#4ADE80" />
                   <circle cx={p.x} cy={p.y} r="12" stroke="#4ADE80" strokeWidth="1" opacity="0.2">
-                    <animate attributeName="r" from="4" to="20" dur="2s" repeatCount="indefinity" />
-                    <animate attributeName="opacity" from="0.4" to="0" dur="2s" repeatCount="indefinity" />
+                    <animate attributeName="r" from="4" to="20" dur="2s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" from="0.4" to="0" dur="2s" repeatCount="indefinite" />
                   </circle>
                 </g>
               );
