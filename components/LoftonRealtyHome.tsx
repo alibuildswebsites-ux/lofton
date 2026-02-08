@@ -45,35 +45,51 @@ const LoftonRealtyHome = () => {
   return (
     <div className="font-sans text-gray-900 bg-white selection:bg-brand selection:text-white">
       <Navbar />
-      <main className="divide-y divide-gray-500/30">
-        <div className="border-b border-gray-500/30"><Hero /></div>
+      <main>
+        <div className="border-b border-gray-500/30">
+          <Hero />
+        </div>
         
         <SectionErrorBoundary>
-          <div className="border-b border-gray-500/30"><StatsBar /></div>
+          <div className="border-b border-gray-500/30">
+            <StatsBar />
+          </div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <div className="border-b border-gray-500/30"><ServicesSection /></div>
+          <div className="border-b border-gray-500/30">
+            <ServicesSection />
+          </div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <div className="border-b border-gray-500/30"><FeaturedProperties /></div>
+          <div className="border-b border-gray-500/30">
+            <FeaturedProperties />
+          </div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <div className="border-b border-gray-500/30"><TrustSection /></div>
+          <div className="border-b border-gray-500/30">
+            <TrustSection />
+          </div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <div className="border-b border-gray-500/30"><LocationsSection /></div>
+          <div className="border-b border-gray-500/30">
+            <LocationsSection />
+          </div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <div className="border-b border-gray-500/30"><TestimonialsSection /></div>
+          <div className="border-b border-gray-500/30">
+            <TestimonialsSection />
+          </div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <div className="border-b border-gray-500/30"><ContactFormSection /></div>
+          <div className="border-b border-gray-500/30">
+            <ContactFormSection />
+          </div>
         </SectionErrorBoundary>
 
         <Footer />
