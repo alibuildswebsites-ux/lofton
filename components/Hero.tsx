@@ -23,9 +23,9 @@ export const Hero = () => {
         {/* 
            CONTENT WRAPPER
         */}
-        <div className="z-10 flex flex-col items-center justify-center max-w-4xl mx-auto">
+        <div className="z-10 flex flex-col items-center justify-center max-w-4xl mx-auto px-4">
           {/* Social Proof Badge */}
-          <div className="inline-flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-full px-4 py-2 w-fit mb-6 animate-in fade-in slide-in-from-bottom-4 duration-700 hover:shadow-md transition-shadow cursor-default">
+          <div className="inline-flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-full px-4 py-2 w-fit mb-4 md:mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 hover:shadow-md transition-shadow cursor-default">
             <div className="flex -space-x-3">
               {avatars.map((src, i) => (
                 <img 
@@ -42,23 +42,23 @@ export const Hero = () => {
           {/* Main Headline: Scaled Typography */}
           <h1 
             className="font-extrabold text-charcoal leading-[1.1] mb-0 tracking-tight animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100"
-            style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)' }}
+            style={{ fontSize: 'clamp(2.5rem, 6vw, 5.5rem)' }}
           >
             Your Dream Home <br /> Awaits
           </h1>
           
           {/* Subheadline */}
-          <p className="text-[20px] lg:text-[24px] text-gray-500 font-medium mt-[16px] leading-snug animate-in fade-in slide-in-from-bottom-6 duration-700 delay-200">
+          <p className="text-[18px] md:text-[22px] lg:text-[24px] text-gray-500 font-medium mt-3 md:mt-6 leading-snug animate-in fade-in slide-in-from-bottom-6 duration-700 delay-200">
             Houston's trusted real estate partner
           </p>
           
           {/* Description */}
-          <p className="text-[16px] lg:text-[18px] text-gray-400 max-w-[600px] mt-[24px] leading-relaxed font-normal animate-in fade-in slide-in-from-bottom-6 duration-700 delay-300">
+          <p className="text-[14px] md:text-[16px] lg:text-[18px] text-gray-400 max-w-[600px] mt-5 md:mt-8 leading-relaxed font-normal animate-in fade-in slide-in-from-bottom-6 duration-700 delay-300">
             Serving Houston, Galveston, Austin, Louisiana, Mississippi, and Florida with expert guidance, 24/7 availability, and personalized service.
           </p>
 
           {/* Buttons */}
-          <div className="mt-[32px] flex flex-col sm:flex-row gap-[16px] w-full sm:w-auto justify-center animate-in fade-in slide-in-from-bottom-6 duration-700 delay-400">
+          <div className="mt-8 md:mt-12 flex flex-col sm:flex-row gap-[16px] w-full sm:w-auto justify-center animate-in fade-in slide-in-from-bottom-6 duration-700 delay-400">
             {/* Button 1 */}
             <Link 
               to="/properties"
