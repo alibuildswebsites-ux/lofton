@@ -91,7 +91,7 @@ export const FeaturedProperties = () => {
         ) : properties.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[30px]" style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
             {properties.map((property) => (
-              <div key={property.id} className="gsap-3d-card">
+              <div key={property.id} className="gsap-3d-card opacity-0">
                 <PropertyCard property={property} />
               </div>
             ))}
