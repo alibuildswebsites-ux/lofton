@@ -2,9 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Home, Menu, X, ChevronDown, LogOut, 
-  LayoutDashboard, Settings, FileText, Users, BookOpen, 
-  TrendingUp, Info, Mail, Grid, ShieldCheck 
+  Menu, X, ChevronDown, LogOut, 
+  LayoutDashboard, Settings, ShieldCheck 
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { logOut } from '../lib/firebase/auth';
@@ -17,9 +16,8 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const [isResourcesOpen, setIsResourcesOpen] = useState(false); // Mobile resources toggle
+  const [isResourcesOpen, setIsResourcesOpen] = useState(false); 
   
-  // Desktop hover state for Resources
   const [hoverResource, setHoverResource] = useState(false);
   
   const location = useLocation();
@@ -28,7 +26,6 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
   const currentPath = location.pathname;
   const timeoutRef = useRef<any>(null);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -40,7 +37,6 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
     };
   }, [isMobileMenuOpen]);
 
-  // Scroll Handler
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -61,32 +57,30 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
     return currentPath.startsWith(path);
   };
 
-  // Navigation Structure
   const mainLinks = [
-    { name: 'Home', path: '/', icon: Home },
-    { name: 'Properties', path: '/property-listings', icon: Grid },
-    { name: 'About Us', path: '/about-us', icon: Info },
+    { name: 'Home', path: '/' },
+    { name: 'Properties', path: '/property-listings' },
+    { name: 'About Us', path: '/about-us' },
   ];
 
   const resourceLinks = [
-    { name: "Buyer's Guide", path: '/buyers-guide', icon: BookOpen },
-    { name: "Seller's Guide", path: '/sellers-guide', icon: TrendingUp },
-    { name: 'Our Agents', path: '/agents', icon: Users },
+    { name: "Buyer's Guide", path: '/buyers-guide' },
+    { name: "Seller's Guide", path: '/sellers-guide' },
+    { name: 'Our Agents', path: '/agents' },
   ];
 
   const secondaryLinks = [
-    { name: 'Blog', path: '/blog', icon: FileText },
-    { name: 'Contact Us', path: '/contact-us', icon: Mail },
+    { name: 'Blog', path: '/blog' },
+    { name: 'Contact Us', path: '/contact-us' },
   ];
 
-  // Refined Animation variants for High UX
   const mobileMenuVariants = {
     closed: { 
       x: "100%",
       opacity: 0,
       transition: { 
         duration: 0.5,
-        ease: [0.32, 0.72, 0, 1], // Custom cubic-bezier for a "heavy" luxurious feel
+        ease: [0.32, 0.72, 0, 1],
         staggerChildren: 0.05,
         staggerDirection: -1
       }
@@ -119,7 +113,6 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
     }
   };
 
-  // Dropdown Handling
   const handleMouseEnter = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setHoverResource(true);
@@ -141,7 +134,6 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
         }`}
       >
         <div className="max-w-[1600px] mx-auto px-5 md:px-6 lg:px-8 flex justify-between items-center h-full">
-          {/* Logo (Left) */}
           <Link 
             to="/" 
             className="font-extrabold text-2xl text-charcoal-dark tracking-tight z-[101] relative flex-shrink-0 mr-8 flex items-center gap-2 group"
@@ -150,9 +142,8 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
             Lofton Realty
           </Link>
 
-          {/* Desktop Menu (Center) */}
+          {/* Desktop Menu */}
           <div className="hidden lg:flex items-center gap-1 xl:gap-2 flex-1 justify-center">
-            {/* Main Links */}
             {mainLinks.map((link) => (
               <Link 
                 key={link.name} 
@@ -171,7 +162,6 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
               </Link>
             ))}
 
-            {/* Resources Dropdown */}
             <div 
               className="relative"
               onMouseEnter={handleMouseEnter}
@@ -207,9 +197,6 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                           isActive(link.path) ? 'text-brand' : 'text-gray-600'
                         }`}
                       >
-                        <div className={`p-1.5 rounded-md ${isActive(link.path) ? 'bg-brand-light text-brand' : 'bg-gray-100 text-gray-500'}`}>
-                            <link.icon size={16} />
-                        </div>
                         {link.name}
                       </Link>
                     ))}
@@ -218,7 +205,6 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
               </AnimatePresence>
             </div>
 
-            {/* Secondary Links */}
             {secondaryLinks.map((link) => (
               <Link 
                 key={link.name} 
@@ -238,9 +224,8 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
             ))}
           </div>
 
-          {/* Right Side: Auth / User */}
+          {/* Desktop Right Side */}
           <div className="hidden lg:flex items-center gap-4">
-            {/* Desktop User Menu */}
             {user ? (
               <div className="relative">
                 <button
@@ -261,12 +246,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                 <AnimatePresence>
                   {isUserMenuOpen && (
                     <>
-                      {/* Transparent Overlay for click-outside */}
-                      <div 
-                        className="fixed inset-0 z-[105] cursor-default" 
-                        onClick={() => setIsUserMenuOpen(false)} 
-                      />
-                      
+                      <div className="fixed inset-0 z-[105] cursor-default" onClick={() => setIsUserMenuOpen(false)} />
                       <motion.div
                         initial={{ opacity: 0, y: 10, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -278,38 +258,21 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                           <p className="font-bold text-charcoal truncate">{user.displayName || 'User'}</p>
                           <p className="text-xs text-gray-500 truncate">{user.email}</p>
                         </div>
-                        
                         <div className="py-2">
-                          <Link 
-                            to="/dashboard" 
-                            onClick={() => setIsUserMenuOpen(false)}
-                            className="flex items-center gap-3 px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors"
-                          >
+                          <Link to="/dashboard" onClick={() => setIsUserMenuOpen(false)} className="flex items-center gap-3 px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors">
                             <LayoutDashboard size={16} /> Dashboard
                           </Link>
                           {isAdmin && (
-                            <Link 
-                              to="/dashboard/admin" 
-                              onClick={() => setIsUserMenuOpen(false)}
-                              className="flex items-center gap-3 px-5 py-2.5 text-sm font-medium text-purple-700 hover:bg-purple-50 transition-colors"
-                            >
+                            <Link to="/dashboard/admin" onClick={() => setIsUserMenuOpen(false)} className="flex items-center gap-3 px-5 py-2.5 text-sm font-medium text-purple-700 hover:bg-purple-50 transition-colors">
                               <ShieldCheck size={16} /> Admin Panel
                             </Link>
                           )}
-                          <Link 
-                            to="/dashboard/profile" 
-                            onClick={() => setIsUserMenuOpen(false)}
-                            className="flex items-center gap-3 px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors"
-                          >
+                          <Link to="/dashboard/profile" onClick={() => setIsUserMenuOpen(false)} className="flex items-center gap-3 px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors">
                             <Settings size={16} /> Settings
                           </Link>
                         </div>
-
                         <div className="border-t border-gray-50 pt-2 mt-1 px-2">
-                          <button
-                            onClick={handleLogout}
-                            className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 rounded-xl transition-colors text-left"
-                          >
+                          <button onClick={handleLogout} className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 rounded-xl transition-colors text-left">
                             <LogOut size={16} /> Sign Out
                           </button>
                         </div>
@@ -320,28 +283,16 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <Link 
-                  to="/login"
-                  className="text-[15px] font-bold text-gray-600 hover:text-brand transition-colors px-4 py-2"
-                >
-                  Log In
-                </Link>
-                <Link 
-                  to="/signup"
-                  className="bg-charcoal text-white px-6 py-2.5 rounded-full font-bold text-[15px] hover:bg-black transition-all shadow-md hover:shadow-lg active:scale-95 border border-transparent"
-                >
-                  Sign Up
-                </Link>
+                <Link to="/login" className="text-[15px] font-bold text-gray-600 hover:text-brand transition-colors px-4 py-2">Log In</Link>
+                <Link to="/signup" className="bg-charcoal text-white px-6 py-2.5 rounded-full font-bold text-[15px] hover:bg-black transition-all shadow-md hover:shadow-lg active:scale-95 border border-transparent">Sign Up</Link>
               </div>
             )}
           </div>
 
-          {/* Mobile Toggle */}
           <button 
             className="lg:hidden p-2 z-[103] relative rounded-full active:bg-gray-100 text-charcoal hover:bg-gray-50 transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
-            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -443,118 +394,30 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                   </AnimatePresence>
                 </motion.div>
 
-                ))}
-
-                {/* Resources Accordion */}
-                <motion.div 
-                    variants={menuItemVariants}
-                    className="mt-2 rounded-2xl overflow-hidden"
-                >
-                    <button 
-                      onClick={() => setIsResourcesOpen(!isResourcesOpen)}
-                      aria-expanded={isResourcesOpen}
-                      className={`w-full flex items-center justify-between px-4 py-4 text-lg font-bold transition-colors active:scale-[0.98] ${
-                        isResourcesOpen ? 'text-charcoal' : 'text-gray-500 hover:text-charcoal'
-                      }`}
-                    >
-                    Resources
-                    <ChevronDown size={20} className={`transition-transform duration-300 ${isResourcesOpen ? 'rotate-180' : ''}`} />
-                  </button>
-                  
-                  <AnimatePresence>
-                    {isResourcesOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
-                        className="overflow-hidden flex flex-col items-start"
-                      >
-                        {resourceLinks.map((link) => (
-                          <Link 
-                            key={link.name} 
-                            to={link.path}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className={`flex items-center justify-start px-8 py-3 text-base font-semibold transition-colors relative w-fit ${
-                              isActive(link.path) ? 'text-brand' : 'text-gray-600'
-                            }`}
-                          >
-                            {link.name}
-                            {isActive(link.path) && (
-                              <motion.div 
-                                layoutId="mobile-resource-indicator"
-                                className="absolute bottom-1 left-8 right-0 h-0.5 bg-brand rounded-full"
-                              />
-                            )}
-                          </Link>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-
                 <motion.div variants={menuItemVariants} className="mt-auto pt-8 border-t border-gray-100">
                   {user ? (
                     <div className="space-y-3">
-                      <div className="flex items-center gap-3 px-4 mb-6">
-                        <div className="w-12 h-12 bg-gradient-to-br from-brand to-brand-dark text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">
+                      <div className="flex flex-col items-center gap-3 px-4 mb-6">
+                        <div className="w-16 h-16 bg-gradient-to-br from-brand to-brand-dark text-white rounded-full flex items-center justify-center font-bold text-xl shadow-md">
                           {user.displayName ? user.displayName[0].toUpperCase() : 'U'}
                         </div>
-                        <div className="overflow-hidden">
+                        <div className="text-center overflow-hidden">
                           <p className="font-bold text-charcoal text-lg truncate">{user.displayName || 'User'}</p>
-                          <p className="text-sm text-gray-500 truncate max-w-[180px]">{user.email}</p>
+                          <p className="text-sm text-gray-500 truncate max-w-[220px]">{user.email}</p>
                         </div>
                       </div>
                       
-                      <Link 
-                        to="/dashboard"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="flex items-center px-4 py-3 rounded-xl bg-gray-50 text-charcoal font-bold hover:bg-gray-100 transition-colors"
-                      >
-                        Dashboard
-                      </Link>
-
+                      <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-center px-4 py-3 rounded-xl bg-gray-50 text-charcoal font-bold hover:bg-gray-100 transition-colors">Dashboard</Link>
                       {isAdmin && (
-                        <Link 
-                          to="/dashboard/admin"
-                          onClick={() => setIsMobileMenuOpen(false)}
-                          className="flex items-center px-4 py-3 rounded-xl bg-purple-50 text-purple-700 font-bold hover:bg-purple-100 transition-colors"
-                        >
-                          Admin Panel
-                        </Link>
+                        <Link to="/dashboard/admin" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-center px-4 py-3 rounded-xl bg-purple-50 text-purple-700 font-bold hover:bg-purple-100 transition-colors">Admin Panel</Link>
                       )}
-                      
-                      <Link 
-                        to="/dashboard/profile"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="flex items-center px-4 py-3 rounded-xl text-gray-600 font-bold hover:bg-gray-50 transition-colors"
-                      >
-                        Settings
-                      </Link>
-                      
-                      <button
-                        onClick={handleLogout}
-                        className="w-full flex items-center px-4 py-3 rounded-xl text-red-600 font-bold hover:bg-red-50 transition-colors mt-2 text-left"
-                      >
-                        Log Out
-                      </button>
+                      <Link to="/dashboard/profile" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-center px-4 py-3 rounded-xl text-gray-600 font-bold hover:bg-gray-50 transition-colors">Settings</Link>
+                      <button onClick={handleLogout} className="w-full flex items-center justify-center px-4 py-3 rounded-xl text-red-600 font-bold hover:bg-red-50 transition-colors mt-2">Log Out</button>
                     </div>
                   ) : (
                     <div className="flex flex-col gap-3">
-                      <Link 
-                        to="/login"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="w-full text-center py-3.5 rounded-xl font-bold text-gray-600 border border-gray-200 hover:bg-gray-50 transition-colors"
-                      >
-                        Log In
-                      </Link>
-                      <Link 
-                        to="/signup"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="w-full text-center py-3.5 rounded-xl font-bold text-white bg-charcoal hover:bg-black transition-all shadow-lg"
-                      >
-                        Sign Up
-                      </Link>
+                      <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="w-full text-center py-3.5 rounded-xl font-bold text-gray-600 border border-gray-200 hover:bg-gray-50 transition-colors">Log In</Link>
+                      <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)} className="w-full text-center py-3.5 rounded-xl font-bold text-white bg-charcoal hover:bg-black transition-all shadow-lg">Sign Up</Link>
                     </div>
                   )}
                 </motion.div>
