@@ -54,12 +54,13 @@ export const ServicesSection = () => {
                            service.title.includes('Sale') || service.title.includes('Sell') ? '/sellers-guide' :
                            '/contact-us';
 
-            return (
-              <div
-                key={idx}
-                className="gsap-service-card group relative bg-white border border-gray-100 rounded-[24px] p-[40px] hover:border-brand/30 hover:shadow-[0_20px_40px_-15px_rgba(74,222,128,0.15)] transition-all duration-300 flex flex-col h-full overflow-hidden md:[&:last-child]:col-span-2 lg:[&:last-child]:col-span-1"
-              >
-                {/* Hover Gradient Overlay */}
+             return (
+               <div
+                 key={idx}
+                 className="gsap-service-card group relative bg-white border border-gray-100 rounded-[24px] p-[40px] hover:border-brand/30 hover:shadow-[0_20px_40px_-15px_rgba(74,222,128,0.15)] transition-all duration-300 flex flex-col h-full overflow-hidden md:[&:last-child]:col-span-2 lg:[&:last-child]:col-span-1 opacity-0"
+               >
+                 {/* Hover Gradient Overlay */}
+
                 <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-brand-light/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
                 <div className="relative z-10 flex flex-col h-full">
