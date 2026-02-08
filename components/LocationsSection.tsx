@@ -122,8 +122,7 @@ export const LocationsSection = () => {
                       <div className="flex items-center gap-1.5 text-[10px] md:text-xs font-bold text-green-600 bg-green-50 px-2 md:px-3 py-1 md:py-1.5 rounded-full border border-green-100 whitespace-nowrap">
                         <TrendingUp size={12} className="md:hidden" />
                         <TrendingUp size={14} className="hidden md:block" /> 
-                        <span className="hidden xs:inline">Growing Market</span>
-                        <span className="xs:hidden">Growing</span>
+                        <span>Growing Market</span>
                       </div>
                     )}
                   </div>
