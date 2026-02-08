@@ -12,7 +12,7 @@ export const Hero = () => {
 
   return (
     <section 
-      className="relative pt-[110px] pb-[60px] md:pt-[140px] md:pb-[80px] lg:pt-[160px] lg:pb-[100px] flex items-center overflow-hidden bg-white min-h-[80vh]" 
+      className="relative flex items-center overflow-hidden bg-white h-screen min-h-[600px] w-full" 
       id="home"
     >
       {/* 
