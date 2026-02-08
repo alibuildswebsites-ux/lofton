@@ -103,7 +103,7 @@ export const StackedLocations = () => {
         </p>
       </div>
 
-      <div className="relative w-full max-w-2xl h-[480px] flex items-center justify-center">
+      <div className="relative w-full max-w-2xl h-[600px] flex items-center justify-center">
         {LOCATIONS.map((loc, i) => (
           <div 
             key={loc.id} 
@@ -133,8 +133,11 @@ export const StackedLocations = () => {
 
               {/* Expandable Area */}
               <div className="desc-area h-0 opacity-0 overflow-hidden">
-                <p className="text-gray-500 text-base leading-relaxed">
-                  {loc.description}
+                <div className="text-brand font-black uppercase text-[10px] tracking-[0.2em] mb-3">
+                  Market Insights
+                </div>
+                <p className="text-gray-500 text-sm md:text-base leading-relaxed">
+                  {loc.longDescription || loc.description}
                 </p>
                 
                 <div className="info-area opacity-0 translate-y-4 grid grid-cols-2 gap-8 mt-8 pt-6 border-t border-gray-50">
