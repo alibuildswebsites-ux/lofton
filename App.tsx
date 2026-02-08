@@ -8,6 +8,8 @@ import { ScrollToTop } from './components/ScrollToTop';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { AdminRoute } from './components/auth/AdminRoute';
 import { LoadingSpinner } from './components/common/LoadingSpinner';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // Static imports for main pages to remove lazy loading delay
 import LoftonRealtyHome from './components/LoftonRealtyHome';
