@@ -45,7 +45,7 @@ const LoftonRealtyHome = () => {
   return (
     <div className="font-sans text-gray-900 bg-white selection:bg-brand selection:text-white">
       <Navbar />
-      <main>
+      <main className="divide-y divide-gray-500/20">
         <Hero />
         
         <SectionErrorBoundary>
@@ -76,9 +76,7 @@ const LoftonRealtyHome = () => {
           <ContactFormSection />
         </SectionErrorBoundary>
 
-        <SectionErrorBoundary>
-          <Footer />
-        </SectionErrorBoundary>
+        <Footer />
       </main>
     </div>
   );
