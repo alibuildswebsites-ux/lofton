@@ -1,5 +1,5 @@
 
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
@@ -42,18 +42,32 @@ const AdminDashboard = lazy(() => import('./components/admin/AdminDashboard').th
 
 function App() {
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
+  const [showIntro, setShowIntro] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowIntro(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <>
       <ScrollToTop />
       <Analytics />
       <SpeedInsights />
+      
+      <AnimatePresence>
+        {showIntro && (
+          <LoadingSpinner fullScreen label="Lofton Realty" />
+        )}
+      </AnimatePresence>
+
       <Suspense fallback={null}>
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname}
-            initial={isHomePage ? { opacity: 1 } : { opacity: 0, y: 10 }}
+            initial={showIntro ? { opacity: 0 } : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
