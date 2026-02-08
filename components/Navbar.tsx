@@ -368,7 +368,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
               variants={mobileMenuVariants}
               className="fixed top-0 right-0 h-full w-[75%] max-w-[300px] bg-white z-[201] shadow-2xl lg:hidden flex flex-col overflow-y-auto border-l border-gray-100"
             >
-              <div className="pt-[15vh] px-6 pb-12 flex flex-col gap-1 flex-grow relative z-10">
+              <div className="pt-[7.5vh] px-6 pb-12 flex flex-col gap-1 flex-grow relative z-10">
                 
                 {/* Main Links */}
                 {[...mainLinks, ...secondaryLinks].map((link) => (
