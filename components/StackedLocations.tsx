@@ -3,11 +3,11 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { LOCATIONS } from '../data';
-import { MapPin, TrendingUp, Home as HomeIcon, Activity } from 'lucide-react';
+import { MapPin, TrendingUp } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Local asset mapping
+// Local asset mapping with relevant high-quality images
 const LOCAL_IMAGES: Record<string, string> = {
   '1': '/assets/locations/houston.jpg',
   '2': '/assets/locations/galveston.jpg',
@@ -39,7 +39,6 @@ export const StackedLocations = () => {
 
     cards.forEach((card: any, i: number) => {
       const descArea = card.querySelector('.desc-area');
-      const infoArea = card.querySelector('.info-area');
       const image = card.querySelector('.card-image');
 
       // PHASE 1: ENTRY
@@ -52,21 +51,16 @@ export const StackedLocations = () => {
       tl.to(descArea, { 
         height: 'auto', 
         opacity: 1, 
-        marginTop: 24, 
+        marginTop: 32, 
         duration: 1.0, 
         ease: "power2.inOut" 
       });
       tl.to(image, {
         filter: 'blur(0px) grayscale(0%)',
         scale: 1.05,
-        duration: 1.0,
+        duration: 1.0, 
         ease: "power2.inOut"
       }, "<");
-      tl.to(infoArea, { 
-        opacity: 1, 
-        y: 0, 
-        duration: 0.6 
-      }, "<0.5");
 
       // STAY MOMENT
       tl.to({}, { duration: 0.5 });
@@ -122,7 +116,7 @@ export const StackedLocations = () => {
           Areas We Serve
         </h2>
         <p className="text-gray-500 max-w-lg mx-auto text-sm md:text-base">
-          Local expertise with a broad reach. Explore our primary service markets across the Southern Network.
+          Cinematic insights into the Southern Coast's most prestigious real estate markets.
         </p>
       </div>
 
@@ -135,79 +129,49 @@ export const StackedLocations = () => {
           >
             <div className="card-inner pointer-events-auto w-full bg-white border border-gray-100 rounded-2xl shadow-2xl overflow-hidden shadow-brand/5">
               {/* Thumbnail with Blur Effect */}
-              <div className="relative h-48 md:h-56 overflow-hidden bg-gray-200">
+              <div className="relative h-56 md:h-64 overflow-hidden bg-gray-200">
                 <img 
                   src={LOCAL_IMAGES[loc.id] || loc.image} 
                   alt={loc.name} 
                   className="card-image w-full h-full object-cover filter blur-[10px] grayscale transition-all duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-60" />
-                <div className="absolute top-4 left-4">
-                  <div className="bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg flex items-center gap-2 shadow-sm">
-                    <Activity size={14} className="text-brand" />
-                    <span className="text-[10px] font-bold text-charcoal uppercase tracking-widest">Market Active</span>
-                  </div>
-                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-white/40 via-transparent to-transparent" />
               </div>
 
               <div className="p-8 md:p-10">
                 <div className="flex justify-between items-start mb-6">
                   <div className="space-y-1">
-                    <h3 className="text-3xl md:text-4xl font-bold text-charcoal tracking-tight">
+                    <h3 className="text-3xl md:text-5xl font-bold text-charcoal tracking-tighter italic uppercase">
                       {loc.name.split(',')[0]}
                     </h3>
-                    <p className="text-gray-400 font-medium tracking-widest uppercase text-[10px]">
+                    <p className="text-brand font-bold tracking-[0.4em] uppercase text-[10px]">
                       {loc.name.split(',')[1] || 'Southern Region'}
                     </p>
                   </div>
                   {loc.stats.trend === 'up' && (
                     <div className="flex items-center gap-1.5 text-[10px] font-bold text-green-600 bg-green-50 px-3 py-1.5 rounded-full uppercase border border-green-100">
-                      <TrendingUp size={12} /> Growing Market
+                      <TrendingUp size={12} /> Hot Market
                     </div>
                   )}
                 </div>
 
                 {/* Expandable Area */}
                 <div className="desc-area h-0 opacity-0 overflow-hidden">
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="h-[1px] w-4 bg-brand" />
-                    <div className="text-brand font-black uppercase text-[10px] tracking-[0.2em]">
-                      Market Insights
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="h-[1px] w-6 bg-brand" />
+                    <div className="text-brand font-black uppercase text-[10px] tracking-[0.3em]">
+                      Market Report
                     </div>
                   </div>
                   
-                  <p className="text-gray-500 text-sm md:text-base leading-relaxed mb-8">
+                  <p className="text-gray-600 text-base md:text-lg leading-relaxed font-light italic border-l-2 border-gray-100 pl-6">
                     {loc.longDescription || loc.description}
                   </p>
-                  
-                  <div className="info-area opacity-0 translate-y-4 grid grid-cols-2 gap-4 mt-8 pt-6 border-t border-gray-50">
-                    <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
-                      <div className="flex items-center gap-2 text-gray-400 mb-1">
-                        <HomeIcon size={12} />
-                        <span className="text-[9px] font-bold uppercase tracking-wider">Listings</span>
-                      </div>
-                      <span className="block text-2xl font-bold text-charcoal tracking-tight">{loc.propertyCount}<span className="text-brand text-sm ml-0.5">+</span></span>
-                    </div>
-                    <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
-                      <div className="flex items-center gap-2 text-gray-400 mb-1">
-                        <TrendingUp size={12} />
-                        <span className="text-[9px] font-bold uppercase tracking-wider">{loc.stats.label}</span>
-                      </div>
-                      <span className="block text-2xl font-bold text-charcoal tracking-tight">{loc.stats.value}</span>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
         ))}
-      </div>
-
-      {/* Simplified Progress Info (Not a bar) */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-4 text-gray-300 font-bold text-[11px] tracking-[0.3em] uppercase">
-        <span>Region Alpha</span>
-        <div className="w-2 h-2 rounded-full bg-brand/30" />
-        <span>Omega</span>
       </div>
     </section>
   );
