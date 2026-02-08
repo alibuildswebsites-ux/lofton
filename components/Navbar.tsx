@@ -366,14 +366,8 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
               animate="open"
               exit="closed"
               variants={mobileMenuVariants}
-              className="fixed top-0 right-0 h-full w-[85%] max-w-[360px] bg-white/90 backdrop-blur-2xl z-[201] shadow-2xl lg:hidden flex flex-col overflow-y-auto border-l border-white/20"
+              className="fixed top-0 right-0 h-full w-[85%] max-w-[360px] bg-white z-[201] shadow-2xl lg:hidden flex flex-col overflow-y-auto border-l border-gray-100"
             >
-              {/* Subtle background decoration */}
-              <div className="absolute inset-0 pointer-events-none opacity-[0.03] overflow-hidden">
-                <div className="absolute top-[20%] -right-20 w-80 h-80 bg-brand rounded-full blur-[100px]" />
-                <div className="absolute bottom-[10%] -left-20 w-60 h-60 bg-brand-dark rounded-full blur-[80px]" />
-              </div>
-
               <div className="pt-28 px-6 pb-12 flex flex-col gap-1 flex-grow relative z-10">
                 
                 {/* Main Links */}
@@ -385,12 +379,17 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                     <Link 
                         to={link.path}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl text-lg font-bold transition-all active:scale-[0.98] ${
-                        isActive(link.path) ? 'bg-brand-light text-brand' : 'text-charcoal hover:bg-gray-50'
+                        className={`flex items-center px-4 py-4 text-lg font-bold transition-all relative w-fit ${
+                        isActive(link.path) ? 'text-charcoal' : 'text-gray-500 hover:text-charcoal'
                         }`}
                     >
-                        <link.icon size={22} className={isActive(link.path) ? 'text-brand' : 'text-gray-400'} />
                         {link.name}
+                        {isActive(link.path) && (
+                          <motion.div 
+                            layoutId="mobile-navbar-indicator"
+                            className="absolute bottom-2 left-4 right-4 h-0.5 bg-brand rounded-full"
+                          />
+                        )}
                     </Link>
                   </motion.div>
                 ))}
@@ -398,17 +397,16 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                 {/* Resources Accordion */}
                 <motion.div 
                     variants={menuItemVariants}
-                    className="mt-2 rounded-2xl overflow-hidden border border-gray-100"
+                    className="mt-2 rounded-2xl overflow-hidden"
                 >
                     <button 
                       onClick={() => setIsResourcesOpen(!isResourcesOpen)}
                       aria-expanded={isResourcesOpen}
-                      className={`w-full flex items-center justify-between px-4 py-3.5 text-lg font-bold transition-colors active:scale-[0.98] ${
-                        isResourcesOpen ? 'bg-gray-50/80 text-charcoal' : 'text-charcoal hover:bg-gray-50'
+                      className={`w-full flex items-center justify-between px-4 py-4 text-lg font-bold transition-colors active:scale-[0.98] ${
+                        isResourcesOpen ? 'text-charcoal' : 'text-gray-500 hover:text-charcoal'
                       }`}
                     >
                     <div className="flex items-center gap-4">
-                      <BookOpen size={22} className={isResourcesOpen ? 'text-brand' : 'text-gray-400'} />
                       Resources
                     </div>
                     <ChevronDown size={20} className={`transition-transform duration-300 ${isResourcesOpen ? 'rotate-180' : ''}`} />
@@ -421,19 +419,24 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
-                        className="bg-gray-50/50 border-t border-gray-100 overflow-hidden"
+                        className="overflow-hidden"
                       >
                         {resourceLinks.map((link) => (
                           <Link 
                             key={link.name} 
                             to={link.path}
                             onClick={() => setIsMobileMenuOpen(false)}
-                            className={`flex items-center gap-3 pl-14 pr-4 py-3 text-base font-medium transition-colors ${
+                            className={`flex items-center px-8 py-3 text-base font-semibold transition-colors relative w-fit ${
                               isActive(link.path) ? 'text-brand' : 'text-gray-600'
                             }`}
                           >
-                            <div className="w-1.5 h-1.5 rounded-full bg-current opacity-50" />
                             {link.name}
+                            {isActive(link.path) && (
+                              <motion.div 
+                                layoutId="mobile-resource-indicator"
+                                className="absolute bottom-1 left-8 right-0 h-0.5 bg-brand rounded-full"
+                              />
+                            )}
                           </Link>
                         ))}
                       </motion.div>
