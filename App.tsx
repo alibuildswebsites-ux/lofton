@@ -127,8 +127,7 @@ function App() {
       </Suspense>
     </motion.div>
   </>
-);
+  );
 }
-
 
 export default App;
