@@ -27,6 +27,14 @@ export const PropertyListings = () => {
   
   const [searchParams, setSearchParams] = useSearchParams();
 
+  // --- Pagination Logic ---
+
+  const totalPages = Math.ceil(sortedProperties.length / itemsPerPage);
+  const currentProperties = sortedProperties.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   useEffect(() => {
     if (!loading && currentProperties.length > 0) {
       // Small timeout to ensure DOM is ready after React render
@@ -59,132 +67,6 @@ export const PropertyListings = () => {
       return () => ctx.revert();
     }
   }, [loading, currentProperties, viewMode]);
-
-  // Initialize filters from URL params lazy to avoid sync issues
-
-  const [filters, setFilters] = useState<FilterState>(() => {
-    const locParam = searchParams.get('location');
-    const statusParam = searchParams.get('status');
-    const minParam = searchParams.get('min');
-    const maxParam = searchParams.get('max');
-
-    return {
-      location: locParam || '',
-      minPrice: minParam ? Number(minParam) : '',
-      maxPrice: maxParam ? Number(maxParam) : '',
-      beds: 'any',
-      baths: 'any',
-      types: [],
-      status: (statusParam as any) || 'All'
-    };
-  });
-
-  // Extract unique locations for dropdown - note: this list updates based on fetched properties
-  // For a more robust app, you might want to hardcode or fetch distinct cities separately
-  const availableLocations = useMemo(() => {
-    return Array.from(new Set(allProperties.map(p => p.city))).sort();
-  }, [allProperties]);
-
-  // If specific filters are applied on the server, we might miss some cities in the dropdown.
-  // Ideally, you'd fetch a list of 'cities' from a separate collection or config.
-  // For now, we will add common cities to ensure they appear if no data is loaded yet.
-  const commonCities = ['Houston', 'Galveston', 'Austin', 'Katy', 'Pearland', 'Sugar Land'].filter(c => !availableLocations.includes(c));
-  const displayLocations = [...availableLocations, ...commonCities].sort();
-
-  const availableTypes = ['House', 'Condo', 'Apartment', 'Townhouse', 'Land', 'Other'];
-
-  // --- Effects ---
-  
-  useEffect(() => {
-    updateSEO({
-      title: "Homes for Sale in Houston, TX | Lofton Realty",
-      description: "Browse exclusive real estate listings in Houston, Galveston, Austin, and the Gulf Coast. Find your dream home with Lofton Realty.",
-      url: "https://loftonrealty.com/properties"
-    });
-  }, []);
-
-  // Fetch properties when SERVER-supported filters change (Location, Status)
-  useEffect(() => {
-    let isMounted = true;
-
-    const fetchProps = async () => {
-      setLoading(true);
-      // Ask the database for specific results to optimize performance
-      const data = await getProperties({
-        status: filters.status,
-        location: filters.location
-      });
-      
-      if (isMounted) {
-        setAllProperties(data as Property[]);
-        setLoading(false);
-      }
-    };
-
-    fetchProps();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [filters.status, filters.location]);
-
-  // Sync state changes to URL
-  useEffect(() => {
-    const params: Record<string, string> = {};
-    if (filters.location) params.location = filters.location;
-    if (filters.status !== 'All') params.status = filters.status;
-    if (filters.minPrice) params.min = filters.minPrice.toString();
-    if (filters.maxPrice) params.max = filters.maxPrice.toString();
-    
-    setSearchParams(params, { replace: true });
-  }, [filters, setSearchParams]);
-
-  // --- Client-Side Filter Logic ---
-  // We still filter by Price, Beds, Baths, and Types on the client
-  // because Firestore inequality filters restricts sorting and flexibility.
-
-  const filteredProperties = useMemo(() => {
-    return allProperties.filter(property => {
-      // Type Match (Array check)
-      if (filters.types.length > 0 && !filters.types.includes(property.type)) return false;
-      
-      // Price Range
-      if (filters.minPrice !== '' && property.price < filters.minPrice) return false;
-      if (filters.maxPrice !== '' && property.price > filters.maxPrice) return false;
-      
-      // Beds/Baths
-      if (filters.beds !== 'any' && property.beds < filters.beds) return false;
-      if (filters.baths !== 'any' && property.baths < filters.baths) return false;
-
-      return true;
-    });
-  }, [filters, allProperties]);
-
-  // --- Sort Logic ---
-
-  const sortedProperties = useMemo(() => {
-    const sorted = [...filteredProperties];
-    switch (sortBy) {
-      case 'price-asc':
-        return sorted.sort((a, b) => a.price - b.price);
-      case 'price-desc':
-        return sorted.sort((a, b) => b.price - a.price);
-      case 'sqft-desc':
-        return sorted.sort((a, b) => b.sqft - a.sqft);
-      case 'newest':
-      default:
-        // Already sorted by createdAt descending from getProperties
-        return sorted; 
-    }
-  }, [filteredProperties, sortBy]);
-
-  // --- Pagination Logic ---
-
-  const totalPages = Math.ceil(sortedProperties.length / itemsPerPage);
-  const currentProperties = sortedProperties.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
 
   const handleFilterChange = (key: keyof FilterState, value: any) => {
     setFilters(prev => ({ ...prev, [key]: value }));
@@ -463,12 +345,7 @@ export const PropertyListings = () => {
                 {currentProperties.map(property => (
                   <div key={property.id} className="gsap-list-card">
                     <PropertyCard 
-                      property={{
-                        ...property, 
-                        // Convert number price to formatted string for Card compatibility if needed
-                        price: typeof property.price === 'number' ? `$${property.price.toLocaleString()}` : property.price,
-                        sqft: typeof property.sqft === 'number' ? property.sqft.toLocaleString() : property.sqft
-                      } as any} // Type assertion for compatibility during migration
+                      property={property}
                       viewMode={viewMode} 
                     />
                   </div>
