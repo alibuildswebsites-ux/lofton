@@ -3,7 +3,6 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { LOCATIONS } from '../data';
-import { MapPin, TrendingUp } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -141,30 +140,18 @@ export const StackedLocations = () => {
               <div className="p-8 md:p-10">
                 <div className="flex justify-between items-start mb-6">
                   <div className="space-y-1">
-                    <h3 className="text-3xl md:text-5xl font-bold text-charcoal tracking-tighter italic uppercase">
+                    <h3 className="text-3xl md:text-5xl font-bold text-charcoal tracking-tighter italic uppercase leading-none">
                       {loc.name.split(',')[0]}
                     </h3>
                     <p className="text-brand font-bold tracking-[0.4em] uppercase text-[10px]">
                       {loc.name.split(',')[1] || 'Southern Region'}
                     </p>
                   </div>
-                  {loc.stats.trend === 'up' && (
-                    <div className="flex items-center gap-1.5 text-[10px] font-bold text-green-600 bg-green-50 px-3 py-1.5 rounded-full uppercase border border-green-100">
-                      <TrendingUp size={12} /> Hot Market
-                    </div>
-                  )}
                 </div>
 
                 {/* Expandable Area */}
                 <div className="desc-area h-0 opacity-0 overflow-hidden">
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className="h-[1px] w-6 bg-brand" />
-                    <div className="text-brand font-black uppercase text-[10px] tracking-[0.3em]">
-                      Market Report
-                    </div>
-                  </div>
-                  
-                  <p className="text-gray-600 text-base md:text-lg leading-relaxed font-light italic border-l-2 border-gray-100 pl-6">
+                  <p className="text-gray-600 text-base md:text-lg leading-relaxed font-light italic border-l-2 border-brand/20 pl-6 py-2">
                     {loc.longDescription || loc.description}
                   </p>
                 </div>
