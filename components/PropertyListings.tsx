@@ -147,9 +147,10 @@ export const PropertyListings = () => {
               opacity: 1, rotationX: 0, y: 0, z: 0, ease: "power2.out",
               scrollTrigger: {
                 trigger: card,
-                start: "top bottom",
-                end: "top 80%",
+                start: "top bottom+=50",
+                end: "top 75%",
                 scrub: 1,
+                immediateRender: false,
               }
             }
           );
