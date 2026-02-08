@@ -446,20 +446,20 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                 <motion.div variants={menuItemVariants} className="mt-auto pt-8 border-t border-gray-100">
                   {user ? (
                     <div className="space-y-3">
-                      <div className="flex items-center gap-3 px-4 mb-6">
-                        <div className="w-12 h-12 bg-gradient-to-br from-brand to-brand-dark text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">
+                      <div className="flex flex-col items-center gap-3 px-4 mb-6">
+                        <div className="w-16 h-16 bg-gradient-to-br from-brand to-brand-dark text-white rounded-full flex items-center justify-center font-bold text-xl shadow-md">
                           {user.displayName ? user.displayName[0].toUpperCase() : 'U'}
                         </div>
-                        <div className="overflow-hidden">
+                        <div className="text-center overflow-hidden">
                           <p className="font-bold text-charcoal text-lg truncate">{user.displayName || 'User'}</p>
-                          <p className="text-sm text-gray-500 truncate max-w-[180px]">{user.email}</p>
+                          <p className="text-sm text-gray-500 truncate max-w-[220px]">{user.email}</p>
                         </div>
                       </div>
                       
                       <Link 
                         to="/dashboard"
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="flex items-center px-4 py-3 rounded-xl bg-gray-50 text-charcoal font-bold hover:bg-gray-100 transition-colors"
+                        className="flex items-center justify-center px-4 py-3 rounded-xl bg-gray-50 text-charcoal font-bold hover:bg-gray-100 transition-colors"
                       >
                         Dashboard
                       </Link>
@@ -468,7 +468,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                         <Link 
                           to="/dashboard/admin"
                           onClick={() => setIsMobileMenuOpen(false)}
-                          className="flex items-center px-4 py-3 rounded-xl bg-purple-50 text-purple-700 font-bold hover:bg-purple-100 transition-colors"
+                          className="flex items-center justify-center px-4 py-3 rounded-xl bg-purple-50 text-purple-700 font-bold hover:bg-purple-100 transition-colors"
                         >
                           Admin Panel
                         </Link>
@@ -477,14 +477,14 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                       <Link 
                         to="/dashboard/profile"
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="flex items-center px-4 py-3 rounded-xl text-gray-600 font-bold hover:bg-gray-50 transition-colors"
+                        className="flex items-center justify-center px-4 py-3 rounded-xl text-gray-600 font-bold hover:bg-gray-50 transition-colors"
                       >
                         Settings
                       </Link>
                       
                       <button
                         onClick={handleLogout}
-                        className="w-full flex items-center px-4 py-3 rounded-xl text-red-600 font-bold hover:bg-red-50 transition-colors mt-2 text-left"
+                        className="w-full flex items-center justify-center px-4 py-3 rounded-xl text-red-600 font-bold hover:bg-red-50 transition-colors mt-2"
                       >
                         Log Out
                       </button>
