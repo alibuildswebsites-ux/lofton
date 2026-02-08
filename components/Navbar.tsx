@@ -407,9 +407,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                         isResourcesOpen ? 'text-charcoal' : 'text-gray-500 hover:text-charcoal'
                       }`}
                     >
-                    <div className="flex items-center gap-4">
-                      Resources
-                    </div>
+                    Resources
                     <ChevronDown size={20} className={`transition-transform duration-300 ${isResourcesOpen ? 'rotate-180' : ''}`} />
                   </button>
                   
@@ -504,41 +502,6 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                         to="/signup"
                         onClick={() => setIsMobileMenuOpen(false)}
                         className="w-full text-center pt-3.5 pb-[7px] rounded-xl font-bold text-white bg-charcoal hover:bg-black transition-all shadow-lg"
-                      >
-                        Sign Up
-                      </Link>
-                    </div>
-                  )}
-
-                      
-                      <Link 
-                        to="/dashboard/profile"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="flex items-center justify-center px-4 py-3 rounded-xl text-gray-600 font-bold hover:bg-gray-50 transition-colors"
-                      >
-                        Settings
-                      </Link>
-                      
-                      <button
-                        onClick={handleLogout}
-                        className="w-full flex items-center justify-center px-4 py-3 rounded-xl text-red-600 font-bold hover:bg-red-50 transition-colors mt-2"
-                      >
-                        Log Out
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="flex flex-col gap-3">
-                      <Link 
-                        to="/login"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="w-full text-center py-3.5 rounded-xl font-bold text-gray-600 border border-gray-200 hover:bg-gray-50 transition-colors"
-                      >
-                        Log In
-                      </Link>
-                      <Link 
-                        to="/signup"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="w-full text-center py-3.5 rounded-xl font-bold text-white bg-charcoal hover:bg-black transition-colors shadow-lg"
                       >
                         Sign Up
                       </Link>
