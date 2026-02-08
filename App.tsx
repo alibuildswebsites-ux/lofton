@@ -40,6 +40,7 @@ const SavedProperties = lazy(() => import('./components/dashboard/SavedPropertie
 // Admin Components
 const AdminDashboard = lazy(() => import('./components/admin/AdminDashboard').then(module => ({ default: module.AdminDashboard })));
 const LocationsPreview = lazy(() => import('./components/LocationsPreview'));
+const InteractiveMapDemo = lazy(() => import('./components/InteractiveMapDemo'));
 
 function App() {
   const location = useLocation();
@@ -78,6 +79,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/admin/login" element={<AdminLoginPage />} />
           <Route path="/locations-preview" element={<LocationsPreview />} />
+          <Route path="/interactive-map" element={<InteractiveMapDemo />} />
           
           {/* Dashboard Routes - Protected */}
           <Route
