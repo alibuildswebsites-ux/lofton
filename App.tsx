@@ -42,6 +42,7 @@ const AdminDashboard = lazy(() => import('./components/admin/AdminDashboard').th
 
 function App() {
   const location = useLocation();
+  const isHomePage = location.pathname === '/';
   const [showIntro, setShowIntro] = useState(true);
 
   useEffect(() => {
