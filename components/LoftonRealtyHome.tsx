@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { LoadingSpinner } from './common/LoadingSpinner';
+import React, { useEffect } from 'react';
 import { Navbar } from './Navbar';
 import { Hero } from './Hero';
 import { SectionErrorBoundary } from './SectionErrorBoundary';
@@ -17,18 +15,6 @@ import { ContactFormSection } from './ContactFormSection';
 import { Footer } from './Footer';
 
 const LoftonRealtyHome = () => {
-  const [showIntro, setShowIntro] = useState(true);
-
-  useEffect(() => {
-    if (!showIntro) return;
-
-    const timer = setTimeout(() => {
-      setShowIntro(false);
-    }, 2000); // 1s animation + 1s brand presence
-
-    return () => clearTimeout(timer);
-  }, [showIntro]);
-
   useEffect(() => {
     updateSEO({
       title: "Lofton Realty | Houston Real Estate Broker & Investment Experts",
@@ -58,54 +44,42 @@ const LoftonRealtyHome = () => {
 
   return (
     <div className="font-sans text-gray-900 bg-white selection:bg-brand selection:text-white">
-      <AnimatePresence>
-        {showIntro && (
-          <LoadingSpinner fullScreen label="Lofton Realty" />
-        )}
-      </AnimatePresence>
+      <Navbar />
+      <main>
+        <Hero />
+        
+        <SectionErrorBoundary>
+          <StatsBar />
+        </SectionErrorBoundary>
 
-      <motion.div
-        initial={showIntro ? { opacity: 0, y: 50 } : { opacity: 1, y: 0 }}
-        animate={!showIntro ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        <Navbar />
-        <main>
-          <Hero />
-          
-          <SectionErrorBoundary>
-            <StatsBar />
-          </SectionErrorBoundary>
+        <SectionErrorBoundary>
+          <ServicesSection />
+        </SectionErrorBoundary>
 
-          <SectionErrorBoundary>
-            <ServicesSection />
-          </SectionErrorBoundary>
+        <SectionErrorBoundary>
+          <FeaturedProperties />
+        </SectionErrorBoundary>
 
-          <SectionErrorBoundary>
-            <FeaturedProperties />
-          </SectionErrorBoundary>
+        <SectionErrorBoundary>
+          <TrustSection />
+        </SectionErrorBoundary>
 
-          <SectionErrorBoundary>
-            <TrustSection />
-          </SectionErrorBoundary>
+        <SectionErrorBoundary>
+          <LocationsSection />
+        </SectionErrorBoundary>
 
-          <SectionErrorBoundary>
-            <LocationsSection />
-          </SectionErrorBoundary>
+        <SectionErrorBoundary>
+          <TestimonialsSection />
+        </SectionErrorBoundary>
 
-          <SectionErrorBoundary>
-            <TestimonialsSection />
-          </SectionErrorBoundary>
+        <SectionErrorBoundary>
+          <ContactFormSection />
+        </SectionErrorBoundary>
 
-          <SectionErrorBoundary>
-            <ContactFormSection />
-          </SectionErrorBoundary>
-
-          <SectionErrorBoundary>
-            <Footer />
-          </SectionErrorBoundary>
-        </main>
-      </motion.div>
+        <SectionErrorBoundary>
+          <Footer />
+        </SectionErrorBoundary>
+      </main>
     </div>
   );
 };
