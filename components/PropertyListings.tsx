@@ -15,6 +15,18 @@ import { PAGINATION } from '../lib/constants';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// --- Types ---
+
+interface FilterState {
+  location: string;
+  minPrice: number | '';
+  maxPrice: number | '';
+  beds: number | 'any';
+  baths: number | 'any';
+  types: string[]; 
+  status: 'All' | 'For Sale' | 'For Rent' | 'Sold' | 'Rented';
+}
+
 export const PropertyListings = () => {
   // --- State ---
   const [allProperties, setAllProperties] = useState<Property[]>([]);
@@ -27,7 +39,60 @@ export const PropertyListings = () => {
   
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // --- Pagination Logic ---
+  // Initialize filters from URL params
+  const [filters, setFilters] = useState<FilterState>(() => {
+    const locParam = searchParams.get('location');
+    const statusParam = searchParams.get('status');
+    const minParam = searchParams.get('min');
+    const maxParam = searchParams.get('max');
+
+    return {
+      location: locParam || '',
+      minPrice: minParam ? Number(minParam) : '',
+      maxPrice: maxParam ? Number(maxParam) : '',
+      beds: 'any',
+      baths: 'any',
+      types: [],
+      status: (statusParam as any) || 'All'
+    };
+  });
+
+  // --- Derived Data (Memos) ---
+
+  const availableLocations = useMemo(() => {
+    return Array.from(new Set(allProperties.map(p => p.city))).sort();
+  }, [allProperties]);
+
+  const commonCities = ['Houston', 'Galveston', 'Austin', 'Katy', 'Pearland', 'Sugar Land'].filter(c => !availableLocations.includes(c));
+  const displayLocations = [...availableLocations, ...commonCities].sort();
+
+  const availableTypes = ['House', 'Condo', 'Apartment', 'Townhouse', 'Land', 'Other'];
+
+  const filteredProperties = useMemo(() => {
+    return allProperties.filter(property => {
+      if (filters.types.length > 0 && !filters.types.includes(property.type)) return false;
+      if (filters.minPrice !== '' && property.price < filters.minPrice) return false;
+      if (filters.maxPrice !== '' && property.price > filters.maxPrice) return false;
+      if (filters.beds !== 'any' && property.beds < (typeof filters.beds === 'number' ? filters.beds : 0)) return false;
+      if (filters.baths !== 'any' && property.baths < (typeof filters.baths === 'number' ? filters.baths : 0)) return false;
+      return true;
+    });
+  }, [filters, allProperties]);
+
+  const sortedProperties = useMemo(() => {
+    const sorted = [...filteredProperties];
+    switch (sortBy) {
+      case 'price-asc':
+        return sorted.sort((a, b) => a.price - b.price);
+      case 'price-desc':
+        return sorted.sort((a, b) => b.price - a.price);
+      case 'sqft-desc':
+        return sorted.sort((a, b) => a.sqft - b.sqft);
+      case 'newest':
+      default:
+        return sorted; 
+    }
+  }, [filteredProperties, sortBy]);
 
   const totalPages = Math.ceil(sortedProperties.length / itemsPerPage);
   const currentProperties = sortedProperties.slice(
@@ -35,25 +100,51 @@ export const PropertyListings = () => {
     currentPage * itemsPerPage
   );
 
+  // --- Effects ---
+  
+  useEffect(() => {
+    updateSEO({
+      title: "Homes for Sale in Houston, TX | Lofton Realty",
+      description: "Browse exclusive real estate listings in Houston, Galveston, Austin, and the Gulf Coast. Find your dream home with Lofton Realty.",
+      url: "https://loftonrealty.com/properties"
+    });
+  }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchProps = async () => {
+      setLoading(true);
+      const data = await getProperties({
+        status: filters.status,
+        location: filters.location
+      });
+      if (isMounted) {
+        setAllProperties(data as Property[]);
+        setLoading(false);
+      }
+    };
+    fetchProps();
+    return () => { isMounted = false; };
+  }, [filters.status, filters.location]);
+
+  useEffect(() => {
+    const params: Record<string, string> = {};
+    if (filters.location) params.location = filters.location;
+    if (filters.status !== 'All') params.status = filters.status;
+    if (filters.minPrice) params.min = filters.minPrice.toString();
+    if (filters.maxPrice) params.max = filters.maxPrice.toString();
+    setSearchParams(params, { replace: true });
+  }, [filters, setSearchParams]);
+
   useEffect(() => {
     if (!loading && currentProperties.length > 0) {
-      // Small timeout to ensure DOM is ready after React render
       const ctx = gsap.context(() => {
         const cards = gsap.utils.toArray('.gsap-list-card');
         cards.forEach((card: any) => {
           gsap.fromTo(card,
-            { 
-              opacity: 0, 
-              rotationX: -25, 
-              y: 60, 
-              z: -150 
-            },
+            { opacity: 0, rotationX: -25, y: 60, z: -150 },
             {
-              opacity: 1,
-              rotationX: 0,
-              y: 0,
-              z: 0,
-              ease: "power2.out",
+              opacity: 1, rotationX: 0, y: 0, z: 0, ease: "power2.out",
               scrollTrigger: {
                 trigger: card,
                 start: "top bottom",
@@ -67,6 +158,8 @@ export const PropertyListings = () => {
       return () => ctx.revert();
     }
   }, [loading, currentProperties, viewMode]);
+
+  // --- Handlers ---
 
   const handleFilterChange = (key: keyof FilterState, value: any) => {
     setFilters(prev => ({ ...prev, [key]: value }));
@@ -86,13 +179,7 @@ export const PropertyListings = () => {
 
   const clearFilters = () => {
     setFilters({
-      location: '',
-      minPrice: '',
-      maxPrice: '',
-      beds: 'any',
-      baths: 'any',
-      types: [],
-      status: 'All'
+      location: '', minPrice: '', maxPrice: '', beds: 'any', baths: 'any', types: [], status: 'All'
     });
     setCurrentPage(1);
   };
@@ -113,7 +200,7 @@ export const PropertyListings = () => {
            {['All', 'For Sale', 'For Rent', 'Sold', 'Rented'].map((s) => (
              <button
                key={s}
-               onClick={() => handleFilterChange('status', s)}
+               onClick={() => handleFilterChange('status', s as any)}
                className={`px-3 py-1.5 rounded-lg text-xs font-bold uppercase transition-all ${
                  filters.status === s ? 'bg-brand text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                }`}
