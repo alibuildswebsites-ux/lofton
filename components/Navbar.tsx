@@ -385,7 +385,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                     <Link 
                         to={link.path}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl text-lg font-bold transition-all ${
+                        className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl text-lg font-bold transition-all active:scale-[0.98] ${
                         isActive(link.path) ? 'bg-brand-light text-brand' : 'text-charcoal hover:bg-gray-50'
                         }`}
                     >
@@ -400,13 +400,13 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                     variants={menuItemVariants}
                     className="mt-2 rounded-2xl overflow-hidden border border-gray-100"
                 >
-                  <button 
-                    onClick={() => setIsResourcesOpen(!isResourcesOpen)}
-                    aria-expanded={isResourcesOpen}
-                    className={`w-full flex items-center justify-between px-4 py-3.5 text-lg font-bold transition-colors ${
-                      isResourcesOpen ? 'bg-gray-50 text-charcoal' : 'text-charcoal hover:bg-gray-50'
-                    }`}
-                  >
+                    <button 
+                      onClick={() => setIsResourcesOpen(!isResourcesOpen)}
+                      aria-expanded={isResourcesOpen}
+                      className={`w-full flex items-center justify-between px-4 py-3.5 text-lg font-bold transition-colors active:scale-[0.98] ${
+                        isResourcesOpen ? 'bg-gray-50/80 text-charcoal' : 'text-charcoal hover:bg-gray-50'
+                      }`}
+                    >
                     <div className="flex items-center gap-4">
                       <BookOpen size={22} className={isResourcesOpen ? 'text-brand' : 'text-gray-400'} />
                       Resources
@@ -420,8 +420,8 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className="bg-gray-50 border-t border-gray-100 overflow-hidden"
+                        transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
+                        className="bg-gray-50/50 border-t border-gray-100 overflow-hidden"
                       >
                         {resourceLinks.map((link) => (
                           <Link 
