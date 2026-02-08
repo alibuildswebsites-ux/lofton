@@ -39,7 +39,6 @@ const SavedProperties = lazy(() => import('./components/dashboard/SavedPropertie
 
 // Admin Components
 const AdminDashboard = lazy(() => import('./components/admin/AdminDashboard').then(module => ({ default: module.AdminDashboard })));
-const CoveragePreview = lazy(() => import('./components/CoveragePreview'));
 
 function App() {
   const location = useLocation();
@@ -77,7 +76,6 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/admin/login" element={<AdminLoginPage />} />
-          <Route path="/coverage-preview" element={<CoveragePreview />} />
           
           {/* Dashboard Routes - Protected */}
           <Route
