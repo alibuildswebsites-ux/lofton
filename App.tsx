@@ -59,21 +59,26 @@ function App() {
       
       <AnimatePresence>
         {showIntro && (
-          <LoadingSpinner fullScreen label="Lofton Realty" />
+          <LoadingSpinner key="global-loader" fullScreen label="Lofton Realty" />
         )}
       </AnimatePresence>
 
-      <Suspense fallback={null}>
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={location.pathname}
-            initial={showIntro ? { opacity: 0 } : { opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-          >
-            <Routes location={location} key={location.pathname}>
-              <Route path="/" element={<LoftonRealtyHome />} />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: showIntro ? 0 : 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Suspense fallback={null}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={location.pathname}
+              initial={isHomePage ? { opacity: 1 } : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              <Routes location={location} key={location.pathname}>
+                <Route path="/" element={<LoftonRealtyHome />} />
           <Route path="/property-listings" element={<PropertyListings />} />
           <Route path="/property-listings/:id" element={<PropertyDetailPage />} />
           <Route path="/blog" element={<BlogList />} />
