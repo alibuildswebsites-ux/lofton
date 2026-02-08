@@ -460,34 +460,34 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                       <Link 
                         to="/dashboard"
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gray-50 text-charcoal font-bold hover:bg-gray-100 transition-colors"
+                        className="flex items-center px-4 py-3 rounded-xl bg-gray-50 text-charcoal font-bold hover:bg-gray-100 transition-colors"
                       >
-                        <LayoutDashboard size={20} /> Dashboard
+                        Dashboard
                       </Link>
 
                       {isAdmin && (
                         <Link 
                           to="/dashboard/admin"
                           onClick={() => setIsMobileMenuOpen(false)}
-                          className="flex items-center gap-3 px-4 py-3 rounded-xl bg-purple-50 text-purple-700 font-bold hover:bg-purple-100 transition-colors"
+                          className="flex items-center px-4 py-3 rounded-xl bg-purple-50 text-purple-700 font-bold hover:bg-purple-100 transition-colors"
                         >
-                          <ShieldCheck size={20} /> Admin Panel
+                          Admin Panel
                         </Link>
                       )}
                       
                       <Link 
                         to="/dashboard/profile"
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 font-bold hover:bg-gray-50 transition-colors"
+                        className="flex items-center px-4 py-3 rounded-xl text-gray-600 font-bold hover:bg-gray-50 transition-colors"
                       >
-                        <Settings size={20} /> Settings
+                        Settings
                       </Link>
                       
                       <button
                         onClick={handleLogout}
-                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-600 font-bold hover:bg-red-50 transition-colors mt-2"
+                        className="w-full flex items-center px-4 py-3 rounded-xl text-red-600 font-bold hover:bg-red-50 transition-colors mt-2 text-left"
                       >
-                        <LogOut size={20} /> Log Out
+                        Log Out
                       </button>
                     </div>
                   ) : (
