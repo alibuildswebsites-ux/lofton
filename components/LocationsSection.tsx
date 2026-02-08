@@ -101,8 +101,8 @@ export const LocationsSection = () => {
         />
         
         {/* Stack Container */}
-        <div className="flex-grow relative mt-12 mb-20 flex items-center justify-center">
-          <div className="relative w-full max-w-2xl h-[500px]">
+        <div className="flex-grow relative mt-8 md:mt-12 mb-12 md:mb-20 flex items-center justify-center">
+          <div className="relative w-full max-w-2xl h-[400px] sm:h-[450px] md:h-[500px]">
             {LOCATIONS.map((location, index) => (
               <div 
                 key={location.id} 
@@ -110,32 +110,37 @@ export const LocationsSection = () => {
               >
                 <button 
                   onClick={() => setSelectedLocation(location)}
-                  className="bg-white p-8 md:p-10 rounded-2xl border border-gray-100 shadow-2xl transition-all duration-300 group cursor-pointer text-left w-full h-full flex flex-col"
+                  className="bg-white p-6 md:p-10 rounded-2xl border border-gray-100 shadow-2xl transition-all duration-300 group cursor-pointer text-left w-full h-full flex flex-col"
                   aria-label={`View details for ${location.name}`}
                 >
-                  <div className="flex justify-between items-start mb-6">
-                    <div className="w-14 h-14 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center text-charcoal group-hover:bg-brand group-hover:text-white transition-colors">
-                      <MapPin size={28} />
+                  <div className="flex justify-between items-start mb-4 md:mb-6">
+                    <div className="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center text-charcoal group-hover:bg-brand group-hover:text-white transition-colors">
+                      <MapPin size={24} className="md:hidden" />
+                      <MapPin size={28} className="hidden md:block" />
                     </div>
                     {location.stats.trend === 'up' && (
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-green-600 bg-green-50 px-3 py-1.5 rounded-full border border-green-100">
-                        <TrendingUp size={14} /> Growing Market
+                      <div className="flex items-center gap-1.5 text-[10px] md:text-xs font-bold text-green-600 bg-green-50 px-2 md:px-3 py-1 md:py-1.5 rounded-full border border-green-100 whitespace-nowrap">
+                        <TrendingUp size={12} className="md:hidden" />
+                        <TrendingUp size={14} className="hidden md:block" /> 
+                        <span className="hidden xs:inline">Growing Market</span>
+                        <span className="xs:hidden">Growing</span>
                       </div>
                     )}
                   </div>
                   
-                  <div className="mb-6">
-                    <h3 className="text-3xl md:text-4xl font-bold text-charcoal mb-2 group-hover:text-brand transition-colors tracking-tight">{location.name}</h3>
-                    <p className="text-gray-500 text-base md:text-lg leading-relaxed line-clamp-3 md:line-clamp-none">{location.description}</p>
+                  <div className="mb-4 md:mb-6 overflow-hidden">
+                    <h3 className="text-2xl md:text-4xl font-bold text-charcoal mb-1 md:mb-2 group-hover:text-brand transition-colors tracking-tight truncate">{location.name}</h3>
+                    <p className="text-gray-500 text-sm md:text-lg leading-relaxed line-clamp-4 md:line-clamp-none">{location.description}</p>
                   </div>
                   
-                  <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-6">
+                  <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-4 md:pt-6">
                     <div>
-                      <span className="block text-xs text-gray-400 font-bold uppercase tracking-wider mb-1">{location.stats.label}</span>
-                      <span className="block text-2xl font-bold text-charcoal">{location.stats.value}</span>
+                      <span className="block text-[10px] md:text-xs text-gray-400 font-bold uppercase tracking-wider mb-0.5 md:mb-1">{location.stats.label}</span>
+                      <span className="block text-xl md:text-2xl font-bold text-charcoal">{location.stats.value}</span>
                     </div>
-                    <div className="w-12 h-12 rounded-xl bg-charcoal text-white flex items-center justify-center group-hover:bg-brand transition-all duration-300">
-                       <ArrowRight size={24} />
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-charcoal text-white flex items-center justify-center group-hover:bg-brand transition-all duration-300">
+                       <ArrowRight size={20} className="md:hidden" />
+                       <ArrowRight size={24} className="hidden md:block" />
                     </div>
                   </div>
                 </button>
