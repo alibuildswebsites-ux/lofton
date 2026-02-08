@@ -45,35 +45,35 @@ const LoftonRealtyHome = () => {
   return (
     <div className="font-sans text-gray-900 bg-white selection:bg-brand selection:text-white">
       <Navbar />
-      <main className="divide-y divide-gray-500/20">
-        <Hero />
+      <main className="divide-y divide-gray-500/30">
+        <div className="border-b border-gray-500/30"><Hero /></div>
         
         <SectionErrorBoundary>
-          <StatsBar />
+          <div className="border-b border-gray-500/30"><StatsBar /></div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <ServicesSection />
+          <div className="border-b border-gray-500/30"><ServicesSection /></div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <FeaturedProperties />
+          <div className="border-b border-gray-500/30"><FeaturedProperties /></div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <TrustSection />
+          <div className="border-b border-gray-500/30"><TrustSection /></div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <LocationsSection />
+          <div className="border-b border-gray-500/30"><LocationsSection /></div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <TestimonialsSection />
+          <div className="border-b border-gray-500/30"><TestimonialsSection /></div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <ContactFormSection />
+          <div className="border-b border-gray-500/30"><ContactFormSection /></div>
         </SectionErrorBoundary>
 
         <Footer />
