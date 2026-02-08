@@ -125,8 +125,9 @@ function App() {
           </motion.div>
         </AnimatePresence>
       </Suspense>
-    </>
-  );
+    </motion.div>
+  </>
+);
 }
 
 
