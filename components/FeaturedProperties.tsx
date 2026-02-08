@@ -35,9 +35,10 @@ export const FeaturedProperties = () => {
             ease: "power2.out",
             scrollTrigger: {
               trigger: card,
-              start: "top bottom",
-              end: "top 80%",
+              start: "top bottom+=50",
+              end: "top 75%",
               scrub: 1,
+              immediateRender: false,
             }
           }
         );
