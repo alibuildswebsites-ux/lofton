@@ -79,33 +79,44 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
     { name: 'Contact Us', path: '/contact-us', icon: Mail },
   ];
 
-  // Refined Animation variants
+  // Refined Animation variants for High UX
   const mobileMenuVariants = {
     closed: { 
       x: "100%",
+      opacity: 0,
       transition: { 
-        type: "spring", 
-        stiffness: 400, 
-        damping: 40,
+        duration: 0.5,
+        ease: [0.32, 0.72, 0, 1], // Custom cubic-bezier for a "heavy" luxurious feel
         staggerChildren: 0.05,
         staggerDirection: -1
       }
     },
     open: { 
       x: "0%",
+      opacity: 1,
       transition: { 
-        type: "spring", 
-        stiffness: 400, 
-        damping: 40,
-        staggerChildren: 0.07,
-        delayChildren: 0.2
+        duration: 0.6,
+        ease: [0.32, 0.72, 0, 1],
+        staggerChildren: 0.08,
+        delayChildren: 0.1
       }
     }
   };
 
   const menuItemVariants = {
-    closed: { opacity: 0, x: 50, transition: { duration: 0.2 } },
-    open: { opacity: 1, x: 0, transition: { duration: 0.4, ease: "easeOut" } }
+    closed: { 
+      opacity: 0, 
+      y: 20,
+      transition: { duration: 0.3 } 
+    },
+    open: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { 
+        duration: 0.6, 
+        ease: "easeOut" 
+      } 
+    }
   };
 
   // Dropdown Handling
@@ -355,9 +366,15 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
               animate="open"
               exit="closed"
               variants={mobileMenuVariants}
-              className="fixed top-0 right-0 h-full w-[85%] max-w-[340px] bg-white z-[201] shadow-2xl lg:hidden flex flex-col overflow-y-auto border-l border-gray-100"
+              className="fixed top-0 right-0 h-full w-[85%] max-w-[360px] bg-white/90 backdrop-blur-2xl z-[201] shadow-2xl lg:hidden flex flex-col overflow-y-auto border-l border-white/20"
             >
-              <div className="pt-24 px-6 pb-8 flex flex-col gap-1 flex-grow">
+              {/* Subtle background decoration */}
+              <div className="absolute inset-0 pointer-events-none opacity-[0.03] overflow-hidden">
+                <div className="absolute top-[20%] -right-20 w-80 h-80 bg-brand rounded-full blur-[100px]" />
+                <div className="absolute bottom-[10%] -left-20 w-60 h-60 bg-brand-dark rounded-full blur-[80px]" />
+              </div>
+
+              <div className="pt-28 px-6 pb-12 flex flex-col gap-1 flex-grow relative z-10">
                 
                 {/* Main Links */}
                 {[...mainLinks, ...secondaryLinks].map((link) => (
