@@ -83,11 +83,12 @@ export const LocationsSection = () => {
         />
         
         {/* Locations Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px] mt-12" style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px] mt-12" style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
            {LOCATIONS.map((location) => (
-             <div key={location.id} className="gsap-location-card h-full">
+             <div key={location.id} className="gsap-location-card h-full opacity-0">
                <button 
                  onClick={() => setSelectedLocation(location)}
+
                  className="bg-white p-8 md:p-10 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer text-left w-full h-full flex flex-col focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
                  aria-label={`View details for ${location.name}`}
                >
