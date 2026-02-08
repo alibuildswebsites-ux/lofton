@@ -6,14 +6,24 @@ import { LOCATIONS } from '../data';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Local asset mapping with relevant high-quality images
+// Local asset mapping with SEO-optimized filenames
 const LOCAL_IMAGES: Record<string, string> = {
-  '1': '/assets/locations/houston.jpg',
-  '2': '/assets/locations/galveston.jpg',
-  '3': '/assets/locations/austin.jpg',
-  '4': '/assets/locations/louisiana.jpg',
-  '5': '/assets/locations/mississippi.jpg',
-  '6': '/assets/locations/florida.jpg',
+  '1': '/assets/locations/houston-tx-urban-real-estate.jpg',
+  '2': '/assets/locations/galveston-tx-coastal-living.jpg',
+  '3': '/assets/locations/austin-tx-tech-hub-skyline.jpg',
+  '4': '/assets/locations/louisiana-southern-charm-estates.jpg',
+  '5': '/assets/locations/mississippi-gulf-coast-opportunities.jpg',
+  '6': '/assets/locations/florida-sunshine-state-expansion.jpg',
+};
+
+// SEO-friendly Alt Tags
+const SEO_ALTS: Record<string, string> = {
+  '1': 'Houston Texas downtown skyline and urban luxury real estate photography.',
+  '2': 'Galveston Texas coastal landscape featuring historic Gulf architecture.',
+  '3': 'Austin Texas skyline view showcasing modern tech-hub urban development.',
+  '4': 'Louisiana southern charm estates with historic oak trees and colonial architecture.',
+  '5': 'Mississippi Gulf Coast waterfront properties and coastal investment opportunities.',
+  '6': 'Florida sunshine state coastal luxury skyline and premium oceanfront realty.',
 };
 
 export const StackedLocations = () => {
@@ -100,7 +110,7 @@ export const StackedLocations = () => {
   }, []);
 
   return (
-    <section ref={triggerRef} className="h-screen bg-gray-50 overflow-hidden relative flex flex-col items-center justify-center font-sans">
+    <section ref={triggerRef} className="h-screen bg-gray-50 overflow-hidden relative flex flex-col items-center justify-center font-sans px-5">
       {/* Background Atmosphere */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-full opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#000 1.5px, transparent 1.5px)', backgroundSize: '40px 40px' }} />
@@ -114,8 +124,8 @@ export const StackedLocations = () => {
         <h2 className="text-4xl md:text-5xl font-extrabold text-charcoal tracking-tight mb-4">
           Areas We Serve
         </h2>
-        <p className="text-gray-500 max-w-lg mx-auto text-sm md:text-base">
-          Cinematic insights into the Southern Coast's most prestigious real estate markets.
+        <p className="text-gray-500 max-w-lg mx-auto text-sm md:text-base font-medium">
+          Cinematic market insights across the Southern Coast's most prestigious regions.
         </p>
       </div>
 
@@ -123,22 +133,22 @@ export const StackedLocations = () => {
         {LOCATIONS.map((loc, i) => (
           <div 
             key={loc.id} 
-            className="stacked-card absolute inset-0 flex items-center justify-center opacity-0 pointer-events-none px-5"
+            className="stacked-card absolute inset-0 flex items-center justify-center opacity-0 pointer-events-none"
             style={{ perspective: "1200px" }}
           >
             <div className="card-inner pointer-events-auto w-full bg-white border border-gray-100 rounded-2xl shadow-2xl overflow-hidden shadow-brand/5">
-              {/* Thumbnail with Blur Effect */}
+              {/* Cinematic Thumbnail */}
               <div className="relative h-56 md:h-64 overflow-hidden bg-gray-200">
                 <img 
-                  src={LOCAL_IMAGES[loc.id] || loc.image} 
-                  alt={loc.name} 
+                  src={LOCAL_IMAGES[loc.id]} 
+                  alt={SEO_ALTS[loc.id]} 
                   className="card-image w-full h-full object-cover filter blur-[10px] grayscale transition-all duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-white/40 via-transparent to-transparent" />
               </div>
 
               <div className="p-8 md:p-10">
-                <div className="flex justify-between items-start mb-6">
+                <div className="flex justify-between items-start">
                   <div className="space-y-1">
                     <h3 className="text-3xl md:text-5xl font-bold text-charcoal tracking-tighter italic uppercase leading-none">
                       {loc.name.split(',')[0]}
@@ -149,11 +159,18 @@ export const StackedLocations = () => {
                   </div>
                 </div>
 
-                {/* Expandable Area */}
+                {/* SEO-Friendly Expansion Area */}
                 <div className="desc-area h-0 opacity-0 overflow-hidden">
-                  <p className="text-gray-600 text-base md:text-lg leading-relaxed font-light italic border-l-2 border-brand/20 pl-6 py-2">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="h-[1px] w-6 bg-brand" />
+                    <div className="text-brand font-black uppercase text-[10px] tracking-[0.3em]">
+                      Market Report
+                    </div>
+                  </div>
+                  
+                  <article className="text-gray-600 text-base md:text-lg leading-relaxed font-light italic border-l-2 border-brand/20 pl-6 py-2">
                     {loc.longDescription || loc.description}
-                  </p>
+                  </article>
                 </div>
               </div>
             </div>
