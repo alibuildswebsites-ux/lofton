@@ -35,17 +35,20 @@ export const LocationsSection = () => {
   }, [selectedLocation]);
 
   useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray('.gsap-location-card');
-      cards.forEach((card: any) => {
-        gsap.fromTo(card,
-          { 
-            opacity: 0, 
-            rotationX: -25, 
-            y: 60, 
-            z: -150 
-          },
-          {
+    const initGSAP = () => {
+      const ctx = gsap.context(() => {
+        const cards = gsap.utils.toArray('.gsap-location-card');
+        
+        // Force initial state immediately
+        gsap.set(cards, { 
+          opacity: 0, 
+          rotationX: -25, 
+          y: 60, 
+          z: -150 
+        });
+
+        cards.forEach((card: any) => {
+          gsap.to(card, {
             opacity: 1,
             rotationX: 0,
             y: 0,
@@ -53,17 +56,35 @@ export const LocationsSection = () => {
             ease: "power2.out",
             scrollTrigger: {
               trigger: card,
-              start: "top bottom+=50", // Added offset to ensure it's not already animated
-              end: "top 75%", // Slightly more scroll space to finish
+              start: "top 95%", // More deliberate entry
+              end: "top 70%",
               scrub: 1,
-              immediateRender: false, // Prevents early execution before ScrollTrigger is ready
+              immediateRender: false,
             }
-          }
-        );
-      });
-    }, sectionRef);
+          });
+        });
+      }, sectionRef);
+      return ctx;
+    };
 
-    return () => ctx.revert();
+    let ctx: gsap.Context;
+
+    const handleReady = () => {
+      ctx = initGSAP();
+    };
+
+    // If app is already ready (e.g. on navigation), init immediately
+    // Otherwise wait for the event
+    if ((window as any).appReady || !document.querySelector('.global-loader')) {
+      ctx = initGSAP();
+    } else {
+      window.addEventListener('appReady', handleReady);
+    }
+
+    return () => {
+      if (ctx) ctx.revert();
+      window.removeEventListener('appReady', handleReady);
+    };
   }, []);
 
   const handleNavigateToProperties = (locationName: string) => {
