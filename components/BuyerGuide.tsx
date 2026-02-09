@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
+
+import React, { useState, useEffect, useMemo, useRef, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   DollarSign, Home, Search, FileText, ClipboardCheck, Key, Award, 
@@ -11,6 +12,10 @@ import { getTestimonials } from '../lib/firebase/firestore';
 import { Testimonial } from '../types';
 import { getOptimizedImageUrl, updateSEO } from '../utils';
 import { SharedContactForm } from './SharedContactForm';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 // --- Types ---
 
@@ -131,6 +136,7 @@ export const BuyerGuide = () => {
   const [activeStep, setActiveStep] = useState<string>('step-1');
   const [buyerTestimonials, setBuyerTestimonials] = useState<Testimonial[]>([]);
   const navigate = useNavigate();
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   // Update SEO
   useEffect(() => {
@@ -242,6 +248,60 @@ export const BuyerGuide = () => {
     }
   ];
 
+  useLayoutEffect(() => {
+    const initGSAP = () => {
+      const ctx = gsap.context(() => {
+        const cards = gsap.utils.toArray('.gsap-step-card');
+        
+        gsap.set(cards, { 
+          opacity: 0, 
+          rotationX: -25, 
+          y: 60, 
+          z: -150 
+        });
+
+        cards.forEach((card: any) => {
+          gsap.to(card, {
+            opacity: 1,
+            rotationX: 0,
+            y: 0,
+            z: 0,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 95%",
+              end: "top 70%",
+              scrub: 1,
+              immediateRender: false,
+            }
+          });
+        });
+      }, sectionRef);
+      return ctx;
+    };
+
+    let ctx: gsap.Context;
+
+    const handleReady = () => {
+      if (ctx) ctx.revert();
+      ctx = initGSAP();
+    };
+
+    if ((window as any).appReady) {
+      const timer = setTimeout(() => {
+        ctx = initGSAP();
+      }, 100);
+      return () => clearTimeout(timer);
+    } else {
+      window.addEventListener('appReady', handleReady);
+    }
+
+    return () => {
+      if (ctx) ctx.revert();
+      window.removeEventListener('appReady', handleReady);
+    };
+  }, []);
+
   // FAQs Data
   const faqs: FAQ[] = [
     { question: "How much should I save for a down payment?", answer: "While 20% is traditional to avoid PMI, many buyers qualify for loans with as little as 3-5% down. FHA loans require 3.5%, and VA/USDA loans can be 0% down." },
@@ -351,7 +411,7 @@ export const BuyerGuide = () => {
         </aside>
 
         {/* Step-by-Step Timeline */}
-        <div className="space-y-16">
+        <div ref={sectionRef} className="space-y-16">
           <div className="lg:hidden mb-8">
             <h2 className="text-3xl font-extrabold text-charcoal">7 Steps to Homeownership</h2>
           </div>
@@ -361,7 +421,7 @@ export const BuyerGuide = () => {
              <div className="absolute left-8 top-4 bottom-4 w-0.5 bg-gray-200 hidden md:block" />
 
              {steps.map((step, index) => (
-               <div key={step.id} id={step.id} className="relative mb-16 last:mb-0 md:pl-24 scroll-mt-32">
+               <div key={step.id} id={step.id} className="gsap-step-card relative mb-16 last:mb-0 md:pl-24 scroll-mt-32 opacity-0" style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
                  {/* Timeline Icon Bubble */}
                  <div className="hidden md:flex absolute left-0 top-0 w-16 h-16 rounded-full bg-white border-4 border-gray-100 items-center justify-center text-brand z-10 shadow-sm">
                    <step.icon size={28} />
@@ -504,6 +564,7 @@ const FAQItem: React.FC<{ faq: FAQ }> = ({ faq }) => {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
             <p className="pb-4 text-gray-500 text-sm leading-relaxed">
