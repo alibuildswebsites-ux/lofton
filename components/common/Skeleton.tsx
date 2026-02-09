@@ -60,3 +60,22 @@ export const BlogSkeleton = () => {
     </div>
   );
 };
+
+export const AgentSkeleton = () => {
+  return (
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col h-full">
+      <div className="p-6 flex flex-col items-center text-center flex-grow">
+        <Skeleton className="w-32 h-32 rounded-full mb-6" />
+        <Skeleton className="h-6 w-3/4 mb-2" />
+        <Skeleton className="h-4 w-1/2 mb-4" />
+        <div className="w-full space-y-2 mb-6">
+          <Skeleton className="h-3 w-full" />
+          <Skeleton className="h-3 w-5/6 mx-auto" />
+        </div>
+        <div className="mt-auto pt-6 border-t border-gray-50 w-full">
+          <Skeleton className="h-6 w-1/2 mx-auto" />
+        </div>
+      </div>
+    </div>
+  );
+};
