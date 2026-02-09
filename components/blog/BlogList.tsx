@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useLayoutEffect } from 'react';
 import { Navbar } from '../Navbar';
 import { Footer } from '../Footer';
 import { getBlogs } from '../../lib/firebase/firestore';
@@ -8,11 +8,16 @@ import { BlogCard } from './BlogCard';
 import { Search } from 'lucide-react';
 import { updateSEO } from '../../utils';
 import { BlogSkeleton } from '../common/Skeleton';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export const BlogList = () => {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('All');
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   const categories = [
     'All',
@@ -42,6 +47,63 @@ export const BlogList = () => {
     fetchBlogs();
   }, []);
 
+  useLayoutEffect(() => {
+    if (loading || filteredBlogs.length === 0) return;
+
+    const initGSAP = () => {
+      const ctx = gsap.context(() => {
+        const cards = gsap.utils.toArray('.gsap-blog-card');
+        
+        // Initial state lock
+        gsap.set(cards, { 
+          opacity: 0, 
+          rotationX: -25, 
+          y: 60, 
+          z: -150 
+        });
+
+        cards.forEach((card: any) => {
+          gsap.to(card, {
+            opacity: 1,
+            rotationX: 0,
+            y: 0,
+            z: 0,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 95%",
+              end: "top 70%",
+              scrub: 1,
+              immediateRender: false,
+            }
+          });
+        });
+      }, sectionRef);
+      return ctx;
+    };
+
+    let ctx: gsap.Context;
+
+    const handleReady = () => {
+      if (ctx) ctx.revert();
+      ctx = initGSAP();
+    };
+
+    if ((window as any).appReady) {
+      const timer = setTimeout(() => {
+        ctx = initGSAP();
+      }, 100);
+      return () => clearTimeout(timer);
+    } else {
+      window.addEventListener('appReady', handleReady);
+    }
+
+    return () => {
+      if (ctx) ctx.revert();
+      window.removeEventListener('appReady', handleReady);
+    };
+  }, [loading, blogs, activeCategory]);
+
   const filteredBlogs = useMemo(() => {
     if (activeCategory === 'All') return blogs;
     return blogs.filter(b => b.category === activeCategory);
@@ -64,7 +126,7 @@ export const BlogList = () => {
         </div>
       </div>
 
-      <main className="max-w-[1280px] mx-auto px-5 md:px-10 py-12">
+      <main ref={sectionRef} className="max-w-[1280px] mx-auto px-5 md:px-10 py-12">
         
         {/* Category Filter */}
         <div className="flex overflow-x-auto pb-4 mb-8 gap-2 no-scrollbar">
@@ -91,9 +153,11 @@ export const BlogList = () => {
             ))}
           </div>
         ) : filteredBlogs.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
             {filteredBlogs.map(post => (
-              <BlogCard key={post.id} post={post} />
+              <div key={post.id} className="gsap-blog-card h-full opacity-0">
+                <BlogCard post={post} />
+              </div>
             ))}
           </div>
         ) : (
