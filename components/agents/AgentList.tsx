@@ -7,7 +7,7 @@ import { getAgents } from '../../lib/firebase/firestore';
 import { AgentCard } from './AgentCard';
 import { Search } from 'lucide-react';
 import { updateSEO } from '../../utils';
-import { LoadingSpinner } from '../common/LoadingSpinner';
+import { AgentSkeleton } from '../common/Skeleton';
 import gsap from 'gsap';
 
 export const AgentList = () => {
@@ -96,8 +96,10 @@ export const AgentList = () => {
 
       <main ref={sectionRef} className="max-w-[1280px] mx-auto px-5 md:px-10 py-16">
         {loading ? (
-          <div className="flex justify-center py-20">
-            <LoadingSpinner />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[...Array(6)].map((_, i) => (
+              <AgentSkeleton key={i} />
+            ))}
           </div>
         ) : agents.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
