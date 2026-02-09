@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
@@ -10,36 +10,61 @@ import { SectionHeader } from './common/SectionHeader';
 gsap.registerPlugin(ScrollTrigger);
 
 export const ServicesSection = () => {
-  useEffect(() => {
-    const cards = gsap.utils.toArray('.gsap-service-card');
-    cards.forEach((card: any) => {
-      gsap.fromTo(card,
-        { 
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const initGSAP = () => {
+      const ctx = gsap.context(() => {
+        const cards = gsap.utils.toArray('.gsap-service-card');
+        
+        // Initial state lock
+        gsap.set(cards, { 
           opacity: 0, 
           rotationX: -25, 
           y: 60, 
           z: -150 
-        },
-        {
-          opacity: 1,
-          rotationX: 0,
-          y: 0,
-          z: 0,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: card,
-            start: "top bottom+=50",
-            end: "top 75%",
-            scrub: 1,
-            immediateRender: false,
-          }
-        }
-      );
-    });
+        });
+
+        cards.forEach((card: any) => {
+          gsap.to(card, {
+            opacity: 1,
+            rotationX: 0,
+            y: 0,
+            z: 0,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 95%",
+              end: "top 70%",
+              scrub: 1,
+              immediateRender: false,
+            }
+          });
+        });
+      }, sectionRef);
+      return ctx;
+    };
+
+    let ctx: gsap.Context;
+
+    const handleReady = () => {
+      ctx = initGSAP();
+    };
+
+    if ((window as any).appReady || !document.querySelector('.global-loader')) {
+      ctx = initGSAP();
+    } else {
+      window.addEventListener('appReady', handleReady);
+    }
+
+    return () => {
+      if (ctx) ctx.revert();
+      window.removeEventListener('appReady', handleReady);
+    };
   }, []);
 
   return (
-    <section className="py-[60px] md:py-[80px] lg:py-[100px] bg-white relative overflow-hidden" id="services">
+    <section ref={sectionRef} className="py-[60px] md:py-[80px] lg:py-[100px] bg-white relative overflow-hidden" id="services">
       
       <div className="max-w-[1280px] mx-auto px-5 md:px-10 lg:px-[40px] relative z-10">
         <SectionHeader 
