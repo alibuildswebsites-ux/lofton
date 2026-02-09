@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { Navbar } from '../Navbar';
 import { Footer } from '../Footer';
 import { Agent } from '../../types';
@@ -8,10 +8,12 @@ import { AgentCard } from './AgentCard';
 import { Search } from 'lucide-react';
 import { updateSEO } from '../../utils';
 import { LoadingSpinner } from '../common/LoadingSpinner';
+import gsap from 'gsap';
 
 export const AgentList = () => {
   const [agents, setAgents] = useState<Agent[]>([]);
   const [loading, setLoading] = useState(true);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     updateSEO({
@@ -30,6 +32,52 @@ export const AgentList = () => {
     fetchAgents();
   }, []);
 
+  useLayoutEffect(() => {
+    if (loading || agents.length === 0) return;
+
+    const initGSAP = () => {
+      const ctx = gsap.context(() => {
+        const cards = gsap.utils.toArray('.gsap-agent-card');
+        
+        gsap.set(cards, { 
+          opacity: 0, 
+          y: 50
+        });
+
+        gsap.to(cards, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.2,
+          ease: "power2.out",
+          delay: 0.2
+        });
+      }, sectionRef);
+      return ctx;
+    };
+
+    let ctx: gsap.Context;
+
+    const handleReady = () => {
+      if (ctx) ctx.revert();
+      ctx = initGSAP();
+    };
+
+    if ((window as any).appReady) {
+      const timer = setTimeout(() => {
+        ctx = initGSAP();
+      }, 100);
+      return () => clearTimeout(timer);
+    } else {
+      window.addEventListener('appReady', handleReady);
+    }
+
+    return () => {
+      if (ctx) ctx.revert();
+      window.removeEventListener('appReady', handleReady);
+    };
+  }, [loading, agents]);
+
   return (
     <div className="font-sans bg-gray-50 min-h-screen">
       <Navbar />
@@ -46,7 +94,7 @@ export const AgentList = () => {
         </div>
       </div>
 
-      <main className="max-w-[1280px] mx-auto px-5 md:px-10 py-16">
+      <main ref={sectionRef} className="max-w-[1280px] mx-auto px-5 md:px-10 py-16">
         {loading ? (
           <div className="flex justify-center py-20">
             <LoadingSpinner />
@@ -54,7 +102,9 @@ export const AgentList = () => {
         ) : agents.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {agents.map(agent => (
-              <AgentCard key={agent.id} agent={agent} />
+              <div key={agent.id} className="gsap-agent-card opacity-0">
+                <AgentCard agent={agent} />
+              </div>
             ))}
           </div>
         ) : (
@@ -64,6 +114,12 @@ export const AgentList = () => {
             </div>
             <h3 className="text-xl font-bold text-charcoal mb-2">No agents found</h3>
             <p className="text-gray-500">Check back soon to meet our growing team.</p>
+            <button 
+              onClick={() => window.location.reload()}
+              className="mt-6 text-brand font-bold hover:underline"
+            >
+              Reload Team
+            </button>
           </div>
         )}
       </main>
