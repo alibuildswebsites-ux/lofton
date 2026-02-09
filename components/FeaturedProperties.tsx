@@ -54,11 +54,15 @@ export const FeaturedProperties = () => {
     let ctx: gsap.Context;
 
     const handleReady = () => {
+      if (ctx) ctx.revert();
       ctx = initGSAP();
     };
 
-    if ((window as any).appReady || !document.querySelector('.global-loader')) {
-      ctx = initGSAP();
+    if ((window as any).appReady) {
+      const timer = setTimeout(() => {
+        ctx = initGSAP();
+      }, 100);
+      return () => clearTimeout(timer);
     } else {
       window.addEventListener('appReady', handleReady);
     }
