@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useLayoutEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Phone, Mail, MapPin, Clock, 
@@ -12,9 +12,11 @@ import { STATS } from '../data';
 import { getOptimizedImageUrl, updateSEO } from '../utils';
 import { SharedContactForm } from './SharedContactForm';
 import { COMPANY_INFO } from '../lib/constants';
+import gsap from 'gsap';
 
 export const ContactPage = () => {
   const navigate = useNavigate();
+  const cardsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     updateSEO({
@@ -23,6 +25,50 @@ export const ContactPage = () => {
       url: "https://loftonrealty.com/contact-us"
     });
     window.scrollTo(0, 0);
+  }, []);
+
+  useLayoutEffect(() => {
+    const initGSAP = () => {
+      const ctx = gsap.context(() => {
+        const cards = gsap.utils.toArray('.gsap-contact-card');
+        
+        gsap.set(cards, { 
+          opacity: 0, 
+          y: 50
+        });
+
+        gsap.to(cards, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.2,
+          ease: "power2.out",
+          delay: 0.2
+        });
+      }, cardsRef);
+      return ctx;
+    };
+
+    let ctx: gsap.Context;
+
+    const handleReady = () => {
+      if (ctx) ctx.revert();
+      ctx = initGSAP();
+    };
+
+    if ((window as any).appReady) {
+      const timer = setTimeout(() => {
+        ctx = initGSAP();
+      }, 100);
+      return () => clearTimeout(timer);
+    } else {
+      window.addEventListener('appReady', handleReady);
+    }
+
+    return () => {
+      if (ctx) ctx.revert();
+      window.removeEventListener('appReady', handleReady);
+    };
   }, []);
 
   return (
@@ -55,7 +101,7 @@ export const ContactPage = () => {
       </section>
 
       {/* Contact Methods Grid */}
-      <section className="relative z-20 -mt-16 px-5 md:px-10 max-w-7xl mx-auto">
+      <section ref={cardsRef} className="relative z-20 -mt-16 px-5 md:px-10 max-w-7xl mx-auto">
         <div className="grid md:grid-cols-3 gap-6">
           {[
             { 
@@ -71,13 +117,9 @@ export const ContactPage = () => {
               action: 'Get Directions', href: 'https://maps.google.com' 
             },
           ].map((item, idx) => (
-            <motion.div
+            <div
               key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
-              viewport={{ once: true }}
-              className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 flex flex-col items-center text-center group hover:border-brand/30 transition-all"
+              className="gsap-contact-card bg-white p-8 rounded-2xl shadow-lg border border-gray-100 flex flex-col items-center text-center group hover:border-brand/30 transition-all opacity-0"
             >
               <div className="w-14 h-14 bg-brand-light rounded-full flex items-center justify-center text-brand mb-4 group-hover:scale-110 transition-transform">
                 <item.icon size={24} />
@@ -93,7 +135,7 @@ export const ContactPage = () => {
               >
                 {item.action}
               </a>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>
