@@ -81,7 +81,12 @@ function App() {
         window.dispatchEvent(new CustomEvent('appReady'));
       }, 100);
     }, 2000);
-    return () => clearTimeout(timer);
+
+    return () => {
+      clearTimeout(timer);
+      lenis.destroy();
+      gsap.ticker.remove(lenis.raf);
+    };
   }, []);
 
   return (

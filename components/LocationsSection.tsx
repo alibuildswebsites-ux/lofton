@@ -31,6 +31,11 @@ export const LocationsSection = () => {
   useEffect(() => {
     if (selectedLocation) {
         setImageLoaded(false);
+        // Pause Lenis when modal is open
+        if ((window as any).lenis) (window as any).lenis.stop();
+    } else {
+        // Resume Lenis when modal is closed
+        if ((window as any).lenis) (window as any).lenis.start();
     }
   }, [selectedLocation]);
 
