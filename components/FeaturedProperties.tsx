@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
@@ -16,18 +16,23 @@ export const FeaturedProperties = () => {
   const [loading, setLoading] = useState(true);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!loading && properties.length > 0) {
-      const cards = gsap.utils.toArray('.gsap-3d-card');
-      cards.forEach((card: any) => {
-        gsap.fromTo(card,
-          { 
-            opacity: 0, 
-            rotationX: -25, 
-            y: 60, 
-            z: -150 
-          },
-          {
+  useLayoutEffect(() => {
+    if (loading || properties.length === 0) return;
+
+    const initGSAP = () => {
+      const ctx = gsap.context(() => {
+        const cards = gsap.utils.toArray('.gsap-3d-card');
+        
+        // Initial state lock
+        gsap.set(cards, { 
+          opacity: 0, 
+          rotationX: -25, 
+          y: 60, 
+          z: -150 
+        });
+
+        cards.forEach((card: any) => {
+          gsap.to(card, {
             opacity: 1,
             rotationX: 0,
             y: 0,
@@ -35,28 +40,42 @@ export const FeaturedProperties = () => {
             ease: "power2.out",
             scrollTrigger: {
               trigger: card,
-              start: "top bottom+=50",
-              end: "top 75%",
+              start: "top 95%",
+              end: "top 70%",
               scrub: 1,
               immediateRender: false,
             }
-          }
-        );
-      });
+          });
+        });
+      }, sectionRef);
+      return ctx;
+    };
+
+    let ctx: gsap.Context;
+
+    const handleReady = () => {
+      ctx = initGSAP();
+    };
+
+    if ((window as any).appReady || !document.querySelector('.global-loader')) {
+      ctx = initGSAP();
+    } else {
+      window.addEventListener('appReady', handleReady);
     }
+
+    return () => {
+      if (ctx) ctx.revert();
+      window.removeEventListener('appReady', handleReady);
+    };
   }, [loading, properties]);
 
   useEffect(() => {
     const fetchFeatured = async () => {
       try {
         setLoading(true);
-        // Fetch all properties
         const allProperties = await getProperties();
-        
-        // Filter and sort manually for featured (Newest 'For Sale' or 'For Rent')
         const featured = allProperties
           .filter(p => p.status === 'For Sale' || p.status === 'For Rent' || p.status === 'New Listing')
-          // Assuming getProperties already sorts by createdAt desc, but ensuring here
           .sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime())
           .slice(0, 4);
           
@@ -72,7 +91,7 @@ export const FeaturedProperties = () => {
   }, []);
 
   return (
-    <section className="py-[60px] md:py-[80px] lg:py-[100px] bg-gray-50" id="properties">
+    <section ref={sectionRef} className="py-[60px] md:py-[80px] lg:py-[100px] bg-gray-50" id="properties">
       <div className="max-w-[1280px] mx-auto px-5 md:px-10 lg:px-[40px]">
         <div className="flex justify-between items-end mb-[40px] md:mb-[60px]">
           <div>
