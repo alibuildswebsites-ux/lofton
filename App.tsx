@@ -10,6 +10,7 @@ import { AdminRoute } from './components/auth/AdminRoute';
 import { LoadingSpinner } from './components/common/LoadingSpinner';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Lenis from 'lenis';
 
 // Static imports for main pages to remove lazy loading delay
 import LoftonRealtyHome from './components/LoftonRealtyHome';
