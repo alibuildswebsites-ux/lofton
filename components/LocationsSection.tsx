@@ -39,7 +39,7 @@ export const LocationsSection = () => {
       const ctx = gsap.context(() => {
         const cards = gsap.utils.toArray('.gsap-location-card');
         
-        // Force initial state immediately
+        // Initial state lock
         gsap.set(cards, { 
           opacity: 0, 
           rotationX: -25, 
@@ -56,7 +56,7 @@ export const LocationsSection = () => {
             ease: "power2.out",
             scrollTrigger: {
               trigger: card,
-              start: "top 95%", // More deliberate entry
+              start: "top 95%",
               end: "top 70%",
               scrub: 1,
               immediateRender: false,
@@ -73,8 +73,6 @@ export const LocationsSection = () => {
       ctx = initGSAP();
     };
 
-    // If app is already ready (e.g. on navigation), init immediately
-    // Otherwise wait for the event
     if ((window as any).appReady || !document.querySelector('.global-loader')) {
       ctx = initGSAP();
     } else {
@@ -106,43 +104,42 @@ export const LocationsSection = () => {
         
         {/* Locations Grid */}
          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px] mt-12" style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
-           {LOCATIONS.map((location) => (
-             <div key={location.id} className="gsap-location-card h-full opacity-0">
-               <button 
-                 onClick={() => setSelectedLocation(location)}
-
-                 className="bg-white p-8 md:p-10 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer text-left w-full h-full flex flex-col focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
-                 aria-label={`View details for ${location.name}`}
-               >
-                  <div className="flex justify-between items-start mb-6">
-                    <div className="w-12 h-12 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center text-charcoal group-hover:bg-brand group-hover:text-white transition-colors">
-                       <MapPin size={24} />
-                    </div>
-                    {location.stats.trend === 'up' && (
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-green-600 bg-green-50 px-3 py-1.5 rounded-full border border-green-100">
-                        <TrendingUp size={14} /> Growing Market
-                      </div>
-                    )}
-                  </div>
-                  
-                  <div className="mb-6">
-                    <h3 className="text-2xl md:text-3xl font-bold text-charcoal mb-2 group-hover:text-brand transition-colors tracking-tight">{location.name}</h3>
-                    <p className="text-gray-500 text-sm md:text-base leading-relaxed line-clamp-3">{location.description}</p>
-                  </div>
-                  
-                  <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-6">
-                    <div>
-                      <span className="block text-xs text-gray-400 font-bold uppercase tracking-wider mb-1">{location.stats.label}</span>
-                      <span className="block text-xl font-bold text-charcoal">{location.stats.value}</span>
-                    </div>
-                    <div className="w-12 h-12 rounded-xl bg-charcoal text-white flex items-center justify-center group-hover:bg-brand transition-all duration-300">
-                       <ArrowRight size={24} />
-                    </div>
-                  </div>
-               </button>
-             </div>
-           ))}
-        </div>
+            {LOCATIONS.map((location) => (
+              <div key={location.id} className="gsap-location-card h-full opacity-0">
+                <button 
+                  onClick={() => setSelectedLocation(location)}
+                  className="bg-white p-8 md:p-10 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer text-left w-full h-full flex flex-col focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+                  aria-label={`View details for ${location.name}`}
+                >
+                   <div className="flex justify-between items-start mb-6">
+                     <div className="w-12 h-12 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center text-charcoal group-hover:bg-brand group-hover:text-white transition-colors">
+                        <MapPin size={24} />
+                     </div>
+                     {location.stats.trend === 'up' && (
+                       <div className="flex items-center gap-1.5 text-xs font-bold text-green-600 bg-green-50 px-3 py-1.5 rounded-full border border-green-100">
+                         <TrendingUp size={14} /> Growing Market
+                       </div>
+                     )}
+                   </div>
+                   
+                   <div className="mb-6">
+                     <h3 className="text-2xl md:text-3xl font-bold text-charcoal mb-2 group-hover:text-brand transition-colors tracking-tight">{location.name}</h3>
+                     <p className="text-gray-500 text-sm md:text-base leading-relaxed line-clamp-3">{location.description}</p>
+                   </div>
+                   
+                   <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-6">
+                     <div>
+                       <span className="block text-xs text-gray-400 font-bold uppercase tracking-wider mb-1">{location.stats.label}</span>
+                       <span className="block text-xl font-bold text-charcoal">{location.stats.value}</span>
+                     </div>
+                     <div className="w-12 h-12 rounded-xl bg-charcoal text-white flex items-center justify-center group-hover:bg-brand transition-all duration-300">
+                        <ArrowRight size={24} />
+                     </div>
+                   </div>
+                </button>
+              </div>
+            ))}
+         </div>
 
         <div className="mt-16 text-center">
           <Link to="/contact-us" className="text-charcoal font-bold border-b-2 border-brand/20 hover:border-brand pb-0.5 transition-colors">
