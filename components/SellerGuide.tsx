@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   TrendingUp, Camera, Handshake, FileCheck, Home, DollarSign, Megaphone, 
@@ -11,6 +12,10 @@ import { getTestimonials } from '../lib/firebase/firestore';
 import { Testimonial } from '../types';
 import { getOptimizedImageUrl, updateSEO } from '../utils';
 import { SharedContactForm } from './SharedContactForm';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 // --- Types ---
 
@@ -150,7 +155,7 @@ const ValuationTool = () => {
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full bg-brand text-white font-bold py-4 rounded-xl hover:bg-brand-dark transition-all shadow-lg shadow-brand/20 flex justify-center items-center"
+              className="w-full bg-brand text-white font-bold py-4 rounded-xl hover:bg-brand-dark transition-all duration-300 shadow-lg shadow-brand/20 flex justify-center items-center"
             >
               {loading ? (
                 <Loader2 className="animate-spin" />
@@ -201,6 +206,7 @@ const ValuationTool = () => {
 
 export const SellerGuide = () => {
   const [sellerTestimonials, setSellerTestimonials] = useState<Testimonial[]>([]);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     updateSEO({
@@ -219,6 +225,60 @@ export const SellerGuide = () => {
       setSellerTestimonials(filtered);
     };
     loadTestimonials();
+  }, []);
+
+  useLayoutEffect(() => {
+    const initGSAP = () => {
+      const ctx = gsap.context(() => {
+        const cards = gsap.utils.toArray('.gsap-seller-card');
+        
+        gsap.set(cards, { 
+          opacity: 0, 
+          rotationX: -25, 
+          y: 60, 
+          z: -150 
+        });
+
+        cards.forEach((card: any) => {
+          gsap.to(card, {
+            opacity: 1,
+            rotationX: 0,
+            y: 0,
+            z: 0,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 95%",
+              end: "top 70%",
+              scrub: 1,
+              immediateRender: false,
+            }
+          });
+        });
+      }, sectionRef);
+      return ctx;
+    };
+
+    let ctx: gsap.Context;
+
+    const handleReady = () => {
+      if (ctx) ctx.revert();
+      ctx = initGSAP();
+    };
+
+    if ((window as any).appReady) {
+      const timer = setTimeout(() => {
+        ctx = initGSAP();
+      }, 100);
+      return () => clearTimeout(timer);
+    } else {
+      window.addEventListener('appReady', handleReady);
+    }
+
+    return () => {
+      if (ctx) ctx.revert();
+      window.removeEventListener('appReady', handleReady);
+    };
   }, []);
 
   const steps: TimelineStep[] = [
@@ -330,24 +390,20 @@ export const SellerGuide = () => {
       </div>
 
       {/* Value Proposition Grid */}
-      <section className="py-20 bg-gray-50 relative -mt-10 md:-mt-20 z-20">
+      <section ref={sectionRef} className="py-20 bg-gray-50 relative -mt-10 md:-mt-20 z-20">
         <div className="max-w-7xl mx-auto px-5 md:px-10">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
             {valueProps.map((vp, idx) => (
-              <motion.div 
+              <div 
                 key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:border-brand/30 transition-colors"
+                className="gsap-seller-card bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:border-brand/30 transition-colors opacity-0"
               >
                 <div className="w-14 h-14 bg-brand-light rounded-xl flex items-center justify-center text-brand mb-6">
                   <vp.icon size={28} />
                 </div>
                 <h3 className="text-xl font-bold text-charcoal mb-3">{vp.title}</h3>
                 <p className="text-gray-500 leading-relaxed">{vp.desc}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
