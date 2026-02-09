@@ -44,7 +44,7 @@ export const LocationsSection = () => {
       const ctx = gsap.context(() => {
         const cards = gsap.utils.toArray('.gsap-location-card');
         
-        // Initial state lock
+        // Force initial state immediately to avoid exposure
         gsap.set(cards, { 
           opacity: 0, 
           rotationX: -25, 
@@ -61,7 +61,7 @@ export const LocationsSection = () => {
             ease: "power2.out",
             scrollTrigger: {
               trigger: card,
-              start: "top 95%",
+              start: "top 95%", // Card must be clearly in view
               end: "top 70%",
               scrub: 1,
               immediateRender: false,
@@ -75,11 +75,16 @@ export const LocationsSection = () => {
     let ctx: gsap.Context;
 
     const handleReady = () => {
+      if (ctx) ctx.revert();
       ctx = initGSAP();
     };
 
-    if ((window as any).appReady || !document.querySelector('.global-loader')) {
-      ctx = initGSAP();
+    // Use a small delay for DOM stability after reveal
+    if ((window as any).appReady) {
+      const timer = setTimeout(() => {
+        ctx = initGSAP();
+      }, 100);
+      return () => clearTimeout(timer);
     } else {
       window.addEventListener('appReady', handleReady);
     }
@@ -89,6 +94,7 @@ export const LocationsSection = () => {
       window.removeEventListener('appReady', handleReady);
     };
   }, []);
+
 
   const handleNavigateToProperties = (locationName: string) => {
     navigate(`/property-listings?location=${encodeURIComponent(locationName)}`);
