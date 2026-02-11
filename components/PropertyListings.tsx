@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useLayoutEffect } from 'react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { PropertyCard } from './PropertyCard';
@@ -121,6 +121,10 @@ export const PropertyListings = () => {
       if (isMounted) {
         setAllProperties(data as Property[]);
         setLoading(false);
+        // Refresh ScrollTrigger after data loads to ensure correct trigger positions
+        setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, 100);
       }
     };
     fetchProps();

@@ -49,6 +49,30 @@ function App() {
   const [showIntro, setShowIntro] = useState(true);
 
   useEffect(() => {
+    // Initialize Lenis smooth scrolling
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 2,
+      infinite: false,
+    });
+
+    // Link Lenis with ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+
+    // Make lenis accessible globally for modal control
+    (window as any).lenis = lenis;
+
     const timer = setTimeout(() => {
       setShowIntro(false);
       // Set global flag and dispatch ready event after content is revealed
@@ -58,7 +82,11 @@ function App() {
         window.dispatchEvent(new CustomEvent('appReady'));
       }, 100);
     }, 2000);
-    return () => clearTimeout(timer);
+
+    return () => {
+      clearTimeout(timer);
+      lenis.destroy();
+    };
   }, []);
 
 

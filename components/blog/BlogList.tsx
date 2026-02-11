@@ -42,6 +42,10 @@ export const BlogList = () => {
       const data = await getBlogs(true); // fetch published only
       setBlogs(data);
       setLoading(false);
+      // Refresh ScrollTrigger after data loads
+      setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 100);
     };
 
     fetchBlogs();

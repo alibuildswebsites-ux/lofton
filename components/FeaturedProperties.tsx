@@ -88,6 +88,10 @@ export const FeaturedProperties = () => {
         console.error("Failed to fetch featured properties", error);
       } finally {
         setLoading(false);
+        // Refresh ScrollTrigger after data loads
+        setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, 100);
       }
     };
 

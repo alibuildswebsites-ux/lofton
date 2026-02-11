@@ -27,6 +27,10 @@ export const AgentList = () => {
       const data = await getAgents();
       setAgents(data);
       setLoading(false);
+      // Refresh ScrollTrigger after data loads
+      setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 100);
     };
 
     fetchAgents();
