@@ -275,6 +275,7 @@ export const BuyerGuide = () => {
               end: "top 70%",
               scrub: 1,
               immediateRender: false,
+              once: true,
             }
           }
         );
