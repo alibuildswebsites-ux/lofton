@@ -113,44 +113,61 @@ export const LocationsSection = () => {
           description="Local expertise with a broad reach. Click a location below to explore market insights and available homes."
         />
         
-        {/* Locations Grid */}
-         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px] mt-12" style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
+        {/* Outer Pin Wrapper */}
+        <div className="gsap-pin-wrapper relative w-full h-[600px] md:h-[700px] mt-12 overflow-hidden">
+          {/* Horizontal Track */}
+          <div className="gsap-track flex flex-nowrap h-full w-max gap-[30px] md:gap-[40px] px-5 md:px-10 overflow-x-auto snap-x snap-mandatory md:overflow-visible md:snap-none pb-8 md:pb-0">
             {LOCATIONS.map((location) => (
-              <div key={location.id} className="gsap-location-card h-full opacity-0">
+              <div key={location.id} className="gsap-location-card relative flex-shrink-0 w-[85vw] md:w-[400px] lg:w-[450px] h-full snap-center rounded-2xl overflow-hidden group cursor-pointer border border-gray-200/20 shadow-xl" style={{ willChange: "transform" }}>
                 <button 
                   onClick={() => setSelectedLocation(location)}
-                  className="bg-white p-8 md:p-10 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer text-left w-full h-full flex flex-col focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+                  className="w-full h-full text-left relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                   aria-label={`View details for ${location.name}`}
                 >
-                   <div className="flex justify-between items-start mb-6">
-                     <div className="w-12 h-12 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center text-charcoal group-hover:bg-brand group-hover:text-white transition-colors">
-                        <MapPin size={24} />
-                     </div>
-                     {location.stats.trend === 'up' && (
-                       <div className="flex items-center gap-1.5 text-xs font-bold text-green-600 bg-green-50 px-3 py-1.5 rounded-full border border-green-100">
-                         <TrendingUp size={14} /> Growing Market
-                       </div>
-                     )}
-                   </div>
-                   
-                   <div className="mb-6">
-                     <h3 className="text-2xl md:text-3xl font-bold text-charcoal mb-2 group-hover:text-brand transition-colors tracking-tight">{location.name}</h3>
-                     <p className="text-gray-500 text-sm md:text-base leading-relaxed line-clamp-3">{location.description}</p>
-                   </div>
-                   
-                   <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-6">
-                     <div>
-                       <span className="block text-xs text-gray-400 font-bold uppercase tracking-wider mb-1">{location.stats.label}</span>
-                       <span className="block text-xl font-bold text-charcoal">{location.stats.value}</span>
-                     </div>
-                     <div className="w-12 h-12 rounded-xl bg-charcoal text-white flex items-center justify-center group-hover:bg-brand transition-all duration-300">
-                        <ArrowRight size={24} />
-                     </div>
-                   </div>
+                  {/* Background Image Wrapper for Parallax */}
+                  <div className="absolute inset-0 overflow-hidden bg-gray-900">
+                    <img 
+                      src={getOptimizedImageUrl(location.image, 800)} 
+                      alt={location.name}
+                      className="gsap-card-img absolute inset-0 w-[120%] h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700 -left-[10%]"
+                      style={{ willChange: "transform" }}
+                      loading="lazy"
+                    />
+                  </div>
+                  
+                  {/* Dark Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal-dark/95 via-charcoal-dark/40 to-transparent pointer-events-none" />
+
+                  {/* Content (Pinned to bottom) */}
+                  <div className="absolute inset-0 p-8 flex flex-col justify-end z-10">
+                    <div className="flex justify-between items-end mb-4">
+                      <div>
+                        <h3 className="text-3xl md:text-4xl font-extrabold text-white mb-2 tracking-tight group-hover:text-brand transition-colors">{location.name}</h3>
+                        <p className="text-gray-300 text-sm md:text-base leading-relaxed line-clamp-2">{location.description}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center justify-between border-t border-white/20 pt-5 mt-2">
+                      <div>
+                        <span className="block text-xs text-brand font-bold uppercase tracking-wider mb-1">{location.stats.label}</span>
+                        <span className="block text-xl font-bold text-white">{location.stats.value}</span>
+                      </div>
+                      <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white flex items-center justify-center group-hover:bg-brand group-hover:border-brand transition-all duration-300">
+                         <ArrowRight size={24} />
+                      </div>
+                    </div>
+
+                    {location.stats.trend === 'up' && (
+                      <div className="absolute top-8 left-8 flex items-center gap-1.5 text-xs font-bold text-charcoal bg-brand px-3 py-1.5 rounded-full shadow-lg">
+                        <TrendingUp size={14} /> Growing Market
+                      </div>
+                    )}
+                  </div>
                 </button>
               </div>
             ))}
-         </div>
+          </div>
+        </div>
 
         <div className="mt-16 text-center">
           <Link to="/contact-us" className="text-charcoal font-bold border-b-2 border-brand/20 hover:border-brand pb-0.5 transition-colors">
