@@ -43,6 +43,7 @@ export const FeaturedProperties = () => {
               end: "top 70%",
               scrub: 1,
               immediateRender: false,
+              once: true,
             }
           }
         );
