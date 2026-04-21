@@ -1,6 +1,6 @@
 import React from 'react';
-import { Agent } from '../../types';
 import { Link } from 'react-router-dom';
+import { Agent } from '../../types';
 import { ArrowRight, Award } from 'lucide-react';
 import { getOptimizedImageUrl } from '../../utils';
 
@@ -10,7 +10,10 @@ interface AgentCardProps {
 
 export const AgentCard: React.FC<AgentCardProps> = ({ agent }) => {
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col group h-full">
+    <Link 
+      to={`/agents/${agent.id}`}
+      className="block bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col group h-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+    >
       <div className="p-6 flex flex-col items-center text-center flex-grow">
         <div className="w-32 h-32 rounded-full mb-6 relative group-hover:scale-105 transition-transform duration-300">
           <img 
@@ -31,14 +34,11 @@ export const AgentCard: React.FC<AgentCardProps> = ({ agent }) => {
         </p>
         
         <div className="mt-auto pt-6 border-t border-gray-50 w-full">
-          <Link 
-            to={`/agents/${agent.id}`}
-            className="w-full py-2 flex items-center justify-center gap-2 text-charcoal font-bold hover:text-brand transition-colors group/link"
-          >
-            View Profile <ArrowRight size={16} className="group-hover/link:translate-x-1 transition-transform" />
-          </Link>
+          <span className="w-full py-2 flex items-center justify-center gap-2 text-brand font-bold group-hover/link:translate-x-1 transition-transform">
+            View Profile <ArrowRight size={16} />
+          </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };

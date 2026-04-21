@@ -36,3 +36,18 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .will-change-transform,
+  .will-change-opacity {
+    will-change: auto;
+  }
+}

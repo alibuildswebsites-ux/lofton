@@ -119,14 +119,14 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, viewMode =
            property.images.map((img, idx) => (
              <div 
                key={idx}
-               className={`absolute inset-0 transition-opacity duration-500 ${idx === currentImageIndex ? 'opacity-100 z-0' : 'opacity-0 -z-10'}`}
+               className={`absolute inset-0 transition-opacity duration-500 will-change-opacity ${idx === currentImageIndex ? 'opacity-100 z-0' : 'opacity-0 -z-10'}`}
              >
                {/* Only render current and adjacent images */}
                {(idx === currentImageIndex || idx === (currentImageIndex + 1) % property.images.length || idx === (currentImageIndex - 1 + property.images.length) % property.images.length) && (
                  <img
                    src={getOptimizedImageUrl(img, 800)}
                    alt={`Property at ${property.address} - View ${idx + 1}`}
-                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 will-change-transform"
                    loading="eager"
                    onError={() => setImageError(true)}
                  />

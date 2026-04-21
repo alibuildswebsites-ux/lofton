@@ -79,7 +79,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
       x: "100%",
       opacity: 0,
       transition: { 
-        duration: 0.5,
+        duration: 0.25,
         ease: [0.32, 0.72, 0, 1],
         staggerChildren: 0.05,
         staggerDirection: -1
@@ -89,7 +89,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
       x: "0%",
       opacity: 1,
       transition: { 
-        duration: 0.6,
+        duration: 0.3,
         ease: [0.32, 0.72, 0, 1],
         staggerChildren: 0.08,
         delayChildren: 0.1
@@ -101,13 +101,13 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
     closed: { 
       opacity: 0, 
       y: 20,
-      transition: { duration: 0.3 } 
+      transition: { duration: 0.2 } 
     },
     open: { 
       opacity: 1, 
       y: 0, 
       transition: { 
-        duration: 0.6, 
+        duration: 0.3, 
         ease: "easeOut" 
       } 
     }
@@ -170,7 +170,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
               <button 
                 aria-expanded={hoverResource}
                 aria-haspopup="true"
-                className={`flex items-center gap-1 text-[15px] font-semibold px-4 py-2 rounded-full transition-all ${
+                className={`flex items-center gap-1 text-[15px] font-semibold px-4 py-2 rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 ${
                   hoverResource || resourceLinks.some(r => isActive(r.path)) 
                     ? 'text-charcoal' 
                     : 'text-gray-500 hover:text-charcoal'
@@ -283,14 +283,14 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <Link to="/login" className="text-[15px] font-bold text-gray-600 hover:text-brand transition-colors px-4 py-2">Log In</Link>
-                <Link to="/signup" className="bg-charcoal text-white px-6 py-2.5 rounded-full font-bold text-[15px] hover:bg-black transition-all shadow-md hover:shadow-lg active:scale-95 border border-transparent">Sign Up</Link>
+                <Link to="/login" className="text-[15px] font-bold text-gray-600 hover:text-brand transition-colors px-4 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 rounded-full">Log In</Link>
+                <Link to="/signup" className="bg-charcoal text-white px-6 py-2.5 rounded-full font-bold text-[15px] hover:bg-black transition-all shadow-md hover:shadow-lg active:scale-95 border border-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2">Sign Up</Link>
               </div>
             )}
           </div>
 
           <button 
-            className="lg:hidden p-2 z-[103] relative rounded-full active:bg-gray-100 text-charcoal hover:bg-gray-50 transition-colors"
+            className="lg:hidden p-2 z-[103] relative rounded-full active:bg-gray-100 text-charcoal hover:bg-gray-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
