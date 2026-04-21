@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
+import { HelmetProvider } from 'react-helmet-async';
 import App from './App';
 import './index.css';
 import { AuthProvider } from './components/auth/AuthProvider';
@@ -16,14 +17,16 @@ if (!rootElement) {
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
-    <GlobalErrorBoundary>
-      <AuthProvider>
-        <BrowserRouter>
-          <App />
-          <Analytics />
-          <SpeedInsights debug={true} />
-        </BrowserRouter>
-      </AuthProvider>
-    </GlobalErrorBoundary>
+    <HelmetProvider>
+      <GlobalErrorBoundary>
+        <AuthProvider>
+          <BrowserRouter>
+            <App />
+            <Analytics />
+            <SpeedInsights debug={true} />
+          </BrowserRouter>
+        </AuthProvider>
+      </GlobalErrorBoundary>
+    </HelmetProvider>
   </React.StrictMode>
 );

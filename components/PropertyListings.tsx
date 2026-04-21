@@ -107,7 +107,7 @@ export const PropertyListings = () => {
     updateSEO({
       title: "Homes for Sale in Houston, TX | Lofton Realty",
       description: "Browse exclusive real estate listings in Houston, Galveston, Austin, and the Gulf Coast. Find your dream home with Lofton Realty.",
-      url: "https://loftonrealty.com/properties"
+      url: "https://lofton-psi.vercel.app/property-listings"
     });
   }, []);
 

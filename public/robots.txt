@@ -3,4 +3,4 @@ Allow: /
 Disallow: /dashboard/
 Disallow: /admin/
 
-Sitemap: https://loftonrealty.com/sitemap.xml
+Sitemap: https://lofton-psi.vercel.app/sitemap.xml

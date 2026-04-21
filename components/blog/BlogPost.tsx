@@ -30,7 +30,7 @@ export const BlogPost = () => {
             title: `${data.metaTitle || data.title} | Lofton Realty Blog`,
             description: data.metaDescription || data.content.replace(/<[^>]+>/g, '').substring(0, 150),
             image: data.featuredImage,
-            url: `https://loftonrealty.com/blog/${data.slug}`,
+            url: `https://lofton-psi.vercel.app/blog/${data.slug}`,
             type: 'article'
           });
 

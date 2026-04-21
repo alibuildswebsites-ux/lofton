@@ -23,7 +23,7 @@ export const AgentList = () => {
     updateSEO({
       title: "Meet Our Real Estate Agents | Lofton Realty Team",
       description: "Get to know the experienced real estate professionals at Lofton Realty. Our team is dedicated to helping you buy or sell your home in Houston.",
-      url: "https://loftonrealty.com/agents"
+      url: "https://lofton-psi.vercel.app/agents"
     });
 
     const fetchAgents = async () => {

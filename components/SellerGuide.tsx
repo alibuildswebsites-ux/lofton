@@ -213,7 +213,7 @@ export const SellerGuide = () => {
     updateSEO({
       title: "Seller's Guide | Home Valuation | Lofton Realty",
       description: "Sell your Houston home for top dollar with Lofton Realty. Get a free home valuation and expert selling tips from our experienced team.",
-      url: "https://loftonrealty.com/sellers-guide"
+      url: "https://lofton-psi.vercel.app/sellers-guide"
     });
     window.scrollTo(0, 0);
 

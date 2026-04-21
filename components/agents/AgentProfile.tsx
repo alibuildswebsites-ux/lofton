@@ -25,7 +25,7 @@ export const AgentProfile = () => {
             title: `${data.name} | Real Estate Agent at Lofton Realty`,
             description: `Contact ${data.name}, a licensed real estate agent with ${data.yearsOfExperience} years of experience. ${data.bio.substring(0, 100)}...`,
             image: data.photo,
-            url: `https://loftonrealty.com/agents/${data.id}`,
+            url: `https://lofton-psi.vercel.app/agents/${data.id}`,
             type: 'profile'
           });
         }

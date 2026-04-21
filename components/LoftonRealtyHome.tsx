@@ -19,7 +19,7 @@ const LoftonRealtyHome = () => {
     updateSEO({
       title: "Lofton Realty | Houston Real Estate Broker & Investment Experts",
       description: "Trusted Houston real estate broker since 2006. Buy, sell, or invest in homes across Houston, Galveston, Austin, and the Gulf Coast. 24/7 service.",
-      url: "https://loftonrealty.com/",
+      url: "https://lofton-psi.vercel.app/",
       image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&q=80"
     });
 
@@ -29,7 +29,7 @@ const LoftonRealtyHome = () => {
       "name": "Lofton Realty",
       "image": "https://images.unsplash.com/photo-1560518883-ce09059eeffa",
       "description": "Houston's trusted real estate partner for buying, selling, and investing.",
-      "url": "https://loftonrealty.com/",
+      "url": "https://lofton-psi.vercel.app/",
       "telephone": "713-203-7661",
       "address": {
         "@type": "PostalAddress",

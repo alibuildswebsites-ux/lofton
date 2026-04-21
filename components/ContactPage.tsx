@@ -22,7 +22,7 @@ export const ContactPage = () => {
     updateSEO({
       title: "Contact Us | Lofton Realty",
       description: "Get in touch with Lofton Realty. Call, email, or visit us for your Houston real estate needs. Available 24/7.",
-      url: "https://loftonrealty.com/contact-us"
+      url: "https://lofton-psi.vercel.app/contact-us"
     });
     window.scrollTo(0, 0);
   }, []);

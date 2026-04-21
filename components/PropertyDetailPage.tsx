@@ -49,7 +49,7 @@ export const PropertyDetailPage = () => {
             title: `${data.address} | Homes for Sale in ${data.city}, ${data.state}`,
             description: `View details for ${data.address}. ${data.beds} Bed, ${data.baths} Bath, $${data.price.toLocaleString()}. ${data.description?.substring(0, 120)}...`,
             image: data.images[0],
-            url: `https://loftonrealty.com/properties/${data.id}`,
+            url: `https://lofton-psi.vercel.app/property-listings/${data.id}`,
             type: 'article'
           });
 
@@ -81,9 +81,9 @@ export const PropertyDetailPage = () => {
 
           // Breadcrumbs
           injectBreadcrumbJSONLD([
-            { name: "Home", item: "https://loftonrealty.com/" },
-            { name: "Properties", item: "https://loftonrealty.com/property-listings" },
-            { name: data.address, item: `https://loftonrealty.com/property-listings/${data.id}` }
+            { name: "Home", item: "https://lofton-psi.vercel.app/" },
+            { name: "Properties", item: "https://lofton-psi.vercel.app/property-listings" },
+            { name: data.address, item: `https://lofton-psi.vercel.app/property-listings/${data.id}` }
           ]);
         }
       }

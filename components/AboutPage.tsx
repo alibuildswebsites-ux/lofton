@@ -24,7 +24,7 @@ export const AboutPage = () => {
     updateSEO({
       title: "About Lofton Realty | Our Story & Team",
       description: "Learn about Lofton Realty, a relationship-driven brokerage founded by Jared Lofton. Serving Houston, Galveston, Austin, and beyond with integrity.",
-      url: "https://loftonrealty.com/about-us"
+      url: "https://lofton-psi.vercel.app/about-us"
     });
     window.scrollTo(0, 0);
   }, []);

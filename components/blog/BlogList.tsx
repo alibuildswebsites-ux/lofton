@@ -35,7 +35,7 @@ export const BlogList = () => {
     updateSEO({
       title: "Real Estate Blog & Market Insights | Lofton Realty",
       description: "Stay informed with the latest Houston real estate news, market updates, buying tips, and selling strategies from Lofton Realty.",
-      url: "https://loftonrealty.com/blog"
+      url: "https://lofton-psi.vercel.app/blog"
     });
 
     const fetchBlogs = async () => {

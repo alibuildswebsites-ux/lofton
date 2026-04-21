@@ -144,7 +144,7 @@ export const BuyerGuide = () => {
     updateSEO({
       title: "First-Time Home Buyer Guide | Lofton Realty",
       description: "Learn how to buy a house in Texas with our step-by-step guide. From pre-approval to closing, Lofton Realty guides you through every step.",
-      url: "https://loftonrealty.com/buyers-guide"
+      url: "https://lofton-psi.vercel.app/buyers-guide"
     });
     window.scrollTo(0, 0);
 
