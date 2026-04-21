@@ -75,6 +75,7 @@ export const LocationsSection = () => {
           animation: tween,
           scrub: 1,
           invalidateOnRefresh: true,
+          once: true,
         });
 
         // 3. Inner Parallax for Images
@@ -89,6 +90,7 @@ export const LocationsSection = () => {
               end: () => `+=${track.scrollWidth}`,
               scrub: 1,
               invalidateOnRefresh: true,
+              once: true,
             }
           });
         });
