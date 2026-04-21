@@ -1,0 +1,49 @@
+# Lofton Realty
+
+> Professional real estate services across Houston, Galveston, Austin, and the Gulf Coast.
+
+## Overview
+
+Lofton Realty is a trusted Houston-based real estate broker established in 2006. We specialize in residential and investment properties across Texas, Louisiana, Mississippi, and Florida. Our team provides 24/7 service for buying, selling, and investment advisory.
+
+## Core Services
+
+- **Residential Home Buying & Selling** - Expert guidance for first-time buyers and experienced investors
+- **Investment Property Advisory** - Strategic consultation for portfolio growth and market optimization
+- **Property Management** - Full-service property oversight and tenant relations
+- **Market Analysis & Valuation** - Data-driven insights for informed decision-making
+
+## Service Areas
+
+- Houston, TX (primary market)
+- Galveston, TX
+- Austin, TX
+- Louisiana
+- Mississippi
+- Florida
+
+## Company Information
+
+- **Established:** 2006 (20 years of experience)
+- **Rating:** 4.9/5 stars (500+ verified reviews)
+- **Phone:** 713-203-7661 (24/7 availability)
+- **Email:** Info@LoftonRealty.com
+- **Website:** https://lofton-psi.vercel.app
+- **Office:** 123 Business Blvd, Houston, TX 77002, USA
+
+## Why Choose Lofton Realty
+
+1. **Two Decades of Expertise** - 20 years serving Gulf Coast markets with integrity and results
+2. **Multi-State Coverage** - Serving six states with local market knowledge
+3. **24/7 Service** - Always available when you need us
+4. **Strong Track Record** - 500+ satisfied clients with 4.9/5 rating
+5. **Investment Focus** - Specialized knowledge in investment property markets
+
+## Key Resources
+
+- [Property Listings](https://lofton-psi.vercel.app/property-listings) - Browse our current inventory
+- [Our Agents](https://lofton-psi.vercel.app/agents) - Meet our experienced team
+- [Buyer's Guide](https://lofton-psi.vercel.app/buyers-guide) - Step-by-step buying process
+- [Seller's Guide](https://lofton-psi.vercel.app/sellers-guide) - Maximize your sale
+- [Blog](https://lofton-psi.vercel.app/blog) - Market insights and tips
+- [Contact Us](https://lofton-psi.vercel.app/contact-us) - Get in touch today
