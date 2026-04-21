@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { LOCATIONS } from '../data';
 import { LocationArea } from '../types';
 import { MapPin, TrendingUp, ArrowRight, X, Building, Loader2 } from 'lucide-react';
@@ -12,6 +12,9 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Animation timing constant
+const SCROLL_PIN_START = "top 15%";
 
 export const LocationsSection = () => {
   const [selectedLocation, setSelectedLocation] = useState<LocationArea | null>(null);
@@ -66,7 +69,7 @@ export const LocationsSection = () => {
         // 2. ScrollTrigger for the Pin
         ScrollTrigger.create({
           trigger: pinWrapper,
-          start: "top 15%", 
+          start: SCROLL_PIN_START, 
           end: () => `+=${track.scrollWidth}`, 
           pin: true,
           animation: tween,
@@ -82,7 +85,7 @@ export const LocationsSection = () => {
             ease: "none",
             scrollTrigger: {
               trigger: pinWrapper,
-              start: "top 15%",
+              start: SCROLL_PIN_START,
               end: () => `+=${track.scrollWidth}`,
               scrub: 1,
               invalidateOnRefresh: true,
@@ -132,6 +135,7 @@ export const LocationsSection = () => {
                       className="gsap-card-img absolute inset-0 w-[120%] h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700 left-0"
                       style={{ willChange: "transform" }}
                       loading="lazy"
+                      onError={() => console.warn(`Failed to load image for ${location.name}`)}
                     />
                   </div>
                   
@@ -205,6 +209,10 @@ export const LocationsSection = () => {
                   alt={selectedLocation.name} 
                   className={`w-full h-full object-cover transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
                   onLoad={() => setImageLoaded(true)}
+                  onError={() => {
+                    setImageLoaded(true);
+                    console.warn(`Failed to load modal image for ${selectedLocation.name}`);
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                 <button onClick={() => setSelectedLocation(null)} className="absolute top-4 right-4 bg-black/20 hover:bg-black/40 text-white p-2 rounded-full backdrop-blur-md z-20"><X size={20} /></button>
