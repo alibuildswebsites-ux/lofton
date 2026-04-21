@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SERVICES } from '../data';
@@ -12,21 +13,21 @@ gsap.registerPlugin(ScrollTrigger);
 export const ServicesSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
-    const initGSAP = () => {
-      const ctx = gsap.context(() => {
-        const cards = gsap.utils.toArray('.gsap-service-card');
-        
-        // Force initial state immediately to avoid exposure
-        gsap.set(cards, { 
-          opacity: 0, 
-          rotationX: -25, 
-          y: 60, 
-          z: -150 
-        });
+  useGSAP(() => {
+    let mm = gsap.matchMedia();
 
-        cards.forEach((card: any) => {
-          gsap.to(card, {
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const cards = gsap.utils.toArray('.gsap-service-card');
+
+      cards.forEach((card: any) => {
+        gsap.fromTo(card, 
+          {
+            opacity: 0, 
+            rotationX: -25, 
+            y: 60, 
+            z: -150 
+          },
+          {
             opacity: 1,
             rotationX: 0,
             y: 0,
@@ -34,38 +35,23 @@ export const ServicesSection = () => {
             ease: "power2.out",
             scrollTrigger: {
               trigger: card,
-              start: "top 95%", // Card must be clearly in view
+              start: "top 95%",
               end: "top 70%",
               scrub: 1,
               immediateRender: false,
             }
-          });
-        });
-      }, sectionRef);
-      return ctx;
-    };
+          }
+        );
+      });
+    });
 
-    let ctx: gsap.Context;
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      const cards = gsap.utils.toArray('.gsap-service-card');
+      gsap.set(cards, { opacity: 1, rotationX: 0, y: 0, z: 0 });
+    });
 
-    const handleReady = () => {
-      if (ctx) ctx.revert();
-      ctx = initGSAP();
-    };
-
-    if ((window as any).appReady) {
-      const timer = setTimeout(() => {
-        ctx = initGSAP();
-      }, 100);
-      return () => clearTimeout(timer);
-    } else {
-      window.addEventListener('appReady', handleReady);
-    }
-
-    return () => {
-      if (ctx) ctx.revert();
-      window.removeEventListener('appReady', handleReady);
-    };
-  }, []);
+    return () => mm.revert();
+  }, { scope: sectionRef });
 
   return (
     <section ref={sectionRef} className="py-[60px] md:py-[80px] lg:py-[100px] bg-white relative overflow-hidden" id="services">
@@ -87,7 +73,8 @@ export const ServicesSection = () => {
             return (
               <div
                 key={idx}
-                className="gsap-service-card group relative bg-white border border-gray-100 rounded-[24px] p-[40px] hover:border-brand/30 hover:shadow-[0_20px_40px_-15px_rgba(74,222,128,0.15)] transition-all duration-300 flex flex-col h-full overflow-hidden md:[&:last-child]:col-span-2 lg:[&:last-child]:col-span-1 opacity-0"
+                className="gsap-service-card group relative bg-white border border-gray-100 rounded-[24px] p-[40px] hover:border-brand/30 hover:shadow-[0_20px_40px_-15px_rgba(74,222,128,0.15)] transition-all duration-300 flex flex-col h-full overflow-hidden md:[&:last-child]:col-span-2 lg:[&:last-child]:col-span-1"
+                style={{ willChange: "transform, opacity" }}
               >
                 {/* Hover Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-brand-light/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

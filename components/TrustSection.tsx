@@ -1,6 +1,7 @@
 
 import React, { useEffect, useRef, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FEATURES } from '../data';
@@ -11,21 +12,21 @@ gsap.registerPlugin(ScrollTrigger);
 export const TrustSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
-    const initGSAP = () => {
-      const ctx = gsap.context(() => {
-        const cards = gsap.utils.toArray('.gsap-trust-card');
-        
-        // Force initial state immediately to avoid exposure
-        gsap.set(cards, { 
-          opacity: 0, 
-          rotationX: -25, 
-          y: 60, 
-          z: -150 
-        });
+  useGSAP(() => {
+    let mm = gsap.matchMedia();
 
-        cards.forEach((card: any) => {
-          gsap.to(card, {
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const cards = gsap.utils.toArray('.gsap-trust-card');
+
+      cards.forEach((card: any) => {
+        gsap.fromTo(card, 
+          {
+            opacity: 0, 
+            rotationX: -25, 
+            y: 60, 
+            z: -150 
+          },
+          {
             opacity: 1,
             rotationX: 0,
             y: 0,
@@ -38,33 +39,18 @@ export const TrustSection = () => {
               scrub: 1,
               immediateRender: false,
             }
-          });
-        });
-      }, sectionRef);
-      return ctx;
-    };
+          }
+        );
+      });
+    });
 
-    let ctx: gsap.Context;
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      const cards = gsap.utils.toArray('.gsap-trust-card');
+      gsap.set(cards, { opacity: 1, rotationX: 0, y: 0, z: 0 });
+    });
 
-    const handleReady = () => {
-      if (ctx) ctx.revert();
-      ctx = initGSAP();
-    };
-
-    if ((window as any).appReady) {
-      const timer = setTimeout(() => {
-        ctx = initGSAP();
-      }, 100);
-      return () => clearTimeout(timer);
-    } else {
-      window.addEventListener('appReady', handleReady);
-    }
-
-    return () => {
-      if (ctx) ctx.revert();
-      window.removeEventListener('appReady', handleReady);
-    };
-  }, []);
+    return () => mm.revert();
+  }, { scope: sectionRef });
 
   return (
     <section ref={sectionRef} className="py-[60px] md:py-[80px] lg:py-[100px] bg-white overflow-hidden" id="about">
@@ -79,7 +65,7 @@ export const TrustSection = () => {
          {/* Features Grid */}
          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12" style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
             {FEATURES.map((feature, idx) => (
-              <div key={idx} className="gsap-trust-card bg-gray-50 p-8 rounded-2xl border border-gray-100 hover:shadow-lg transition-shadow duration-300 opacity-0">
+              <div key={idx} className="gsap-trust-card bg-gray-50 p-8 rounded-2xl border border-gray-100 hover:shadow-lg transition-shadow duration-300" style={{ willChange: "transform, opacity" }}>
                  <div className="w-12 h-12 rounded-xl bg-white border border-gray-100 shadow-sm flex items-center justify-center text-brand mb-6">
                     <feature.icon size={24} />
                  </div>

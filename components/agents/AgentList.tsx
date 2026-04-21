@@ -8,7 +8,11 @@ import { AgentCard } from './AgentCard';
 import { Search } from 'lucide-react';
 import { updateSEO } from '../../utils';
 import { AgentSkeleton } from '../common/Skeleton';
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export const AgentList = () => {
   const [agents, setAgents] = useState<Agent[]>([]);
@@ -36,51 +40,34 @@ export const AgentList = () => {
     fetchAgents();
   }, []);
 
-  useLayoutEffect(() => {
+  useGSAP(() => {
     if (loading || agents.length === 0) return;
 
-    const initGSAP = () => {
-      const ctx = gsap.context(() => {
-        const cards = gsap.utils.toArray('.gsap-agent-card');
-        
-        gsap.set(cards, { 
-          opacity: 0, 
-          y: 50
-        });
+    let mm = gsap.matchMedia();
 
-        gsap.to(cards, {
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const cards = gsap.utils.toArray('.gsap-agent-card');
+      
+      gsap.fromTo(cards, 
+        { opacity: 0, y: 50 },
+        {
           opacity: 1,
           y: 0,
           duration: 0.8,
           stagger: 0.2,
           ease: "power2.out",
           delay: 0.2
-        });
-      }, sectionRef);
-      return ctx;
-    };
+        }
+      );
+    });
 
-    let ctx: gsap.Context;
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      const cards = gsap.utils.toArray('.gsap-agent-card');
+      gsap.set(cards, { opacity: 1, y: 0 });
+    });
 
-    const handleReady = () => {
-      if (ctx) ctx.revert();
-      ctx = initGSAP();
-    };
-
-    if ((window as any).appReady) {
-      const timer = setTimeout(() => {
-        ctx = initGSAP();
-      }, 100);
-      return () => clearTimeout(timer);
-    } else {
-      window.addEventListener('appReady', handleReady);
-    }
-
-    return () => {
-      if (ctx) ctx.revert();
-      window.removeEventListener('appReady', handleReady);
-    };
-  }, [loading, agents]);
+    return () => mm.revert();
+  }, { scope: sectionRef, dependencies: [loading, agents] });
 
   return (
     <div className="font-sans bg-gray-50 min-h-screen">
@@ -108,7 +95,7 @@ export const AgentList = () => {
         ) : agents.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {agents.map(agent => (
-              <div key={agent.id} className="gsap-agent-card opacity-0">
+              <div key={agent.id} className="gsap-agent-card" style={{ willChange: "transform, opacity" }}>
                 <AgentCard agent={agent} />
               </div>
             ))}

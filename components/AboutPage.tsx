@@ -10,6 +10,7 @@ import { Footer } from './Footer';
 import { LocationsSection } from './LocationsSection';
 import { TestimonialsSection } from './TestimonialsSection';
 import { getOptimizedImageUrl, updateSEO } from '../utils';
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -28,20 +29,21 @@ export const AboutPage = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  useLayoutEffect(() => {
-    const initGSAP = () => {
-      const ctx = gsap.context(() => {
-        const cards = gsap.utils.toArray('.gsap-value-card');
-        
-        gsap.set(cards, { 
-          opacity: 0, 
-          rotationX: -25, 
-          y: 60, 
-          z: -150 
-        });
+  useGSAP(() => {
+    let mm = gsap.matchMedia();
 
-        cards.forEach((card: any) => {
-          gsap.to(card, {
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const cards = gsap.utils.toArray('.gsap-value-card');
+      
+      cards.forEach((card: any) => {
+        gsap.fromTo(card, 
+          {
+            opacity: 0, 
+            rotationX: -25, 
+            y: 60, 
+            z: -150 
+          },
+          {
             opacity: 1,
             rotationX: 0,
             y: 0,
@@ -54,33 +56,18 @@ export const AboutPage = () => {
               scrub: 1,
               immediateRender: false,
             }
-          });
-        });
-      }, sectionRef);
-      return ctx;
-    };
+          }
+        );
+      });
+    });
 
-    let ctx: gsap.Context;
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      const cards = gsap.utils.toArray('.gsap-value-card');
+      gsap.set(cards, { opacity: 1, rotationX: 0, y: 0, z: 0 });
+    });
 
-    const handleReady = () => {
-      if (ctx) ctx.revert();
-      ctx = initGSAP();
-    };
-
-    if ((window as any).appReady) {
-      const timer = setTimeout(() => {
-        ctx = initGSAP();
-      }, 100);
-      return () => clearTimeout(timer);
-    } else {
-      window.addEventListener('appReady', handleReady);
-    }
-
-    return () => {
-      if (ctx) ctx.revert();
-      window.removeEventListener('appReady', handleReady);
-    };
-  }, []);
+    return () => mm.revert();
+  }, { scope: sectionRef });
 
   // --- Data ---
 
@@ -266,7 +253,7 @@ export const AboutPage = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8" style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
             {values.map((val, idx) => (
-              <div key={idx} className="gsap-value-card bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300 group opacity-0">
+              <div key={idx} className="gsap-value-card bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300 group" style={{ willChange: "transform, opacity" }}>
                 <div className="w-14 h-14 bg-brand-light rounded-xl flex items-center justify-center text-brand mb-6 group-hover:scale-110 transition-transform">
                   <val.icon size={28} />
                 </div>

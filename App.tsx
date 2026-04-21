@@ -64,10 +64,11 @@ function App() {
     // Link Lenis with ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
 
-    gsap.ticker.add((time) => {
+    const raf = (time: number) => {
       lenis.raf(time * 1000);
-    });
+    };
 
+    gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
 
     // Make lenis accessible globally for modal control
@@ -85,6 +86,7 @@ function App() {
 
     return () => {
       clearTimeout(timer);
+      gsap.ticker.remove(raf);
       lenis.destroy();
     };
   }, []);

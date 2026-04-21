@@ -12,6 +12,7 @@ import { getTestimonials } from '../lib/firebase/firestore';
 import { Testimonial } from '../types';
 import { getOptimizedImageUrl, updateSEO } from '../utils';
 import { SharedContactForm } from './SharedContactForm';
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -227,20 +228,21 @@ export const SellerGuide = () => {
     loadTestimonials();
   }, []);
 
-  useLayoutEffect(() => {
-    const initGSAP = () => {
-      const ctx = gsap.context(() => {
-        const cards = gsap.utils.toArray('.gsap-seller-card');
-        
-        gsap.set(cards, { 
-          opacity: 0, 
-          rotationX: -25, 
-          y: 60, 
-          z: -150 
-        });
+  useGSAP(() => {
+    let mm = gsap.matchMedia();
 
-        cards.forEach((card: any) => {
-          gsap.to(card, {
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const cards = gsap.utils.toArray('.gsap-seller-card');
+      
+      cards.forEach((card: any) => {
+        gsap.fromTo(card, 
+          {
+            opacity: 0, 
+            rotationX: -25, 
+            y: 60, 
+            z: -150 
+          },
+          {
             opacity: 1,
             rotationX: 0,
             y: 0,
@@ -253,33 +255,18 @@ export const SellerGuide = () => {
               scrub: 1,
               immediateRender: false,
             }
-          });
-        });
-      }, sectionRef);
-      return ctx;
-    };
+          }
+        );
+      });
+    });
 
-    let ctx: gsap.Context;
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      const cards = gsap.utils.toArray('.gsap-seller-card');
+      gsap.set(cards, { opacity: 1, rotationX: 0, y: 0, z: 0 });
+    });
 
-    const handleReady = () => {
-      if (ctx) ctx.revert();
-      ctx = initGSAP();
-    };
-
-    if ((window as any).appReady) {
-      const timer = setTimeout(() => {
-        ctx = initGSAP();
-      }, 100);
-      return () => clearTimeout(timer);
-    } else {
-      window.addEventListener('appReady', handleReady);
-    }
-
-    return () => {
-      if (ctx) ctx.revert();
-      window.removeEventListener('appReady', handleReady);
-    };
-  }, []);
+    return () => mm.revert();
+  }, { scope: sectionRef });
 
   const steps: TimelineStep[] = [
     {
@@ -396,7 +383,8 @@ export const SellerGuide = () => {
             {valueProps.map((vp, idx) => (
               <div 
                 key={idx}
-                className="gsap-seller-card bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:border-brand/30 transition-colors opacity-0"
+                className="gsap-seller-card bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:border-brand/30 transition-colors"
+                style={{ willChange: "transform, opacity" }}
               >
                 <div className="w-14 h-14 bg-brand-light rounded-xl flex items-center justify-center text-brand mb-6">
                   <vp.icon size={28} />

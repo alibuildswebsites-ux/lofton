@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, useRef, useLayoutEffect } from 're
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { PropertyCard } from './PropertyCard';
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { getProperties } from '../lib/firebase/firestore';
@@ -140,23 +141,23 @@ export const PropertyListings = () => {
     setSearchParams(params, { replace: true });
   }, [filters, setSearchParams]);
 
-  useLayoutEffect(() => {
+  useGSAP(() => {
     if (loading || currentProperties.length === 0) return;
 
-    const initGSAP = () => {
-      const ctx = gsap.context(() => {
-        const cards = gsap.utils.toArray('.gsap-list-card');
-        
-        // Initial state lock
-        gsap.set(cards, { 
-          opacity: 0, 
-          rotationX: -25, 
-          y: 60, 
-          z: -150 
-        });
+    let mm = gsap.matchMedia();
 
-        cards.forEach((card: any) => {
-          gsap.to(card, {
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const cards = gsap.utils.toArray('.gsap-list-card');
+      
+      cards.forEach((card: any) => {
+        gsap.fromTo(card, 
+          {
+            opacity: 0, 
+            rotationX: -25, 
+            y: 60, 
+            z: -150 
+          },
+          {
             opacity: 1,
             rotationX: 0,
             y: 0,
@@ -169,33 +170,18 @@ export const PropertyListings = () => {
               scrub: 1,
               immediateRender: false,
             }
-          });
-        });
+          }
+        );
       });
-      return ctx;
-    };
+    });
 
-    let ctx: gsap.Context;
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      const cards = gsap.utils.toArray('.gsap-list-card');
+      gsap.set(cards, { opacity: 1, rotationX: 0, y: 0, z: 0 });
+    });
 
-    const handleReady = () => {
-      if (ctx) ctx.revert();
-      ctx = initGSAP();
-    };
-
-    if ((window as any).appReady) {
-      const timer = setTimeout(() => {
-        ctx = initGSAP();
-      }, 100);
-      return () => clearTimeout(timer);
-    } else {
-      window.addEventListener('appReady', handleReady);
-    }
-
-    return () => {
-      if (ctx) ctx.revert();
-      window.removeEventListener('appReady', handleReady);
-    };
-  }, [loading, currentProperties, viewMode]);
+    return () => mm.revert();
+  }, { dependencies: [loading, currentProperties, viewMode] });
 
   // --- Handlers ---
 
@@ -468,7 +454,7 @@ export const PropertyListings = () => {
             ) : currentProperties.length > 0 ? (
               <div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1'}`} style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
                 {currentProperties.map(property => (
-                  <div key={property.id} className="gsap-list-card opacity-0">
+                  <div key={property.id} className="gsap-list-card" style={{ willChange: "transform, opacity" }}>
                     <PropertyCard 
                       property={property}
                       viewMode={viewMode} 

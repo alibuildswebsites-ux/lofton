@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { getProperties } from '../lib/firebase/firestore';
@@ -16,23 +17,21 @@ export const FeaturedProperties = () => {
   const [loading, setLoading] = useState(true);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
-    if (loading || properties.length === 0) return;
+  useGSAP(() => {
+    let mm = gsap.matchMedia();
 
-    const initGSAP = () => {
-      const ctx = gsap.context(() => {
-        const cards = gsap.utils.toArray('.gsap-3d-card');
-        
-        // Initial state lock
-        gsap.set(cards, { 
-          opacity: 0, 
-          rotationX: -25, 
-          y: 60, 
-          z: -150 
-        });
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const cards = gsap.utils.toArray('.gsap-3d-card');
 
-        cards.forEach((card: any) => {
-          gsap.to(card, {
+      cards.forEach((card: any) => {
+        gsap.fromTo(card, 
+          {
+            opacity: 0, 
+            rotationX: -25, 
+            y: 60, 
+            z: -150 
+          },
+          {
             opacity: 1,
             rotationX: 0,
             y: 0,
@@ -45,58 +44,18 @@ export const FeaturedProperties = () => {
               scrub: 1,
               immediateRender: false,
             }
-          });
-        });
-      }, sectionRef);
-      return ctx;
-    };
+          }
+        );
+      });
+    });
 
-    let ctx: gsap.Context;
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      const cards = gsap.utils.toArray('.gsap-3d-card');
+      gsap.set(cards, { opacity: 1, rotationX: 0, y: 0, z: 0 });
+    });
 
-    const handleReady = () => {
-      if (ctx) ctx.revert();
-      ctx = initGSAP();
-    };
-
-    if ((window as any).appReady) {
-      const timer = setTimeout(() => {
-        ctx = initGSAP();
-      }, 100);
-      return () => clearTimeout(timer);
-    } else {
-      window.addEventListener('appReady', handleReady);
-    }
-
-    return () => {
-      if (ctx) ctx.revert();
-      window.removeEventListener('appReady', handleReady);
-    };
-  }, [loading, properties]);
-
-  useEffect(() => {
-    const fetchFeatured = async () => {
-      try {
-        setLoading(true);
-        const allProperties = await getProperties();
-        const featured = allProperties
-          .filter(p => p.status === 'For Sale' || p.status === 'For Rent' || p.status === 'New Listing')
-          .sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime())
-          .slice(0, 4);
-          
-        setProperties(featured as Property[]);
-      } catch (error) {
-        console.error("Failed to fetch featured properties", error);
-      } finally {
-        setLoading(false);
-        // Refresh ScrollTrigger after data loads
-        setTimeout(() => {
-          ScrollTrigger.refresh();
-        }, 100);
-      }
-    };
-
-    fetchFeatured();
-  }, []);
+    return () => mm.revert();
+  }, { scope: sectionRef });
 
   return (
     <section ref={sectionRef} className="py-[60px] md:py-[80px] lg:py-[100px] bg-gray-50" id="properties">
@@ -119,7 +78,7 @@ export const FeaturedProperties = () => {
         ) : properties.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[30px]" style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
             {properties.map((property) => (
-              <div key={property.id} className="gsap-3d-card opacity-0">
+              <div key={property.id} className="gsap-3d-card" style={{ willChange: "transform, opacity" }}>
                 <PropertyCard property={property} />
               </div>
             ))}
