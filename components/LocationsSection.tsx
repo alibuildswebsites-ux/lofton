@@ -55,7 +55,7 @@ export const LocationsSection = () => {
 
       if (desktop) {
         // Calculate the exact distance to translate the track
-        const getScrollAmount = () => -(track.scrollWidth - window.innerWidth + 80);
+        const getScrollAmount = () => -(track.scrollWidth - pinWrapper.offsetWidth);
 
         // 1. Horizontal Scroll Tween
         const tween = gsap.to(track, {
@@ -78,7 +78,7 @@ export const LocationsSection = () => {
         const images = gsap.utils.toArray('.gsap-card-img');
         images.forEach((img: any) => {
           gsap.to(img, {
-            xPercent: 15,
+            xPercent: -15,
             ease: "none",
             scrollTrigger: {
               trigger: pinWrapper,
@@ -116,7 +116,7 @@ export const LocationsSection = () => {
         {/* Outer Pin Wrapper */}
         <div className="gsap-pin-wrapper relative w-full h-[600px] md:h-[700px] mt-12 overflow-hidden">
           {/* Horizontal Track */}
-          <div className="gsap-track flex flex-nowrap h-full w-max gap-[30px] md:gap-[40px] px-5 md:px-10 overflow-x-auto snap-x snap-mandatory md:overflow-visible md:snap-none pb-8 md:pb-0">
+          <div className="gsap-track flex flex-nowrap h-full w-full md:w-max gap-[30px] md:gap-[40px] px-5 md:px-10 overflow-x-auto snap-x snap-mandatory md:overflow-visible md:snap-none pb-8 md:pb-0">
             {LOCATIONS.map((location) => (
               <div key={location.id} className="gsap-location-card relative flex-shrink-0 w-[85vw] md:w-[400px] lg:w-[450px] h-full snap-center rounded-2xl overflow-hidden group cursor-pointer border border-gray-200/20 shadow-xl" style={{ willChange: "transform" }}>
                 <button 
@@ -129,7 +129,7 @@ export const LocationsSection = () => {
                     <img 
                       src={getOptimizedImageUrl(location.image, 800)} 
                       alt={location.name}
-                      className="gsap-card-img absolute inset-0 w-[120%] h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700 -left-[10%]"
+                      className="gsap-card-img absolute inset-0 w-[120%] h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700 left-0"
                       style={{ willChange: "transform" }}
                       loading="lazy"
                     />
