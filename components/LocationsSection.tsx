@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getOptimizedImageUrl } from '../utils';
 import { SectionHeader } from './common/SectionHeader';
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -39,61 +40,60 @@ export const LocationsSection = () => {
     }
   }, [selectedLocation]);
 
-  useLayoutEffect(() => {
-    const initGSAP = () => {
-      const ctx = gsap.context(() => {
-        const cards = gsap.utils.toArray('.gsap-location-card');
-        
-        // Force initial state immediately to avoid exposure
-        gsap.set(cards, { 
-          opacity: 0, 
-          rotationX: -25, 
-          y: 60, 
-          z: -150 
+  useGSAP(() => {
+    const track = document.querySelector('.gsap-track') as HTMLElement;
+    const pinWrapper = document.querySelector('.gsap-pin-wrapper') as HTMLElement;
+    if (!track || !pinWrapper) return;
+
+    let mm = gsap.matchMedia();
+
+    mm.add({
+      desktop: "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+      reduce: "(max-width: 767px), (prefers-reduced-motion: reduce)"
+    }, (context) => {
+      let { desktop } = context.conditions as any;
+
+      if (desktop) {
+        // Calculate the exact distance to translate the track
+        const getScrollAmount = () => -(track.scrollWidth - window.innerWidth + 80);
+
+        // 1. Horizontal Scroll Tween
+        const tween = gsap.to(track, {
+          x: getScrollAmount,
+          ease: "none",
         });
 
-        cards.forEach((card: any) => {
-          gsap.to(card, {
-            opacity: 1,
-            rotationX: 0,
-            y: 0,
-            z: 0,
-            ease: "power2.out",
+        // 2. ScrollTrigger for the Pin
+        ScrollTrigger.create({
+          trigger: pinWrapper,
+          start: "top 15%", 
+          end: () => `+=${track.scrollWidth}`, 
+          pin: true,
+          animation: tween,
+          scrub: 1,
+          invalidateOnRefresh: true,
+        });
+
+        // 3. Inner Parallax for Images
+        const images = gsap.utils.toArray('.gsap-card-img');
+        images.forEach((img: any) => {
+          gsap.to(img, {
+            xPercent: 15,
+            ease: "none",
             scrollTrigger: {
-              trigger: card,
-              start: "top 95%", // Card must be clearly in view
-              end: "top 70%",
+              trigger: pinWrapper,
+              start: "top 15%",
+              end: () => `+=${track.scrollWidth}`,
               scrub: 1,
-              immediateRender: false,
+              invalidateOnRefresh: true,
             }
           });
         });
-      }, sectionRef);
-      return ctx;
-    };
+      }
+    });
 
-    let ctx: gsap.Context;
-
-    const handleReady = () => {
-      if (ctx) ctx.revert();
-      ctx = initGSAP();
-    };
-
-    // Use a small delay for DOM stability after reveal
-    if ((window as any).appReady) {
-      const timer = setTimeout(() => {
-        ctx = initGSAP();
-      }, 100);
-      return () => clearTimeout(timer);
-    } else {
-      window.addEventListener('appReady', handleReady);
-    }
-
-    return () => {
-      if (ctx) ctx.revert();
-      window.removeEventListener('appReady', handleReady);
-    };
-  }, []);
+    return () => mm.revert();
+  }, { scope: sectionRef, dependencies: [] });
 
 
   const handleNavigateToProperties = (locationName: string) => {
