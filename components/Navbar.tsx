@@ -130,8 +130,8 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
       <nav
         className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 border-b ${
           isScrolled 
-            ? 'bg-background/95 backdrop-blur-md shadow-sm py-3 border-border/50' 
-            : 'bg-background py-5 border-transparent'
+            ? 'bg-background/95 backdrop-blur-md shadow-sm py-3 border-border/60' 
+            : 'bg-background py-5 border-border/40'
         }`}
       >
         <div className="max-w-[1600px] mx-auto px-5 md:px-6 lg:px-8 flex justify-between items-center h-full">
