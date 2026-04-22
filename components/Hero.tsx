@@ -30,7 +30,7 @@ export const Hero = () => {
 
   return (
     <section 
-      className="relative flex items-center overflow-hidden bg-white h-screen min-h-[600px] w-full" 
+      className="relative flex items-center overflow-hidden bg-slate-50/50 h-screen min-h-[600px] w-full" 
       id="home"
     >
       <InfiniteGrid />

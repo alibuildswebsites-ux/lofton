@@ -35,13 +35,13 @@ export const InfiniteGrid = ({ className }: { className?: string }) => {
       className={cn("absolute inset-0 overflow-hidden pointer-events-auto", className)}
     >
       {/* Static Grid Layer */}
-      <div className="absolute inset-0 z-0 opacity-10">
+      <div className="absolute inset-0 z-0 opacity-20">
         <GridPattern offsetX={gridOffsetX} offsetY={gridOffsetY} />
       </div>
       
       {/* Mouse Reveal Layer */}
       <motion.div 
-        className="absolute inset-0 z-0 opacity-40"
+        className="absolute inset-0 z-0 opacity-60"
         style={{ maskImage, WebkitMaskImage: maskImage }}
       >
         <GridPattern offsetX={gridOffsetX} offsetY={gridOffsetY} />
@@ -49,8 +49,8 @@ export const InfiniteGrid = ({ className }: { className?: string }) => {
 
       {/* Glow Blobs */}
       <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute right-[-10%] top-[-10%] w-[30%] h-[30%] rounded-full bg-brand/25 blur-[120px]" />
-        <div className="absolute left-[-5%] bottom-[-10%] w-[25%] h-[25%] rounded-full bg-emerald-500/15 blur-[100px]" />
+        <div className="absolute right-[-10%] top-[-10%] w-[40%] h-[40%] rounded-full bg-brand/30 blur-[120px]" />
+        <div className="absolute left-[-5%] bottom-[-10%] w-[35%] h-[35%] rounded-full bg-emerald-500/20 blur-[100px]" />
       </div>
     </div>
   );
@@ -72,7 +72,7 @@ const GridPattern = ({ offsetX, offsetY }: { offsetX: any, offsetY: any }) => (
             fill="none"
             stroke="currentColor"
             strokeWidth="1"
-            className="text-brand/40" 
+            className="text-brand/80" 
           />
       </motion.pattern>
     </defs>
