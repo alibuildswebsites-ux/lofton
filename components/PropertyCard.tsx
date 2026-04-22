@@ -107,7 +107,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, viewMode =
   return (
     <div
       onClick={handleCardClick}
-      className={`group bg-white rounded-[20px] overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 flex ${isList ? 'flex-col md:flex-row' : 'flex-col hover:-translate-y-2'}`}
+      className={`group bg-white rounded-[20px] overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-[box-shadow,border-color] duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 flex ${isList ? 'flex-col md:flex-row' : 'flex-col'}`}
       role="article"
       aria-label={`View details for ${property.address}`}
     >

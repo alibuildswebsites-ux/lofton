@@ -26,7 +26,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
   return (
     <Link 
       to={`/blog/${post.slug}`}
-      className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+      className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-[box-shadow,border-color] duration-300 overflow-hidden flex flex-col h-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
     >
       <div className="relative h-48 overflow-hidden bg-gray-100">
         <div className="absolute top-4 left-4 z-10">

@@ -86,7 +86,7 @@ export const DashboardHome = () => {
             <Link
               key={index}
               to={action.link}
-              className="flex items-center gap-4 p-4 bg-white border border-gray-100 rounded-2xl hover:shadow-lg hover:border-gray-200 transition-all duration-300 group"
+              className="flex items-center gap-4 p-4 bg-white border border-gray-100 rounded-2xl hover:shadow-lg hover:border-gray-200 transition-[box-shadow,border-color] duration-300 group"
             >
               <div className={`w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center ${action.color}`}>
                 <action.icon size={22} />
@@ -95,7 +95,7 @@ export const DashboardHome = () => {
                 <h3 className="font-bold text-charcoal group-hover:text-brand transition-colors">{action.title}</h3>
                 <p className="text-sm text-gray-500">{action.desc}</p>
               </div>
-              <ArrowRight size={18} className="text-gray-300 group-hover:text-brand transform group-hover:translate-x-1 transition-all" />
+              <ArrowRight size={18} className="text-gray-300 group-hover:text-brand transition-colors duration-300" />
             </Link>
           ))}
         </div>

@@ -12,10 +12,10 @@ export const AgentCard: React.FC<AgentCardProps> = ({ agent }) => {
   return (
     <Link 
       to={`/agents/${agent.id}`}
-      className="block bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col group h-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+      className="block bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-[box-shadow,border-color] duration-300 overflow-hidden flex flex-col group h-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
     >
       <div className="p-6 flex flex-col items-center text-center flex-grow">
-        <div className="w-32 h-32 rounded-full mb-6 relative group-hover:scale-105 transition-transform duration-300">
+        <div className="w-32 h-32 rounded-full mb-6 relative">
           <img 
             src={getOptimizedImageUrl(agent.photo || 'https://images.unsplash.com/photo-1560250097-0b93528c311a', 400)} 
             alt={agent.name}

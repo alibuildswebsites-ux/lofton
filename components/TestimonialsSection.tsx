@@ -105,7 +105,7 @@ export const TestimonialsSection = () => {
                   {chunk.map((testimonial) => (
                     <div
                       key={testimonial.id}
-                      className="bg-white border border-gray-100 p-8 rounded-[24px] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full relative group min-h-[320px]"
+                      className="bg-white border border-gray-100 p-8 rounded-[24px] shadow-sm hover:shadow-xl transition-[box-shadow,border-color] duration-300 flex flex-col h-full relative group min-h-[320px]"
                     >
                       {/* Quote Icon */}
                       <div className="mb-6">

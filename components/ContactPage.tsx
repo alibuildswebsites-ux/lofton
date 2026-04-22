@@ -119,9 +119,9 @@ export const ContactPage = () => {
           ].map((item, idx) => (
             <div
               key={idx}
-              className="gsap-contact-card bg-white p-8 rounded-2xl shadow-lg border border-gray-100 flex flex-col items-center text-center group hover:border-brand/30 transition-all opacity-0"
+              className="gsap-contact-card bg-white p-8 rounded-2xl shadow-lg border border-gray-100 flex flex-col items-center text-center group hover:border-brand/30 transition-[box-shadow,border-color] duration-300 opacity-0"
             >
-              <div className="w-14 h-14 bg-brand-light rounded-full flex items-center justify-center text-brand mb-4 group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 bg-brand-light rounded-full flex items-center justify-center text-brand mb-4 transition-colors duration-300">
                 <item.icon size={24} />
               </div>
               <h3 className="text-xl font-bold text-charcoal mb-1">{item.title}</h3>
@@ -230,7 +230,7 @@ export const ContactPage = () => {
                   <button 
                     key={i}
                     onClick={link.action}
-                    className="w-full flex items-center justify-between p-4 bg-white border border-gray-100 rounded-xl hover:border-brand/30 hover:shadow-md transition-all group text-left"
+                    className="w-full flex items-center justify-between p-4 bg-white border border-gray-100 rounded-xl hover:border-brand/30 hover:shadow-md transition-[box-shadow,border-color] duration-300 group text-left"
                   >
                     <span className="text-gray-600 font-medium group-hover:text-charcoal">{link.label}</span>
                     <ArrowRight size={16} className="text-gray-300 group-hover:text-brand" />

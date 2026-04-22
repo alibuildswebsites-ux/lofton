@@ -90,8 +90,8 @@ export const LocationsSection = () => {
               className="
                 coverage-badge min-w-[260px] sm:min-w-[300px] lg:min-w-[340px]
                 rounded-xl border border-gray-200 bg-white px-5 py-5
-                shadow-sm transition-all duration-300 ease-out
-                hover:-translate-y-1 hover:shadow-md
+                shadow-sm transition-[box-shadow,border-color] duration-300 ease-out
+                hover:shadow-md
                 will-change-transform
               "
               style={{ willChange: 'transform, opacity' }}

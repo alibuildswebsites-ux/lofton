@@ -254,8 +254,8 @@ export const AboutPage = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8" style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
             {values.map((val, idx) => (
-              <div key={idx} className="gsap-value-card bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300 group" style={{ willChange: "transform, opacity" }}>
-                <div className="w-14 h-14 bg-brand-light rounded-xl flex items-center justify-center text-brand mb-6 group-hover:scale-110 transition-transform">
+              <div key={idx} className="gsap-value-card bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg transition-[box-shadow] duration-300 group" style={{ willChange: "transform, opacity" }}>
+                <div className="w-14 h-14 bg-brand-light rounded-xl flex items-center justify-center text-brand mb-6 transition-colors duration-300">
                   <val.icon size={28} />
                 </div>
                 <h3 className="text-xl font-bold text-charcoal mb-3">{val.title}</h3>
