@@ -107,12 +107,12 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, viewMode =
   return (
     <div
       onClick={handleCardClick}
-      className={`group bg-white rounded-[20px] overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-[box-shadow,border-color] duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 flex ${isList ? 'flex-col md:flex-row' : 'flex-col'}`}
+      className={`group bg-background rounded-[20px] overflow-hidden border border-border shadow-sm hover:shadow-xl transition-[box-shadow,border-color] duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 flex ${isList ? 'flex-col md:flex-row' : 'flex-col'}`}
       role="article"
       aria-label={`View details for ${property.address}`}
     >
       {/* Image Carousel Area */}
-      <div className={`relative overflow-hidden bg-gray-100 ${isList ? 'w-full md:w-[320px] h-[240px] md:h-auto shrink-0' : 'h-[240px] lg:h-[260px] w-full'}`}>
+      <div className={`relative overflow-hidden bg-muted ${isList ? 'w-full md:w-[320px] h-[240px] md:h-auto shrink-0' : 'h-[240px] lg:h-[260px] w-full'}`}>
          
          {/* Images */}
          {!imageError && hasImages ? (
@@ -134,7 +134,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, viewMode =
              </div>
            ))
          ) : (
-           <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 text-gray-400">
+           <div className="absolute inset-0 flex flex-col items-center justify-center bg-muted text-muted-foreground/60">
              <ImageOff size={48} className="mb-2" />
              <span className="text-sm font-medium">Image not available</span>
            </div>
@@ -157,14 +157,14 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, viewMode =
            <>
              <button 
                onClick={handlePrevImage}
-               className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 p-2 rounded-full text-gray-800 shadow-md hover:bg-white hover:text-brand transition-all duration-200 z-20 opacity-100 translate-x-0 lg:opacity-0 lg:-translate-x-4 lg:group-hover:opacity-100 lg:group-hover:translate-x-0"
+               className="absolute left-2 top-1/2 -translate-y-1/2 bg-background/90 p-2 rounded-full text-foreground shadow-md hover:bg-background hover:text-brand transition-all duration-200 z-20 opacity-100 translate-x-0 lg:opacity-0 lg:-translate-x-4 lg:group-hover:opacity-100 lg:group-hover:translate-x-0"
                aria-label="Previous image"
              >
                <ChevronLeft size={18} />
              </button>
              <button 
                onClick={handleNextImage}
-               className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 p-2 rounded-full text-gray-800 shadow-md hover:bg-white hover:text-brand transition-all duration-200 z-20 opacity-100 translate-x-0 lg:opacity-0 lg:translate-x-4 lg:group-hover:opacity-100 lg:group-hover:translate-x-0"
+               className="absolute right-2 top-1/2 -translate-y-1/2 bg-background/90 p-2 rounded-full text-foreground shadow-md hover:bg-background hover:text-brand transition-all duration-200 z-20 opacity-100 translate-x-0 lg:opacity-0 lg:translate-x-4 lg:group-hover:opacity-100 lg:group-hover:translate-x-0"
                aria-label="Next image"
              >
                <ChevronRight size={18} />
@@ -175,7 +175,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, viewMode =
                {property.images.map((_, idx) => (
                  <div 
                    key={idx} 
-                   className={`w-1.5 h-1.5 rounded-full shadow-sm transition-colors ${idx === currentImageIndex ? 'bg-white' : 'bg-white/50'}`} 
+                   className={`w-1.5 h-1.5 rounded-full shadow-sm transition-colors ${idx === currentImageIndex ? 'bg-background' : 'bg-background/50'}`} 
                  />
                ))}
              </div>
@@ -188,8 +188,8 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, viewMode =
          {/* Favorite Button */}
          <button 
             onClick={toggleFavorite}
-            className={`absolute top-4 right-4 z-20 bg-white/90 backdrop-blur p-2 rounded-full shadow-md hover:bg-white transition-all duration-200 
-              ${isFavorite ? 'text-red-500 opacity-100' : 'text-gray-600 hover:text-red-500'} 
+            className={`absolute top-4 right-4 z-20 bg-background/90 backdrop-blur p-2 rounded-full shadow-md hover:bg-background transition-all duration-200 
+              ${isFavorite ? 'text-red-500 opacity-100' : 'text-muted-foreground hover:text-red-500'} 
               ${!isFavorite ? 'opacity-100 lg:opacity-0 lg:group-hover:opacity-100' : ''}`}
             title={isFavorite ? "Remove from favorites" : "Save to favorites"}
          >
@@ -201,33 +201,33 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, viewMode =
       <div className={`p-6 flex flex-col justify-between flex-grow ${isList ? 'py-6 px-8' : ''}`}>
         <div>
           <div className="flex justify-between items-start mb-2">
-             <h3 className="text-2xl font-bold text-charcoal">
+             <h3 className="text-2xl font-bold text-foreground">
                ${property.price.toLocaleString()}
              </h3>
           </div>
-          <p className="text-gray-700 font-semibold text-lg mb-1 truncate">{property.address}</p>
-          <p className="text-gray-400 text-sm mb-6 flex items-center gap-1">
+          <p className="text-foreground font-semibold text-lg mb-1 truncate">{property.address}</p>
+          <p className="text-muted-foreground/60 text-sm mb-6 flex items-center gap-1">
             <MapPin size={14} className="text-brand" /> {property.location || property.city + ', ' + property.state}
           </p>
 
-          <div className="flex items-center gap-6 text-gray-500 text-sm border-t border-gray-100 pt-4 mb-4">
+          <div className="flex items-center gap-6 text-muted-foreground text-sm border-t border-border pt-4 mb-4">
             <div className="flex items-center gap-2">
-              <Bed size={18} className="text-gray-400" /> 
-              <span><strong className="text-gray-800">{property.beds}</strong> Beds</span>
+              <Bed size={18} className="text-muted-foreground/60" /> 
+              <span><strong className="text-foreground">{property.beds}</strong> Beds</span>
             </div>
             <div className="flex items-center gap-2">
-              <Bath size={18} className="text-gray-400" />
-              <span><strong className="text-gray-800">{property.baths}</strong> Baths</span>
+              <Bath size={18} className="text-muted-foreground/60" />
+              <span><strong className="text-foreground">{property.baths}</strong> Baths</span>
             </div>
             <div className="flex items-center gap-2">
-              <Maximize size={18} className="text-gray-400" />
-              <span><strong className="text-gray-800">{property.sqft.toLocaleString()}</strong> Sqft</span>
+              <Maximize size={18} className="text-muted-foreground/60" />
+              <span><strong className="text-foreground">{property.sqft.toLocaleString()}</strong> Sqft</span>
             </div>
           </div>
         </div>
         
         <button 
-          className="w-full mt-auto border border-gray-200 rounded-lg py-3 text-sm font-bold text-charcoal hover:bg-charcoal hover:text-white hover:border-charcoal transition-colors text-center inline-block touch-manipulation"
+          className="w-full mt-auto border border-border rounded-lg py-3 text-sm font-bold text-foreground hover:bg-foreground hover:text-white hover:border-charcoal transition-colors text-center inline-block touch-manipulation"
         >
           View Details
         </button>

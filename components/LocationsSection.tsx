@@ -74,7 +74,7 @@ export const LocationsSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-16 bg-gray-50"
+      className="py-16 bg-accent"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
@@ -89,7 +89,7 @@ export const LocationsSection = () => {
               key={location.id}
               className="
                 coverage-badge min-w-[260px] sm:min-w-[300px] lg:min-w-[340px]
-                rounded-xl border border-gray-200 bg-white px-5 py-5
+                rounded-xl border border-border bg-background px-5 py-5
                 shadow-sm transition-[box-shadow,border-color] duration-300 ease-out
                 hover:shadow-md
                 will-change-transform
@@ -97,8 +97,8 @@ export const LocationsSection = () => {
               style={{ willChange: 'transform, opacity' }}
             >
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-dark">Local Coverage</p>
-              <h3 className="mt-2 text-lg font-semibold text-charcoal">{location.name}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-gray-600">{trustProofByLocation[location.id] || location.description}</p>
+              <h3 className="mt-2 text-lg font-semibold text-foreground">{location.name}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{trustProofByLocation[location.id] || location.description}</p>
             </li>
           ))}
         </ul>

@@ -26,11 +26,11 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
   return (
     <Link 
       to={`/blog/${post.slug}`}
-      className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-[box-shadow,border-color] duration-300 overflow-hidden flex flex-col h-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+      className="group bg-background rounded-2xl border border-border shadow-sm hover:shadow-xl transition-[box-shadow,border-color] duration-300 overflow-hidden flex flex-col h-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
     >
-      <div className="relative h-48 overflow-hidden bg-gray-100">
+      <div className="relative h-48 overflow-hidden bg-muted">
         <div className="absolute top-4 left-4 z-10">
-          <span className="bg-white/90 backdrop-blur-sm text-brand-dark px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide shadow-sm">
+          <span className="bg-background/90 backdrop-blur-sm text-brand-dark px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide shadow-sm">
             {post.category}
           </span>
         </div>
@@ -44,22 +44,22 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
       </div>
 
       <div className="p-6 flex flex-col flex-grow">
-        <div className="flex items-center gap-4 text-xs text-gray-400 mb-3 font-medium">
+        <div className="flex items-center gap-4 text-xs text-muted-foreground/60 mb-3 font-medium">
           <span className="flex items-center gap-1"><Calendar size={12} /> {date}</span>
           <span className="flex items-center gap-1"><Clock size={12} /> {readTime} min read</span>
         </div>
 
-        <h3 className="text-xl font-bold text-charcoal mb-3 group-hover:text-brand transition-colors line-clamp-2">
+        <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-brand transition-colors line-clamp-2">
           {post.title}
         </h3>
 
-        <p className="text-gray-500 text-sm leading-relaxed mb-4 flex-grow line-clamp-3">
+        <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-grow line-clamp-3">
           {excerpt}
         </p>
 
         <div className="flex flex-wrap gap-2 mb-4">
           {post.tags.slice(0, 2).map((tag, idx) => (
-            <span key={idx} className="bg-gray-50 text-gray-500 px-2 py-1 rounded-md text-xs font-medium">
+            <span key={idx} className="bg-accent text-muted-foreground px-2 py-1 rounded-md text-xs font-medium">
               #{tag}
             </span>
           ))}

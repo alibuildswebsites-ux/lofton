@@ -101,17 +101,17 @@ export const BlogList = () => {
   }, [blogs, activeCategory]);
 
   return (
-    <div className="font-sans bg-gray-50 min-h-screen">
+    <div className="font-sans bg-accent min-h-screen">
       <Navbar />
 
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 pt-32 pb-12">
+      <div className="bg-background border-b border-border pt-32 pb-12">
         <div className="max-w-[1280px] mx-auto px-5 md:px-10 text-center">
           <span className="text-brand font-bold tracking-widest uppercase text-sm mb-3 block">Lofton Realty Insights</span>
-          <h1 className="text-3xl md:text-5xl font-extrabold text-charcoal mb-6 tracking-tight">
+          <h1 className="text-3xl md:text-5xl font-extrabold text-foreground mb-6 tracking-tight">
             Latest Real Estate News & Tips
           </h1>
-          <p className="text-gray-500 max-w-2xl mx-auto text-lg">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
             Expert advice for buyers, sellers, and investors in the Texas market.
           </p>
         </div>
@@ -127,8 +127,8 @@ export const BlogList = () => {
               onClick={() => setActiveCategory(cat)}
               className={`px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap transition-all ${
                 activeCategory === cat 
-                  ? 'bg-brand text-white shadow-lg shadow-brand/20' 
-                  : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300'
+                  ? 'bg-primary text-primary-foreground shadow-lg shadow-brand/20' 
+                  : 'bg-background border border-border text-muted-foreground hover:bg-accent hover:border-gray-300'
               }`}
             >
               {cat}
@@ -152,12 +152,12 @@ export const BlogList = () => {
             ))}
           </div>
         ) : (
-          <div className="text-center py-32 bg-white rounded-2xl border border-gray-100">
-            <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Search className="text-gray-400" size={24} />
+          <div className="text-center py-32 bg-background rounded-2xl border border-border">
+            <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
+              <Search className="text-muted-foreground/60" size={24} />
             </div>
-            <h3 className="text-xl font-bold text-charcoal mb-2">No articles found</h3>
-            <p className="text-gray-500">There are no posts in the {activeCategory} category yet.</p>
+            <h3 className="text-xl font-bold text-foreground mb-2">No articles found</h3>
+            <p className="text-muted-foreground">There are no posts in the {activeCategory} category yet.</p>
             <button 
               onClick={() => setActiveCategory('All')}
               className="mt-6 text-brand font-bold hover:underline"

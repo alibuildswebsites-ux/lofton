@@ -72,22 +72,22 @@ export const AdminTestimonialList = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-extrabold text-charcoal">Testimonials</h1>
-          <p className="text-gray-500">Manage client reviews and display order.</p>
+          <h1 className="text-3xl font-extrabold text-foreground">Testimonials</h1>
+          <p className="text-muted-foreground">Manage client reviews and display order.</p>
         </div>
         <div className="flex gap-2">
           {hasOrderChanged && (
             <button 
               onClick={saveOrder}
               disabled={isSaving}
-              className="bg-charcoal text-white px-4 py-2 rounded-xl font-bold flex items-center gap-2"
+              className="bg-foreground text-background px-4 py-2 rounded-xl font-bold flex items-center gap-2"
             >
               {isSaving ? <Loader2 className="animate-spin" size={18}/> : <Save size={18}/>} Save Order
             </button>
           )}
           <button 
             onClick={handleAddNew}
-            className="bg-brand text-white px-4 py-2 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-brand/20 hover:bg-brand-dark"
+            className="bg-primary text-primary-foreground px-4 py-2 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-brand/20 hover:bg-brand-dark"
           >
             <Plus size={20}/> Add New
           </button>
@@ -97,29 +97,29 @@ export const AdminTestimonialList = () => {
       {loading ? (
         <div className="flex justify-center py-12"><Loader2 className="animate-spin text-brand" size={40}/></div>
       ) : (
-        <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+        <div className="bg-background rounded-2xl border border-border overflow-hidden">
           <table className="w-full text-left">
-            <thead className="bg-gray-50 border-b border-gray-200">
+            <thead className="bg-accent border-b border-border">
               <tr>
                 <th className="w-12 px-4 py-4"></th>
-                <th className="px-6 py-4 font-bold text-gray-600 text-sm">Quote</th>
-                <th className="px-6 py-4 font-bold text-gray-600 text-sm">Author</th>
-                <th className="px-6 py-4 font-bold text-gray-600 text-sm text-right">Actions</th>
+                <th className="px-6 py-4 font-bold text-muted-foreground text-sm">Quote</th>
+                <th className="px-6 py-4 font-bold text-muted-foreground text-sm">Author</th>
+                <th className="px-6 py-4 font-bold text-muted-foreground text-sm text-right">Actions</th>
               </tr>
             </thead>
             <Reorder.Group as="tbody" axis="y" values={testimonials} onReorder={handleReorder} className="divide-y divide-gray-100">
               {testimonials.map(t => (
-                <Reorder.Item key={t.id} value={t} as="tr" className="hover:bg-gray-50 bg-white">
-                  <td className="px-4 py-4 text-gray-400 cursor-grab active:cursor-grabbing"><GripVertical size={20}/></td>
-                  <td className="px-6 py-4 text-sm text-gray-600 italic line-clamp-2 max-w-md">"{t.quote}"</td>
+                <Reorder.Item key={t.id} value={t} as="tr" className="hover:bg-accent bg-background">
+                  <td className="px-4 py-4 text-muted-foreground/60 cursor-grab active:cursor-grabbing"><GripVertical size={20}/></td>
+                  <td className="px-6 py-4 text-sm text-muted-foreground italic line-clamp-2 max-w-md">"{t.quote}"</td>
                   <td className="px-6 py-4">
-                    <div className="font-bold text-charcoal">{t.author}</div>
-                    <div className="text-xs text-gray-500">{t.role}</div>
+                    <div className="font-bold text-foreground">{t.author}</div>
+                    <div className="text-xs text-muted-foreground">{t.role}</div>
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex justify-end gap-2">
-                      <button onClick={() => handleEdit(t)} className="p-2 text-gray-400 hover:text-brand"><Pencil size={18}/></button>
-                      <button onClick={() => handleDelete(t.id)} className="p-2 text-gray-400 hover:text-red-500"><Trash2 size={18}/></button>
+                      <button onClick={() => handleEdit(t)} className="p-2 text-muted-foreground/60 hover:text-brand"><Pencil size={18}/></button>
+                      <button onClick={() => handleDelete(t.id)} className="p-2 text-muted-foreground/60 hover:text-red-500"><Trash2 size={18}/></button>
                     </div>
                   </td>
                 </Reorder.Item>
@@ -132,50 +132,50 @@ export const AdminTestimonialList = () => {
       {/* Edit Modal */}
       {isEditing && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4">
+          <div className="bg-background rounded-2xl max-w-lg w-full p-6 space-y-4">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-bold text-charcoal">{editingId ? 'Edit Testimonial' : 'New Testimonial'}</h3>
-              <button onClick={() => setIsEditing(false)}><X size={24} className="text-gray-400"/></button>
+              <h3 className="text-xl font-bold text-foreground">{editingId ? 'Edit Testimonial' : 'New Testimonial'}</h3>
+              <button onClick={() => setIsEditing(false)}><X size={24} className="text-muted-foreground/60"/></button>
             </div>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-1">Quote</label>
+                <label className="block text-sm font-bold text-foreground mb-1">Quote</label>
                 <textarea 
                   required
                   rows={4}
                   maxLength={300}
                   value={formData.quote}
                   onChange={e => setFormData({...formData, quote: e.target.value})}
-                  className="w-full border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-brand resize-none"
+                  className="w-full border border-border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-brand resize-none"
                   placeholder="Enter client testimonial..."
                 />
-                <div className="text-right text-xs text-gray-400">{formData.quote.length}/300</div>
+                <div className="text-right text-xs text-muted-foreground/60">{formData.quote.length}/300</div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-1">Author Name</label>
+                  <label className="block text-sm font-bold text-foreground mb-1">Author Name</label>
                   <input 
                     required
                     value={formData.author}
                     onChange={e => setFormData({...formData, author: e.target.value})}
-                    className="w-full border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-brand"
+                    className="w-full border border-border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-brand"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-1">Role</label>
+                  <label className="block text-sm font-bold text-foreground mb-1">Role</label>
                   <input 
                     required
                     placeholder="e.g. Buyer"
                     value={formData.role}
                     onChange={e => setFormData({...formData, role: e.target.value})}
-                    className="w-full border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-brand"
+                    className="w-full border border-border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-brand"
                   />
                 </div>
               </div>
               <button 
                 type="submit" 
                 disabled={isSaving}
-                className="w-full bg-brand text-white py-3 rounded-xl font-bold flex justify-center items-center gap-2 hover:bg-brand-dark transition-colors"
+                className="w-full bg-primary text-primary-foreground py-3 rounded-xl font-bold flex justify-center items-center gap-2 hover:bg-brand-dark transition-colors"
               >
                 {isSaving ? <Loader2 className="animate-spin"/> : 'Save Testimonial'}
               </button>

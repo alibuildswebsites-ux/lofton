@@ -69,8 +69,8 @@ const ValuationTool = () => {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden relative">
-      <div className="bg-charcoal p-6 text-white flex items-center justify-between">
+    <div className="bg-background rounded-2xl shadow-xl border border-border overflow-hidden relative">
+      <div className="bg-foreground p-6 text-white flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Calculator className="text-brand" size={24} />
           <h3 className="text-xl font-bold">Instant Home Valuation</h3>
@@ -81,7 +81,7 @@ const ValuationTool = () => {
         {!result ? (
           <form onSubmit={handleCalculate} className="space-y-6">
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-600">Property Address</label>
+              <label className="text-sm font-semibold text-muted-foreground">Property Address</label>
               <input 
                 required
                 type="text"
@@ -94,9 +94,9 @@ const ValuationTool = () => {
             
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="text-sm font-semibold text-gray-600">Property Type</label>
+                <label className="text-sm font-semibold text-muted-foreground">Property Type</label>
                 <select 
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-brand outline-none bg-white"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-brand outline-none bg-background"
                   value={formData.type}
                   onChange={e => setFormData({...formData, type: e.target.value})}
                 >
@@ -106,7 +106,7 @@ const ValuationTool = () => {
                 </select>
               </div>
               <div>
-                <label className="text-sm font-semibold text-gray-600">Year Built</label>
+                <label className="text-sm font-semibold text-muted-foreground">Year Built</label>
                 <input 
                   type="number" 
                   placeholder="2005"
@@ -119,9 +119,9 @@ const ValuationTool = () => {
 
             <div className="grid grid-cols-3 gap-4">
               <div>
-                <label className="text-sm font-semibold text-gray-600">Beds</label>
+                <label className="text-sm font-semibold text-muted-foreground">Beds</label>
                 <select 
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-brand outline-none bg-white"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-brand outline-none bg-background"
                   value={formData.beds}
                   onChange={e => setFormData({...formData, beds: e.target.value})}
                 >
@@ -130,9 +130,9 @@ const ValuationTool = () => {
                 </select>
               </div>
               <div>
-                <label className="text-sm font-semibold text-gray-600">Baths</label>
+                <label className="text-sm font-semibold text-muted-foreground">Baths</label>
                 <select 
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-brand outline-none bg-white"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-brand outline-none bg-background"
                   value={formData.baths}
                   onChange={e => setFormData({...formData, baths: e.target.value})}
                 >
@@ -141,7 +141,7 @@ const ValuationTool = () => {
                 </select>
               </div>
               <div>
-                <label className="text-sm font-semibold text-gray-600">Sq. Ft.</label>
+                <label className="text-sm font-semibold text-muted-foreground">Sq. Ft.</label>
                 <input 
                   required
                   type="number" 
@@ -156,7 +156,7 @@ const ValuationTool = () => {
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full bg-brand text-white font-bold py-4 rounded-xl hover:bg-brand-dark transition-all duration-300 shadow-lg shadow-brand/20 flex justify-center items-center"
+              className="w-full bg-primary text-primary-foreground font-bold py-4 rounded-xl hover:bg-brand-dark transition-all duration-300 shadow-lg shadow-brand/20 flex justify-center items-center"
             >
               {loading ? (
                 <Loader2 className="animate-spin" />
@@ -174,24 +174,24 @@ const ValuationTool = () => {
             <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-6">
               <TrendingUp className="text-green-600" size={32} />
             </div>
-            <h4 className="text-lg text-gray-500 font-medium mb-2">Estimated Market Value</h4>
-            <div className="text-4xl md:text-5xl font-extrabold text-charcoal mb-2">
+            <h4 className="text-lg text-muted-foreground font-medium mb-2">Estimated Market Value</h4>
+            <div className="text-4xl md:text-5xl font-extrabold text-foreground mb-2">
               ${result.min.toLocaleString()} - ${result.max.toLocaleString()}
             </div>
-            <p className="text-sm text-gray-400 mb-8 max-w-sm mx-auto">
+            <p className="text-sm text-muted-foreground/60 mb-8 max-w-sm mx-auto">
               *This is a preliminary estimate based on market averages for {formData.address}.
             </p>
             
             <div className="space-y-3">
               <button 
                 onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
-                className="w-full bg-charcoal text-white font-bold py-3 rounded-lg hover:bg-black transition-colors"
+                className="w-full bg-foreground text-background font-bold py-3 rounded-lg hover:bg-black transition-colors"
               >
                 Request Official CMA Report
               </button>
               <button 
                 onClick={resetForm}
-                className="w-full text-gray-500 font-medium py-2 hover:text-brand transition-colors"
+                className="w-full text-muted-foreground font-medium py-2 hover:text-brand transition-colors"
               >
                 Start Over
               </button>
@@ -335,11 +335,11 @@ export const SellerGuide = () => {
   const heroBg = "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=80";
 
   return (
-    <div className="font-sans bg-white min-h-screen">
+    <div className="font-sans bg-background min-h-screen">
       <Navbar />
 
       {/* Hero Section */}
-      <div className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-charcoal-dark overflow-hidden">
+      <div className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-background overflow-hidden">
         <div 
            className="absolute inset-0 opacity-30 bg-cover bg-center" 
            style={{ backgroundImage: `url(${getOptimizedImageUrl(heroBg, 1200)})` }}
@@ -362,13 +362,13 @@ export const SellerGuide = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <button 
                 onClick={() => document.getElementById('valuation')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-brand text-white hover:bg-brand-dark px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-brand/25 transition-all"
+                className="bg-primary text-primary-foreground hover:bg-brand-dark px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-brand/25 transition-all"
               >
                 Get Free Valuation
               </button>
               <button 
                 onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-transparent border border-white text-white hover:bg-white/10 px-8 py-4 rounded-full font-bold text-lg transition-all"
+                className="bg-transparent border border-white text-white hover:bg-background/10 px-8 py-4 rounded-full font-bold text-lg transition-all"
               >
                 Contact Us
               </button>
@@ -378,20 +378,20 @@ export const SellerGuide = () => {
       </div>
 
       {/* Value Proposition Grid */}
-      <section ref={sectionRef} className="py-20 bg-gray-50 relative -mt-10 md:-mt-20 z-20">
+      <section ref={sectionRef} className="py-20 bg-accent relative -mt-10 md:-mt-20 z-20">
         <div className="max-w-7xl mx-auto px-5 md:px-10">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
             {valueProps.map((vp, idx) => (
               <div 
                 key={idx}
-                className="gsap-seller-card bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:border-brand/30 transition-colors"
+                className="gsap-seller-card bg-background p-8 rounded-2xl shadow-lg border border-border hover:border-brand/30 transition-colors"
                 style={{ willChange: "transform, opacity" }}
               >
                 <div className="w-14 h-14 bg-brand-light rounded-xl flex items-center justify-center text-brand mb-6">
                   <vp.icon size={28} />
                 </div>
-                <h3 className="text-xl font-bold text-charcoal mb-3">{vp.title}</h3>
-                <p className="text-gray-500 leading-relaxed">{vp.desc}</p>
+                <h3 className="text-xl font-bold text-foreground mb-3">{vp.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{vp.desc}</p>
               </div>
             ))}
           </div>
@@ -399,9 +399,9 @@ export const SellerGuide = () => {
       </section>
 
       {/* Quote Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-background">
         <div className="max-w-4xl mx-auto px-5 text-center">
-          <p className="text-2xl md:text-3xl font-medium text-charcoal leading-relaxed">
+          <p className="text-2xl md:text-3xl font-medium text-foreground leading-relaxed">
             "We don't measure success through achievements or awards, but through the satisfaction of our clients. We work relentlessly to help you achieve top dollar for your property."
           </p>
           <div className="h-1 w-20 bg-brand mx-auto mt-8 mb-4" />
@@ -409,7 +409,7 @@ export const SellerGuide = () => {
       </section>
 
       {/* Valuation Tool & Stats */}
-      <section id="valuation" className="py-20 bg-charcoal-dark text-white relative overflow-hidden">
+      <section id="valuation" className="py-20 bg-background text-white relative overflow-hidden">
         {/* Background blobs */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand rounded-full blur-[120px] opacity-10 translate-x-1/2 -translate-y-1/2 pointer-events-none" />
         
@@ -417,7 +417,7 @@ export const SellerGuide = () => {
           <div>
             <span className="text-brand font-bold tracking-widest uppercase text-sm mb-2 block">Market Intelligence</span>
             <h2 className="text-4xl md:text-5xl font-extrabold mb-6">What's Your Home Worth?</h2>
-            <p className="text-gray-400 text-lg mb-10 max-w-lg">
+            <p className="text-muted-foreground/60 text-lg mb-10 max-w-lg">
               Get a preliminary estimate instantly. For a precise valuation, our agents conduct a thorough walkthrough and analysis.
             </p>
             
@@ -425,19 +425,19 @@ export const SellerGuide = () => {
             <div className="grid grid-cols-2 gap-8 border-t border-gray-700 pt-10">
               <div>
                 <div className="text-4xl font-extrabold text-brand mb-1">98.5%</div>
-                <div className="text-sm text-gray-400 font-medium uppercase tracking-wide">Sale-to-List Price</div>
+                <div className="text-sm text-muted-foreground/60 font-medium uppercase tracking-wide">Sale-to-List Price</div>
               </div>
               <div>
                 <div className="text-4xl font-extrabold text-brand mb-1">14</div>
-                <div className="text-sm text-gray-400 font-medium uppercase tracking-wide">Avg. Days on Market</div>
+                <div className="text-sm text-muted-foreground/60 font-medium uppercase tracking-wide">Avg. Days on Market</div>
               </div>
               <div>
                 <div className="text-4xl font-extrabold text-white mb-1">500+</div>
-                <div className="text-sm text-gray-400 font-medium uppercase tracking-wide">Homes Sold</div>
+                <div className="text-sm text-muted-foreground/60 font-medium uppercase tracking-wide">Homes Sold</div>
               </div>
               <div>
                 <div className="text-4xl font-extrabold text-white mb-1">5 ★</div>
-                <div className="text-sm text-gray-400 font-medium uppercase tracking-wide">Client Rating</div>
+                <div className="text-sm text-muted-foreground/60 font-medium uppercase tracking-wide">Client Rating</div>
               </div>
             </div>
           </div>
@@ -447,25 +447,25 @@ export const SellerGuide = () => {
       </section>
 
       {/* Timeline Section */}
-      <section className="py-24 bg-gray-50">
+      <section className="py-24 bg-accent">
         <div className="max-w-7xl mx-auto px-5 md:px-10">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-charcoal mb-4">The Selling Process</h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">From preparation to payday, we guide you through every milestone with transparency and expertise.</p>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-foreground mb-4">The Selling Process</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">From preparation to payday, we guide you through every milestone with transparency and expertise.</p>
           </div>
 
           <div className="relative">
             {/* Vertical Line */}
-            <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-gray-200" />
+            <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-muted" />
 
             <div className="space-y-12">
               {steps.map((step, idx) => (
                 <div key={step.id} className={`flex flex-col md:flex-row gap-8 items-start ${idx % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
                   {/* Content Side */}
                   <div className={`flex-1 w-full pl-16 md:pl-0 ${idx % 2 === 0 ? 'md:text-right md:pr-12' : 'md:pl-12'}`}>
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                      <h3 className="text-xl font-bold text-charcoal mb-2">{step.title}</h3>
-                      <p className="text-gray-500 mb-4">{step.description}</p>
+                    <div className="bg-background p-6 rounded-2xl shadow-sm border border-border hover:shadow-md transition-shadow">
+                      <h3 className="text-xl font-bold text-foreground mb-2">{step.title}</h3>
+                      <p className="text-muted-foreground mb-4">{step.description}</p>
                       
                       <div className={`flex flex-wrap gap-3 ${idx % 2 === 0 ? 'md:justify-end' : ''}`}>
                         {step.downloadable && (
@@ -476,7 +476,7 @@ export const SellerGuide = () => {
                         {step.cta && (
                           <button 
                             onClick={step.cta.action}
-                            className="flex items-center gap-2 text-sm font-bold text-white bg-charcoal px-3 py-1.5 rounded-lg hover:bg-black transition-colors"
+                            className="flex items-center gap-2 text-sm font-bold text-white bg-foreground px-3 py-1.5 rounded-lg hover:bg-black transition-colors"
                           >
                             {step.cta.text} <ArrowRight size={16} />
                           </button>
@@ -500,13 +500,13 @@ export const SellerGuide = () => {
       </section>
 
       {/* Marketing Showcase */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-background">
         <div className="max-w-7xl mx-auto px-5 md:px-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <span className="text-brand font-bold tracking-widest uppercase text-sm mb-2 block">Visual Excellence</span>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-charcoal mb-6">Marketing That Moves</h2>
-              <p className="text-gray-500 text-lg mb-8 leading-relaxed">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-foreground mb-6">Marketing That Moves</h2>
+              <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
                 Most buyers find their home online. We ensure your listing stops the scroll with professional staging, high-dynamic-range photography, and cinematic video tours.
               </p>
               
@@ -514,22 +514,22 @@ export const SellerGuide = () => {
                  <div className="flex gap-4">
                     <CheckCircle2 className="text-brand flex-shrink-0" />
                     <div>
-                      <h4 className="font-bold text-charcoal">Professional Staging Consultation</h4>
-                      <p className="text-sm text-gray-500">We help you declutter and arrange to maximize space.</p>
+                      <h4 className="font-bold text-foreground">Professional Staging Consultation</h4>
+                      <p className="text-sm text-muted-foreground">We help you declutter and arrange to maximize space.</p>
                     </div>
                  </div>
                  <div className="flex gap-4">
                     <CheckCircle2 className="text-brand flex-shrink-0" />
                     <div>
-                      <h4 className="font-bold text-charcoal">HDR Photography & Drone</h4>
-                      <p className="text-sm text-gray-500">Capturing every angle and the surrounding neighborhood.</p>
+                      <h4 className="font-bold text-foreground">HDR Photography & Drone</h4>
+                      <p className="text-sm text-muted-foreground">Capturing every angle and the surrounding neighborhood.</p>
                     </div>
                  </div>
                  <div className="flex gap-4">
                     <CheckCircle2 className="text-brand flex-shrink-0" />
                     <div>
-                      <h4 className="font-bold text-charcoal">Social Media Amplification</h4>
-                      <p className="text-sm text-gray-500">Targeted ads on Instagram, Facebook, and YouTube.</p>
+                      <h4 className="font-bold text-foreground">Social Media Amplification</h4>
+                      <p className="text-sm text-muted-foreground">Targeted ads on Instagram, Facebook, and YouTube.</p>
                     </div>
                  </div>
               </div>
@@ -544,8 +544,8 @@ export const SellerGuide = () => {
                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                  loading="lazy"
                />
-               <div className="absolute bottom-6 left-6 z-20 bg-white/90 backdrop-blur px-4 py-2 rounded-lg shadow-lg">
-                 <span className="font-bold text-charcoal flex items-center gap-2">
+               <div className="absolute bottom-6 left-6 z-20 bg-background/90 backdrop-blur px-4 py-2 rounded-lg shadow-lg">
+                 <span className="font-bold text-foreground flex items-center gap-2">
                    <Camera size={18} className="text-brand" /> 
                    Professional Media Package Included
                  </span>
@@ -556,24 +556,24 @@ export const SellerGuide = () => {
       </section>
 
       {/* FAQ & Testimonials Split */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-accent">
         <div className="max-w-7xl mx-auto px-5 md:px-10 grid lg:grid-cols-2 gap-12">
           
           {/* FAQ */}
           <div>
-            <h3 className="text-2xl font-bold text-charcoal mb-8">Seller Frequently Asked Questions</h3>
+            <h3 className="text-2xl font-bold text-foreground mb-8">Seller Frequently Asked Questions</h3>
             <div className="space-y-4">
               {faqs.map((faq, i) => (
-                <div key={i} className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+                <div key={i} className="bg-background rounded-xl border border-border overflow-hidden">
                   <details className="group p-4 [&_summary::-webkit-details-marker]:hidden">
-                    <summary className="flex cursor-pointer items-center justify-between font-bold text-charcoal text-lg">
+                    <summary className="flex cursor-pointer items-center justify-between font-bold text-foreground text-lg">
                       {faq.q}
-                      <span className="ml-4 shrink-0 rounded-full bg-gray-50 p-1.5 text-gray-900 sm:p-3 group-open:bg-brand group-open:text-white transition-colors">
+                      <span className="ml-4 shrink-0 rounded-full bg-accent p-1.5 text-foreground sm:p-3 group-open:bg-brand group-open:text-white transition-colors">
                         <ChevronDown size={18} className="group-open:hidden" />
                         <ChevronUp size={18} className="hidden group-open:block" />
                       </span>
                     </summary>
-                    <p className="mt-4 leading-relaxed text-gray-500">
+                    <p className="mt-4 leading-relaxed text-muted-foreground">
                       {faq.a}
                     </p>
                   </details>
@@ -584,17 +584,17 @@ export const SellerGuide = () => {
 
           {/* Testimonials */}
           <div>
-            <h3 className="text-2xl font-bold text-charcoal mb-8">Success Stories</h3>
+            <h3 className="text-2xl font-bold text-foreground mb-8">Success Stories</h3>
             <div className="space-y-6">
               {sellerTestimonials.map(t => (
-                <div key={t.id} className="bg-white p-8 rounded-xl border border-gray-100 shadow-sm">
-                  <p className="italic text-gray-600 mb-4">"{t.quote}"</p>
+                <div key={t.id} className="bg-background p-8 rounded-xl border border-border shadow-sm">
+                  <p className="italic text-muted-foreground mb-4">"{t.quote}"</p>
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-brand text-white rounded-full flex items-center justify-center font-bold">
+                    <div className="w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold">
                       {t.author.charAt(0)}
                     </div>
                     <div>
-                      <div className="font-bold text-charcoal">{t.author}</div>
+                      <div className="font-bold text-foreground">{t.author}</div>
                       <div className="text-xs font-bold text-brand uppercase">{t.role}</div>
                     </div>
                   </div>
@@ -607,15 +607,15 @@ export const SellerGuide = () => {
       </section>
 
       {/* Contact Form CTA */}
-      <section id="contact-form" className="py-24 bg-white">
+      <section id="contact-form" className="py-24 bg-background">
         <div className="max-w-4xl mx-auto px-5 md:px-10">
-          <div className="bg-charcoal-dark rounded-[32px] p-8 md:p-16 overflow-hidden relative shadow-2xl">
+          <div className="bg-background rounded-[32px] p-8 md:p-16 overflow-hidden relative shadow-2xl">
             {/* Decor */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-brand rounded-full blur-[80px] opacity-20 translate-x-1/2 -translate-y-1/2" />
 
             <div className="relative z-10 text-center mb-10">
               <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Ready to Sell Your Home?</h2>
-              <p className="text-gray-400 text-lg">Schedule a no-obligation consultation with our team.</p>
+              <p className="text-muted-foreground/60 text-lg">Schedule a no-obligation consultation with our team.</p>
             </div>
             
             <div className="relative z-10 max-w-2xl mx-auto">
@@ -623,7 +623,7 @@ export const SellerGuide = () => {
             </div>
 
             <div className="relative z-10 pt-6 text-center">
-                <p className="text-gray-400 text-sm mb-2">Or call us directly</p>
+                <p className="text-muted-foreground/60 text-sm mb-2">Or call us directly</p>
                 <a href="tel:7132037661" className="text-white font-bold text-xl hover:text-brand transition-colors">
                   (713) 203-7661
                 </a>

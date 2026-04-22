@@ -160,20 +160,20 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
   if (showPreview) {
     const previewProp = { ...formData, id: 'preview', address: `${formData.street}, ${formData.city}, ${formData.state} ${formData.zip}` } as Property;
     return (
-      <div className="fixed inset-0 z-[100] bg-gray-50 flex flex-col overflow-hidden">
-        <div className="bg-white px-6 py-4 border-b border-gray-200 flex justify-between items-center shadow-sm">
-          <h3 className="text-xl font-bold text-charcoal">Preview Mode</h3>
+      <div className="fixed inset-0 z-[100] bg-accent flex flex-col overflow-hidden">
+        <div className="bg-background px-6 py-4 border-b border-border flex justify-between items-center shadow-sm">
+          <h3 className="text-xl font-bold text-foreground">Preview Mode</h3>
           <button 
             onClick={() => setShowPreview(false)}
-            className="flex items-center gap-2 text-gray-600 hover:text-charcoal font-medium"
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground font-medium"
           >
             <X size={20} /> Close Preview
           </button>
         </div>
-        <div className="flex-1 overflow-y-auto p-8 flex justify-center bg-gray-100">
+        <div className="flex-1 overflow-y-auto p-8 flex justify-center bg-muted">
            <div className="max-w-md w-full">
              <PropertyCard property={previewProp} />
-             <div className="mt-8 bg-white p-6 rounded-xl shadow-sm">
+             <div className="mt-8 bg-background p-6 rounded-xl shadow-sm">
                 <h4 className="font-bold text-lg mb-4">Description</h4>
                 <div className="prose prose-sm" dangerouslySetInnerHTML={{ __html: formData.description.replace(/\n/g, '<br/>') }} />
                 
@@ -189,22 +189,22 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+    <form onSubmit={handleSubmit} className="bg-background rounded-2xl shadow-sm border border-border overflow-hidden">
       {/* Header */}
-      <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-        <h2 className="text-lg font-bold text-charcoal">{initialData ? 'Edit Property' : 'Add New Property'}</h2>
+      <div className="px-6 py-4 border-b border-border flex justify-between items-center bg-accent">
+        <h2 className="text-lg font-bold text-foreground">{initialData ? 'Edit Property' : 'Add New Property'}</h2>
         <div className="flex gap-2">
           <button 
             type="button" 
             onClick={() => setShowPreview(true)}
-            className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-200 rounded-lg transition-colors"
+            className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-foreground hover:bg-muted rounded-lg transition-colors"
           >
             <Eye size={16} /> Preview
           </button>
           <button 
             type="button" 
             onClick={onCancel}
-            className="p-1.5 text-gray-400 hover:text-red-500 rounded-lg transition-colors"
+            className="p-1.5 text-muted-foreground/60 hover:text-red-500 rounded-lg transition-colors"
           >
             <X size={20} />
           </button>
@@ -215,11 +215,11 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
         
         {/* Basic Info */}
         <section className="space-y-4">
-          <h3 className="text-sm font-bold text-brand uppercase tracking-wider border-b border-gray-100 pb-2">Basic Details</h3>
+          <h3 className="text-sm font-bold text-brand uppercase tracking-wider border-b border-border pb-2">Basic Details</h3>
           
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">Property Title</label>
+              <label className="block text-sm font-semibold text-foreground mb-1">Property Title</label>
               <input 
                 name="title" 
                 value={formData.title} 
@@ -230,7 +230,7 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">Price ($)</label>
+              <label className="block text-sm font-semibold text-foreground mb-1">Price ($)</label>
               <input 
                 type="number" 
                 name="price" 
@@ -244,12 +244,12 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
 
           <div className="grid md:grid-cols-2 gap-4">
              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">Status</label>
+                <label className="block text-sm font-semibold text-foreground mb-1">Status</label>
                 <select 
                   name="status" 
                   value={formData.status} 
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand outline-none bg-white"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand outline-none bg-background"
                 >
                   <option>For Sale</option>
                   <option>For Rent</option>
@@ -261,12 +261,12 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
                 </select>
              </div>
              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">Type</label>
+                <label className="block text-sm font-semibold text-foreground mb-1">Type</label>
                 <select 
                   name="type" 
                   value={formData.type} 
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand outline-none bg-white"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand outline-none bg-background"
                 >
                   <option>House</option>
                   <option>Condo</option>
@@ -281,11 +281,11 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
 
         {/* Location */}
         <section className="space-y-4">
-          <h3 className="text-sm font-bold text-brand uppercase tracking-wider border-b border-gray-100 pb-2">Location</h3>
+          <h3 className="text-sm font-bold text-brand uppercase tracking-wider border-b border-border pb-2">Location</h3>
           
           <div className="grid gap-4">
              <div>
-               <label className="block text-sm font-semibold text-gray-700 mb-1">Street Address</label>
+               <label className="block text-sm font-semibold text-foreground mb-1">Street Address</label>
                <input 
                   name="street" 
                   value={formData.street} 
@@ -297,7 +297,7 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
              </div>
              <div className="grid grid-cols-3 gap-4">
                <div className="col-span-1">
-                 <label className="block text-sm font-semibold text-gray-700 mb-1">City</label>
+                 <label className="block text-sm font-semibold text-foreground mb-1">City</label>
                  <input 
                     name="city" 
                     value={formData.city} 
@@ -307,7 +307,7 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
                   />
                </div>
                <div className="col-span-1">
-                 <label className="block text-sm font-semibold text-gray-700 mb-1">State</label>
+                 <label className="block text-sm font-semibold text-foreground mb-1">State</label>
                  <input 
                     name="state" 
                     value={formData.state} 
@@ -317,7 +317,7 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
                   />
                </div>
                <div className="col-span-1">
-                 <label className="block text-sm font-semibold text-gray-700 mb-1">Zip</label>
+                 <label className="block text-sm font-semibold text-foreground mb-1">Zip</label>
                  <input 
                     name="zip" 
                     value={formData.zip} 
@@ -332,18 +332,18 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
 
         {/* Specs */}
         <section className="space-y-4">
-          <h3 className="text-sm font-bold text-brand uppercase tracking-wider border-b border-gray-100 pb-2">Property Specs</h3>
+          <h3 className="text-sm font-bold text-brand uppercase tracking-wider border-b border-border pb-2">Property Specs</h3>
           <div className="grid grid-cols-3 gap-4">
              <div>
-               <label className="block text-sm font-semibold text-gray-700 mb-1">Bedrooms</label>
+               <label className="block text-sm font-semibold text-foreground mb-1">Bedrooms</label>
                <input type="number" name="beds" value={formData.beds} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand outline-none" />
              </div>
              <div>
-               <label className="block text-sm font-semibold text-gray-700 mb-1">Bathrooms</label>
+               <label className="block text-sm font-semibold text-foreground mb-1">Bathrooms</label>
                <input type="number" step="0.5" name="baths" value={formData.baths} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand outline-none" />
              </div>
              <div>
-               <label className="block text-sm font-semibold text-gray-700 mb-1">Sq Ft</label>
+               <label className="block text-sm font-semibold text-foreground mb-1">Sq Ft</label>
                <input type="number" name="sqft" value={formData.sqft} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand outline-none" />
              </div>
           </div>
@@ -351,10 +351,10 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
 
         {/* Description & Features */}
         <section className="space-y-4">
-          <h3 className="text-sm font-bold text-brand uppercase tracking-wider border-b border-gray-100 pb-2">Details</h3>
+          <h3 className="text-sm font-bold text-brand uppercase tracking-wider border-b border-border pb-2">Details</h3>
           
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">Description</label>
+            <label className="block text-sm font-semibold text-foreground mb-1">Description</label>
             <textarea 
               name="description" 
               rows={5} 
@@ -366,7 +366,7 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
           </div>
 
           <div>
-             <label className="block text-sm font-semibold text-gray-700 mb-1">Features</label>
+             <label className="block text-sm font-semibold text-foreground mb-1">Features</label>
              <div className="flex gap-2 mb-2">
                <input 
                  value={newFeature} 
@@ -375,7 +375,7 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand outline-none"
                  placeholder="Add a feature (e.g. Pool, Fireplace)"
                />
-               <button type="button" onClick={handleFeatureAdd} className="bg-gray-100 hover:bg-gray-200 text-charcoal px-3 rounded-lg"><Plus size={20}/></button>
+               <button type="button" onClick={handleFeatureAdd} className="bg-muted hover:bg-muted text-foreground px-3 rounded-lg"><Plus size={20}/></button>
              </div>
              <div className="flex flex-wrap gap-2">
                {formData.features.map((f, i) => (
@@ -387,9 +387,9 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
           </div>
 
           <div>
-             <label className="block text-sm font-semibold text-gray-700 mb-1">Tags (Check for 'New Listing')</label>
+             <label className="block text-sm font-semibold text-foreground mb-1">Tags (Check for 'New Listing')</label>
              <div className="flex gap-2 mb-2">
-                <label className="flex items-center gap-2 cursor-pointer bg-gray-50 px-3 py-2 rounded-lg border border-gray-200">
+                <label className="flex items-center gap-2 cursor-pointer bg-accent px-3 py-2 rounded-lg border border-border">
                   <input 
                     type="checkbox" 
                     checked={formData.tags.includes('New Listing')}
@@ -407,11 +407,11 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
 
         {/* Media */}
         <section className="space-y-4">
-           <h3 className="text-sm font-bold text-brand uppercase tracking-wider border-b border-gray-100 pb-2">Media</h3>
+           <h3 className="text-sm font-bold text-brand uppercase tracking-wider border-b border-border pb-2">Media</h3>
            
            <div>
-             <label className="block text-sm font-semibold text-gray-700 mb-2">Images (Drag & Drop)</label>
-             <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-brand transition-colors bg-gray-50 group cursor-pointer relative">
+             <label className="block text-sm font-semibold text-foreground mb-2">Images (Drag & Drop)</label>
+             <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-brand transition-colors bg-accent group cursor-pointer relative">
                 <input 
                   type="file" 
                   multiple 
@@ -420,8 +420,8 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 />
                 <div className="pointer-events-none">
-                  <Upload className="mx-auto text-gray-400 group-hover:text-brand mb-2" size={32} />
-                  <p className="text-sm text-gray-500 font-medium">Click or Drag images here</p>
+                  <Upload className="mx-auto text-muted-foreground/60 group-hover:text-brand mb-2" size={32} />
+                  <p className="text-sm text-muted-foreground font-medium">Click or Drag images here</p>
                 </div>
              </div>
              
@@ -429,7 +429,7 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
              {formData.images.length > 0 && (
                 <div className="grid grid-cols-4 sm:grid-cols-5 gap-3 mt-4">
                    {formData.images.map((img, i) => (
-                      <div key={i} className="relative aspect-square rounded-lg overflow-hidden group border border-gray-200 bg-gray-100">
+                      <div key={i} className="relative aspect-square rounded-lg overflow-hidden group border border-border bg-muted">
                          <img src={img} alt="" className="w-full h-full object-cover" />
                          <button 
                             type="button" 
@@ -445,19 +445,19 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
            </div>
 
            <div className="mt-4">
-             <label className="block text-sm font-semibold text-gray-700 mb-2">Videos (Max 100MB)</label>
+             <label className="block text-sm font-semibold text-foreground mb-2">Videos (Max 100MB)</label>
              <div className="flex items-center gap-4">
-               <label className="cursor-pointer bg-white border border-gray-300 hover:bg-gray-50 text-charcoal px-4 py-2 rounded-lg font-medium inline-flex items-center gap-2">
+               <label className="cursor-pointer bg-background border border-gray-300 hover:bg-accent text-foreground px-4 py-2 rounded-lg font-medium inline-flex items-center gap-2">
                  <Video size={18} /> Add Video
                  <input type="file" accept="video/*" onChange={handleVideoUpload} className="hidden" />
                </label>
-               {uploadingMedia && <span className="text-sm text-gray-500 flex items-center gap-2"><Loader2 size={14} className="animate-spin" /> Uploading to Cloudinary...</span>}
+               {uploadingMedia && <span className="text-sm text-muted-foreground flex items-center gap-2"><Loader2 size={14} className="animate-spin" /> Uploading to Cloudinary...</span>}
              </div>
              {formData.videos.length > 0 && (
                <div className="mt-2 space-y-2">
                  {formData.videos.map((vid, i) => (
-                   <div key={i} className="flex items-center justify-between bg-gray-50 p-2 rounded-lg border border-gray-200">
-                      <span className="text-xs text-gray-500 truncate max-w-[200px]">Video {i + 1}</span>
+                   <div key={i} className="flex items-center justify-between bg-accent p-2 rounded-lg border border-border">
+                      <span className="text-xs text-muted-foreground truncate max-w-[200px]">Video {i + 1}</span>
                       <button type="button" onClick={() => handleMediaRemove('videos', i)} className="text-red-500 hover:text-red-700"><Trash2 size={16} /></button>
                    </div>
                  ))}
@@ -468,18 +468,18 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
 
       </div>
 
-      <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-end gap-3">
+      <div className="px-6 py-4 bg-accent border-t border-border flex justify-end gap-3">
          <button 
            type="button" 
            onClick={onCancel}
-           className="px-6 py-2.5 rounded-xl font-bold text-gray-600 hover:bg-gray-200 transition-colors"
+           className="px-6 py-2.5 rounded-xl font-bold text-muted-foreground hover:bg-muted transition-colors"
          >
            Cancel
          </button>
          <button 
            type="submit" 
            disabled={loading || uploadingMedia}
-           className="px-6 py-2.5 rounded-xl font-bold bg-brand text-white hover:bg-brand-dark transition-colors flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-brand/20"
+           className="px-6 py-2.5 rounded-xl font-bold bg-primary text-primary-foreground hover:bg-brand-dark transition-colors flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-brand/20"
          >
            {loading ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
            {loading ? 'Saving...' : 'Save Property'}

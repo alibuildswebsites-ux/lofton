@@ -65,7 +65,7 @@ export const TestimonialsSection = () => {
 
   if (loading) {
     return (
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-background">
         <LoadingSpinner />
       </section>
     );
@@ -74,9 +74,9 @@ export const TestimonialsSection = () => {
   if (testimonials.length === 0) return null;
 
   return (
-    <section className="py-[60px] md:py-[80px] lg:py-[100px] bg-white relative overflow-hidden" id="testimonials">
+    <section className="py-[60px] md:py-[80px] lg:py-[100px] bg-background relative overflow-hidden" id="testimonials">
        {/* Background Elements */}
-       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[500px] bg-gray-50 rounded-full blur-3xl -z-10 opacity-60" />
+       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[500px] bg-accent rounded-full blur-3xl -z-10 opacity-60" />
 
       <div className="max-w-[1400px] mx-auto px-5 md:px-10">
         <SectionHeader 
@@ -105,7 +105,7 @@ export const TestimonialsSection = () => {
                   {chunk.map((testimonial) => (
                     <div
                       key={testimonial.id}
-                      className="bg-white border border-gray-100 p-8 rounded-[24px] shadow-sm hover:shadow-xl transition-[box-shadow,border-color] duration-300 flex flex-col h-full relative group min-h-[320px]"
+                      className="bg-background border border-border p-8 rounded-[24px] shadow-sm hover:shadow-xl transition-[box-shadow,border-color] duration-300 flex flex-col h-full relative group min-h-[320px]"
                     >
                       {/* Quote Icon */}
                       <div className="mb-6">
@@ -115,14 +115,14 @@ export const TestimonialsSection = () => {
                       </div>
 
                       {/* Content */}
-                      <p className="text-gray-600 text-lg leading-relaxed italic mb-8 flex-grow">
+                      <p className="text-muted-foreground text-lg leading-relaxed italic mb-8 flex-grow">
                         "{testimonial.quote}"
                       </p>
 
                       {/* Footer */}
                       <div className="border-t border-gray-50 pt-6">
-                          <h4 className="font-bold text-charcoal text-base">{testimonial.author}</h4>
-                          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mt-1">{testimonial.role}</p>
+                          <h4 className="font-bold text-foreground text-base">{testimonial.author}</h4>
+                          <p className="text-xs font-semibold text-muted-foreground/60 uppercase tracking-wide mt-1">{testimonial.role}</p>
                       </div>
                     </div>
                   ))}
@@ -136,7 +136,7 @@ export const TestimonialsSection = () => {
             <button 
               onClick={handlePrev}
               disabled={totalPages <= 1}
-              className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:border-brand hover:text-brand transition-all active:scale-95 bg-white shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-12 h-12 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:border-brand hover:text-brand transition-all active:scale-95 bg-background shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
               aria-label="Previous testimonials"
             >
               <ChevronLeft size={24} />
@@ -144,7 +144,7 @@ export const TestimonialsSection = () => {
             <button 
               onClick={handleNext}
               disabled={totalPages <= 1}
-              className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:border-brand hover:text-brand transition-all active:scale-95 bg-white shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-12 h-12 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:border-brand hover:text-brand transition-all active:scale-95 bg-background shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
               aria-label="Next testimonials"
             >
               <ChevronRight size={24} />

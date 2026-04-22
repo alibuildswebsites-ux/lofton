@@ -13,7 +13,7 @@ export const LocationCard: React.FC<LocationCardProps> = ({ location }) => {
     <div
       className="
         flex-shrink-0 w-full md:w-80 h-64
-        bg-white rounded-lg shadow-md
+        bg-background rounded-lg shadow-md
         p-6 flex flex-col
         hover:shadow-lg transition-shadow duration-300
         will-change-transform
@@ -27,13 +27,13 @@ export const LocationCard: React.FC<LocationCardProps> = ({ location }) => {
           <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-brand-light">
             <MapPin className="h-4 w-4 text-brand-dark" />
           </span>
-          <h3 className="text-xl font-semibold text-gray-900">
+          <h3 className="text-xl font-semibold text-foreground">
             {location.name}
           </h3>
         </div>
 
         <p
-          className="text-gray-600 text-sm leading-relaxed"
+          className="text-muted-foreground text-sm leading-relaxed"
           style={{
             display: '-webkit-box',
             WebkitLineClamp: 4,

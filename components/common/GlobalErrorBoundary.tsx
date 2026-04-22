@@ -33,17 +33,17 @@ export class GlobalErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4 text-center">
-          <div className="bg-white p-8 rounded-3xl shadow-xl border border-gray-100 max-w-md w-full">
+        <div className="min-h-screen bg-accent flex flex-col items-center justify-center p-4 text-center">
+          <div className="bg-background p-8 rounded-3xl shadow-xl border border-border max-w-md w-full">
             <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
               <AlertTriangle className="text-red-500" size={32} />
             </div>
-            <h1 className="text-2xl font-extrabold text-charcoal mb-2">Something went wrong</h1>
-            <p className="text-gray-500 mb-8 text-sm leading-relaxed">
+            <h1 className="text-2xl font-extrabold text-foreground mb-2">Something went wrong</h1>
+            <p className="text-muted-foreground mb-8 text-sm leading-relaxed">
               We encountered an unexpected error. Please try refreshing the page.
             </p>
             {this.state.error && (
-                <div className="bg-gray-50 p-4 rounded-xl mb-8 text-left overflow-hidden">
+                <div className="bg-accent p-4 rounded-xl mb-8 text-left overflow-hidden">
                 <code className="text-xs text-red-500 font-mono break-all">
                     {this.state.error.message}
                 </code>
@@ -51,7 +51,7 @@ export class GlobalErrorBoundary extends Component<Props, State> {
             )}
             <button
               onClick={this.handleReload}
-              className="w-full bg-charcoal text-white py-3 rounded-xl font-bold hover:bg-black transition-colors flex items-center justify-center gap-2"
+              className="w-full bg-foreground text-background py-3 rounded-xl font-bold hover:bg-black transition-colors flex items-center justify-center gap-2"
             >
               <RefreshCw size={18} /> Reload Page
             </button>

@@ -31,7 +31,7 @@ export const ForgotPasswordPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
+    <div className="min-h-screen bg-accent flex flex-col font-sans">
       <Navbar />
       
       {/* Centered Content */}
@@ -42,17 +42,17 @@ export const ForgotPasswordPage = () => {
             transition={{ duration: 0.4 }}
             className="w-full max-w-md"
         >
-          <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8 md:p-10 text-center relative overflow-hidden">
+          <div className="bg-background rounded-3xl shadow-xl border border-border p-8 md:p-10 text-center relative overflow-hidden">
             {/* Background decoration */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-brand/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
             
             <div className="relative z-10">
-                <div className="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm border border-gray-100">
+                <div className="w-16 h-16 bg-accent rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm border border-border">
                     <KeyRound className="text-brand" size={32} />
                 </div>
 
-                <h1 className="text-3xl font-extrabold text-charcoal mb-3">Forgot Password?</h1>
-                <p className="text-gray-500 mb-8 leading-relaxed">
+                <h1 className="text-3xl font-extrabold text-foreground mb-3">Forgot Password?</h1>
+                <p className="text-muted-foreground mb-8 leading-relaxed">
                   No worries! Enter your email and we'll send you reset instructions.
                 </p>
 
@@ -80,15 +80,15 @@ export const ForgotPasswordPage = () => {
 
                 <form onSubmit={handleSubmit} className="space-y-6 text-left">
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-gray-700 ml-1">Email Address</label>
+                    <label className="text-sm font-bold text-foreground ml-1">Email Address</label>
                     <div className="relative group">
-                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-brand transition-colors" size={20} />
+                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/60 group-focus-within:text-brand transition-colors" size={20} />
                       <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="w-full pl-11 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all font-medium"
+                        className="w-full pl-11 pr-4 py-4 bg-accent border border-border rounded-xl focus:bg-background focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all font-medium"
                         placeholder="you@example.com"
                       />
                     </div>
@@ -97,17 +97,17 @@ export const ForgotPasswordPage = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-charcoal text-white py-4 rounded-xl font-bold hover:bg-black transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-full bg-foreground text-background py-4 rounded-xl font-bold hover:bg-black transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {loading && <Loader2 className="animate-spin" size={20} />}
                     {loading ? 'Sending Instructions...' : 'Reset Password'}
                   </button>
                 </form>
 
-                <div className="mt-8 pt-6 border-t border-gray-100">
+                <div className="mt-8 pt-6 border-t border-border">
                   <Link 
                     to="/login" 
-                    className="inline-flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-charcoal transition-colors group"
+                    className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-foreground transition-colors group"
                   >
                     <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
                     Back to Sign In

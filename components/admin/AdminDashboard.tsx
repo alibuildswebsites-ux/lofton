@@ -71,23 +71,23 @@ export const AdminDashboard = () => {
     <div className="space-y-8">
       
       {/* Top Tab Navigation */}
-      <div className="flex gap-4 border-b border-gray-200 overflow-x-auto no-scrollbar pb-1">
-        <button onClick={() => setActiveTab('overview')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'overview' ? 'border-brand text-brand' : 'border-transparent text-gray-500 hover:text-charcoal'}`}>
+      <div className="flex gap-4 border-b border-border overflow-x-auto no-scrollbar pb-1">
+        <button onClick={() => setActiveTab('overview')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'overview' ? 'border-brand text-brand' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
           <BarChart3 size={18} /> Overview
         </button>
-        <button onClick={() => setActiveTab('properties')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'properties' ? 'border-brand text-brand' : 'border-transparent text-gray-500 hover:text-charcoal'}`}>
+        <button onClick={() => setActiveTab('properties')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'properties' ? 'border-brand text-brand' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
           <LayoutGrid size={18} /> Properties
         </button>
-        <button onClick={() => setActiveTab('clients')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'clients' ? 'border-brand text-brand' : 'border-transparent text-gray-500 hover:text-charcoal'}`}>
+        <button onClick={() => setActiveTab('clients')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'clients' ? 'border-brand text-brand' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
           <Users size={18} /> Clients
         </button>
-        <button onClick={() => setActiveTab('blogs')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'blogs' ? 'border-brand text-brand' : 'border-transparent text-gray-500 hover:text-charcoal'}`}>
+        <button onClick={() => setActiveTab('blogs')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'blogs' ? 'border-brand text-brand' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
           <FileText size={18} /> Blog
         </button>
-        <button onClick={() => setActiveTab('agents')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'agents' ? 'border-brand text-brand' : 'border-transparent text-gray-500 hover:text-charcoal'}`}>
+        <button onClick={() => setActiveTab('agents')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'agents' ? 'border-brand text-brand' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
           <Briefcase size={18} /> Agents
         </button>
-        <button onClick={() => setActiveTab('testimonials')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'testimonials' ? 'border-brand text-brand' : 'border-transparent text-gray-500 hover:text-charcoal'}`}>
+        <button onClick={() => setActiveTab('testimonials')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'testimonials' ? 'border-brand text-brand' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
           <MessageSquare size={18} /> Testimonials
         </button>
       </div>
@@ -111,53 +111,53 @@ export const AdminDashboard = () => {
         ) : (
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-              <h2 className="text-2xl font-bold text-charcoal">Property Listings</h2>
+              <h2 className="text-2xl font-bold text-foreground">Property Listings</h2>
               <button 
                 onClick={handleAddNewProp}
-                className="bg-brand text-white px-5 py-2.5 rounded-xl font-bold hover:bg-brand-dark transition-colors flex items-center gap-2 shadow-lg shadow-brand/20"
+                className="bg-primary text-primary-foreground px-5 py-2.5 rounded-xl font-bold hover:bg-brand-dark transition-colors flex items-center gap-2 shadow-lg shadow-brand/20"
               >
                 <Plus size={20} /> Add Property
               </button>
             </div>
 
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/60" size={20} />
               <input 
                 type="text" 
                 placeholder="Search properties..." 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand"
+                className="w-full pl-11 pr-4 py-3 bg-background border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-brand"
               />
             </div>
 
             {loadingProps ? (
               <div className="flex justify-center py-12"><LoadingSpinner /></div>
             ) : filteredProperties.length === 0 ? (
-              <div className="text-center py-12 bg-white rounded-2xl border border-gray-100 text-gray-500">No properties found.</div>
+              <div className="text-center py-12 bg-background rounded-2xl border border-border text-muted-foreground">No properties found.</div>
             ) : (
-              <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+              <div className="bg-background rounded-2xl border border-border overflow-hidden">
                 <table className="w-full text-left">
-                  <thead className="bg-gray-50 border-b border-gray-200">
+                  <thead className="bg-accent border-b border-border">
                     <tr>
-                      <th className="px-6 py-4 font-bold text-gray-600 text-sm">Property</th>
-                      <th className="px-6 py-4 font-bold text-gray-600 text-sm">Status</th>
-                      <th className="px-6 py-4 font-bold text-gray-600 text-sm">Views</th>
-                      <th className="px-6 py-4 font-bold text-gray-600 text-sm">Price</th>
-                      <th className="px-6 py-4 font-bold text-gray-600 text-sm text-right">Actions</th>
+                      <th className="px-6 py-4 font-bold text-muted-foreground text-sm">Property</th>
+                      <th className="px-6 py-4 font-bold text-muted-foreground text-sm">Status</th>
+                      <th className="px-6 py-4 font-bold text-muted-foreground text-sm">Views</th>
+                      <th className="px-6 py-4 font-bold text-muted-foreground text-sm">Price</th>
+                      <th className="px-6 py-4 font-bold text-muted-foreground text-sm text-right">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-100">
                     {filteredProperties.map(p => (
-                      <tr key={p.id} className="hover:bg-gray-50">
+                      <tr key={p.id} className="hover:bg-accent">
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
+                            <div className="w-12 h-12 rounded-lg bg-muted overflow-hidden flex-shrink-0">
                               {p.images[0] && <img src={p.images[0]} className="w-full h-full object-cover" />}
                             </div>
                             <div>
-                              <div className="font-bold text-charcoal">{p.title}</div>
-                              <div className="text-xs text-gray-500">{p.address}</div>
+                              <div className="font-bold text-foreground">{p.title}</div>
+                              <div className="text-xs text-muted-foreground">{p.address}</div>
                             </div>
                           </div>
                         </td>
@@ -166,14 +166,14 @@ export const AdminDashboard = () => {
                             {p.status}
                           </span>
                         </td>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-600">
+                        <td className="px-6 py-4 text-sm font-medium text-muted-foreground">
                           {p.views || 0}
                         </td>
                         <td className="px-6 py-4 font-bold">${p.price.toLocaleString()}</td>
                         <td className="px-6 py-4 text-right">
                           <div className="flex justify-end gap-2">
-                            <button onClick={() => handleEditProp(p)} className="p-2 text-gray-400 hover:text-brand"><Pencil size={18}/></button>
-                            <button onClick={() => handleDeleteProp(p.id)} className="p-2 text-gray-400 hover:text-red-500"><Trash2 size={18}/></button>
+                            <button onClick={() => handleEditProp(p)} className="p-2 text-muted-foreground/60 hover:text-brand"><Pencil size={18}/></button>
+                            <button onClick={() => handleDeleteProp(p.id)} className="p-2 text-muted-foreground/60 hover:text-red-500"><Trash2 size={18}/></button>
                           </div>
                         </td>
                       </tr>

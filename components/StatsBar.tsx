@@ -36,7 +36,7 @@ const CountUpStats = ({ value, suffix }: { value: number, suffix: string }) => {
 
 export const StatsBar = () => {
   return (
-    <section className="bg-gray-50 border-b border-gray-100 py-[40px] md:py-[60px]">
+    <section className="bg-accent border-b border-border py-[40px] md:py-[60px]">
       <div className="max-w-[1280px] mx-auto px-5 md:px-10 lg:px-[40px]">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {STATS.map((stat, idx) => (
@@ -49,11 +49,11 @@ export const StatsBar = () => {
               </div>
               
               {/* Count Up Animation */}
-              <h3 className="text-[48px] leading-tight font-extrabold text-charcoal-dark mb-1">
+              <h3 className="text-[48px] leading-tight font-extrabold text-foreground-dark mb-1">
                 <CountUpStats value={stat.value} suffix={stat.suffix} />
               </h3>
               
-              <p className="text-[16px] text-gray-500 font-medium">{stat.label}</p>
+              <p className="text-[16px] text-muted-foreground font-medium">{stat.label}</p>
             </div>
           ))}
         </div>
@@ -65,7 +65,7 @@ export const StatsBar = () => {
               <Star key={s} size={24} className="fill-brand text-brand" />
             ))}
           </div>
-          <p className="text-[14px] text-gray-400 font-medium">4.9 Average client rating</p>
+          <p className="text-[14px] text-muted-foreground/60 font-medium">4.9 Average client rating</p>
         </div>
       </div>
     </section>

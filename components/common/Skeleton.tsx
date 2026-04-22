@@ -8,7 +8,7 @@ interface SkeletonProps {
 
 export const Skeleton: React.FC<SkeletonProps> = ({ className = "" }) => {
   return (
-    <div className={`relative overflow-hidden bg-gray-100 rounded-lg ${className}`}>
+    <div className={`relative overflow-hidden bg-muted rounded-lg ${className}`}>
       <motion.div
         className="absolute inset-0"
         style={{
@@ -29,7 +29,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({ className = "" }) => {
 
 export const PropertySkeleton = () => {
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 h-full">
+    <div className="bg-background rounded-2xl overflow-hidden shadow-sm border border-border h-full">
       <Skeleton className="h-64 w-full rounded-none" />
       <div className="p-6 space-y-4">
         <div className="flex justify-between items-start">
@@ -49,7 +49,7 @@ export const PropertySkeleton = () => {
 
 export const BlogSkeleton = () => {
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 h-full">
+    <div className="bg-background rounded-2xl overflow-hidden shadow-sm border border-border h-full">
       <Skeleton className="h-56 w-full rounded-none" />
       <div className="p-6 space-y-4">
         <Skeleton className="h-4 w-1/4" />
@@ -63,7 +63,7 @@ export const BlogSkeleton = () => {
 
 export const AgentSkeleton = () => {
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col h-full">
+    <div className="bg-background rounded-2xl border border-border shadow-sm overflow-hidden flex flex-col h-full">
       <div className="p-6 flex flex-col items-center text-center flex-grow">
         <Skeleton className="w-32 h-32 rounded-full mb-6" />
         <Skeleton className="h-6 w-3/4 mb-2" />

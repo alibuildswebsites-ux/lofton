@@ -18,9 +18,9 @@ export const AdminRoute: React.FC<AdminRouteProps> = ({ children }) => {
 
   if (loading) {
     return (
-      <div className="fixed inset-0 bg-white z-[9999] flex flex-col items-center justify-center">
+      <div className="fixed inset-0 bg-background z-[9999] flex flex-col items-center justify-center">
         <Loader2 className="w-10 h-10 text-brand animate-spin mb-4" />
-        <p className="text-gray-400 text-sm font-medium tracking-widest uppercase animate-pulse">
+        <p className="text-muted-foreground/60 text-sm font-medium tracking-widest uppercase animate-pulse">
           Verifying Access...
         </p>
       </div>
@@ -33,24 +33,24 @@ export const AdminRoute: React.FC<AdminRouteProps> = ({ children }) => {
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4 text-center">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-accent px-4 text-center">
         <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-6">
           <ShieldAlert className="text-red-600" size={32} />
         </div>
-        <h1 className="text-2xl font-bold text-charcoal mb-2">Access Denied</h1>
-        <p className="text-gray-500 max-w-md mb-8">
+        <h1 className="text-2xl font-bold text-foreground mb-2">Access Denied</h1>
+        <p className="text-muted-foreground max-w-md mb-8">
           You do not have administrative privileges to view this page.
         </p>
         <div className="flex gap-4">
           <button 
             onClick={() => window.location.href = '/dashboard'}
-            className="bg-charcoal text-white px-6 py-3 rounded-xl font-bold hover:bg-black transition-colors"
+            className="bg-foreground text-background px-6 py-3 rounded-xl font-bold hover:bg-black transition-colors"
           >
             Return to Dashboard
           </button>
           <button 
             onClick={handleLogout}
-            className="flex items-center gap-2 bg-white border border-gray-200 text-gray-700 px-6 py-3 rounded-xl font-bold hover:bg-gray-50 transition-colors"
+            className="flex items-center gap-2 bg-background border border-border text-foreground px-6 py-3 rounded-xl font-bold hover:bg-accent transition-colors"
           >
             <LogOut size={18} /> Sign Out
           </button>

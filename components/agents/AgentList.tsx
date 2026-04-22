@@ -70,16 +70,16 @@ export const AgentList = () => {
   }, { scope: sectionRef, dependencies: [loading, agents] });
 
   return (
-    <div className="font-sans bg-gray-50 min-h-screen">
+    <div className="font-sans bg-accent min-h-screen">
       <Navbar />
 
-      <div className="bg-white border-b border-gray-200 pt-32 pb-12">
+      <div className="bg-background border-b border-border pt-32 pb-12">
         <div className="max-w-[1280px] mx-auto px-5 md:px-10 text-center">
           <span className="text-brand font-bold tracking-widest uppercase text-sm mb-3 block">Our Experts</span>
-          <h1 className="text-3xl md:text-5xl font-extrabold text-charcoal mb-6 tracking-tight">
+          <h1 className="text-3xl md:text-5xl font-extrabold text-foreground mb-6 tracking-tight">
             Meet The Team
           </h1>
-          <p className="text-gray-500 max-w-2xl mx-auto text-lg">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
             Dedicated professionals committed to your real estate success.
           </p>
         </div>
@@ -101,12 +101,12 @@ export const AgentList = () => {
             ))}
           </div>
         ) : (
-          <div className="text-center py-20 bg-white rounded-2xl border border-gray-100">
-            <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Search className="text-gray-400" size={24} />
+          <div className="text-center py-20 bg-background rounded-2xl border border-border">
+            <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
+              <Search className="text-muted-foreground/60" size={24} />
             </div>
-            <h3 className="text-xl font-bold text-charcoal mb-2">No agents found</h3>
-            <p className="text-gray-500">Check back soon to meet our growing team.</p>
+            <h3 className="text-xl font-bold text-foreground mb-2">No agents found</h3>
+            <p className="text-muted-foreground">Check back soon to meet our growing team.</p>
             <button 
               onClick={() => window.location.reload()}
               className="mt-6 text-brand font-bold hover:underline"

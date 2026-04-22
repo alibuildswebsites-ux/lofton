@@ -146,29 +146,29 @@ export const SharedContactForm: React.FC<SharedContactFormProps> = ({ variant = 
 
   // Styles
   const isDark = variant === 'dark';
-  const labelClass = `text-sm font-bold ${isDark ? 'text-white/90' : 'text-gray-700'}`;
+  const labelClass = `text-sm font-bold ${isDark ? 'text-white/90' : 'text-foreground'}`;
   const inputBase = `w-full px-4 py-3 rounded-xl outline-none focus:ring-4 transition-all`;
   
   const getInputClass = (hasError: boolean) => {
     if (isDark) {
-      return `${inputBase} bg-white/10 text-white placeholder-gray-400 ${hasError ? 'border border-red-400 focus:ring-red-400/20' : 'border border-white/20 focus:border-brand focus:ring-brand/50'}`;
+      return `${inputBase} bg-background/10 text-white placeholder-gray-400 ${hasError ? 'border border-red-400 focus:ring-red-400/20' : 'border border-white/20 focus:border-brand focus:ring-brand/50'}`;
     }
-    return `${inputBase} bg-white text-gray-900 placeholder-gray-400 ${hasError ? 'border border-red-300 focus:ring-red-100' : 'border border-gray-200 focus:border-brand focus:ring-brand/20'}`;
+    return `${inputBase} bg-background text-foreground placeholder-gray-400 ${hasError ? 'border border-red-300 focus:ring-red-100' : 'border border-border focus:border-brand focus:ring-brand/20'}`;
   };
 
-  const selectArrowClass = `absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none ${isDark ? 'text-white/50' : 'text-gray-400'}`;
+  const selectArrowClass = `absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none ${isDark ? 'text-white/50' : 'text-muted-foreground/60'}`;
 
   if (isSuccess) {
     return (
       <motion.div 
         initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-        className={`flex flex-col items-center justify-center py-12 text-center rounded-2xl ${isDark ? 'bg-white/5 border border-white/10' : 'bg-green-50 border border-green-100'}`}
+        className={`flex flex-col items-center justify-center py-12 text-center rounded-2xl ${isDark ? 'bg-background/5 border border-white/10' : 'bg-green-50 border border-green-100'}`}
       >
         <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 ${isDark ? 'bg-green-500/20 text-green-400' : 'bg-green-100 text-green-600'}`}>
           <CheckCircle2 size={32} />
         </div>
-        <h3 className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-charcoal'}`}>Message Sent!</h3>
-        <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>We'll be in touch shortly.</p>
+        <h3 className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-foreground'}`}>Message Sent!</h3>
+        <p className={`${isDark ? 'text-gray-300' : 'text-muted-foreground'}`}>We'll be in touch shortly.</p>
         <button 
           onClick={() => setIsSuccess(false)}
           className="mt-6 text-brand font-bold hover:underline"
@@ -230,10 +230,10 @@ export const SharedContactForm: React.FC<SharedContactFormProps> = ({ variant = 
             {['Phone', 'Email', 'Text'].map((m) => (
               <label key={m} className="flex items-center gap-2 cursor-pointer group">
                 <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${formData.method === m ? 'border-brand bg-brand' : (isDark ? 'border-gray-500 group-hover:border-brand' : 'border-gray-300 group-hover:border-brand')}`}>
-                  {formData.method === m && <div className="w-2 h-2 rounded-full bg-white" />}
+                  {formData.method === m && <div className="w-2 h-2 rounded-full bg-background" />}
                 </div>
                 <input type="radio" name="method" value={m} checked={formData.method === m} onChange={(e) => setFormData(prev => ({ ...prev, method: e.target.value as any }))} className="hidden" />
-                <span className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm font-medium`}>{m}</span>
+                <span className={`${isDark ? 'text-gray-300' : 'text-muted-foreground'} text-sm font-medium`}>{m}</span>
               </label>
             ))}
           </div>
@@ -246,11 +246,11 @@ export const SharedContactForm: React.FC<SharedContactFormProps> = ({ variant = 
               name="interest" value={formData.interest} onChange={handleChange}
               className={`${getInputClass(false)} appearance-none`}
             >
-              <option className="text-gray-900">Buying a Home</option>
-              <option className="text-gray-900">Selling a Home</option>
-              <option className="text-gray-900">Investment Properties</option>
-              <option className="text-gray-900">Renting</option>
-              <option className="text-gray-900">General Inquiry</option>
+              <option className="text-foreground">Buying a Home</option>
+              <option className="text-foreground">Selling a Home</option>
+              <option className="text-foreground">Investment Properties</option>
+              <option className="text-foreground">Renting</option>
+              <option className="text-foreground">General Inquiry</option>
             </select>
             <ArrowRight size={16} className={`${selectArrowClass} rotate-90`} />
           </div>
@@ -263,13 +263,13 @@ export const SharedContactForm: React.FC<SharedContactFormProps> = ({ variant = 
               name="location" value={formData.location} onChange={handleChange}
               className={`${getInputClass(false)} appearance-none`}
             >
-              <option className="text-gray-900">Houston, TX</option>
-              <option className="text-gray-900">Galveston, TX</option>
-              <option className="text-gray-900">Austin, TX</option>
-              <option className="text-gray-900">Louisiana</option>
-              <option className="text-gray-900">Mississippi</option>
-              <option className="text-gray-900">Florida</option>
-              <option className="text-gray-900">Not sure yet</option>
+              <option className="text-foreground">Houston, TX</option>
+              <option className="text-foreground">Galveston, TX</option>
+              <option className="text-foreground">Austin, TX</option>
+              <option className="text-foreground">Louisiana</option>
+              <option className="text-foreground">Mississippi</option>
+              <option className="text-foreground">Florida</option>
+              <option className="text-foreground">Not sure yet</option>
             </select>
             <ArrowRight size={16} className={`${selectArrowClass} rotate-90`} />
           </div>
@@ -286,7 +286,7 @@ export const SharedContactForm: React.FC<SharedContactFormProps> = ({ variant = 
             placeholder="Tell us about your property goals..."
             maxLength={500}
           />
-          <div className={`absolute bottom-3 right-3 text-xs font-medium ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+          <div className={`absolute bottom-3 right-3 text-xs font-medium ${isDark ? 'text-muted-foreground' : 'text-muted-foreground/60'}`}>
             {formData.message.length}/500
           </div>
         </div>
@@ -303,10 +303,10 @@ export const SharedContactForm: React.FC<SharedContactFormProps> = ({ variant = 
               onClick={() => handleCheckboxChange(time)}
               className={`px-4 py-2 rounded-lg text-sm font-medium border transition-all ${
                 formData.times.includes(time) 
-                  ? 'bg-brand text-white border-brand' 
+                  ? 'bg-primary text-primary-foreground border-brand' 
                   : isDark 
-                    ? 'bg-white/5 border-white/20 text-gray-300 hover:bg-white/10'
-                    : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300'
+                    ? 'bg-background/5 border-white/20 text-gray-300 hover:bg-background/10'
+                    : 'bg-background border-border text-muted-foreground hover:border-gray-300'
               }`}
             >
               {time}
@@ -318,7 +318,7 @@ export const SharedContactForm: React.FC<SharedContactFormProps> = ({ variant = 
       <button 
         type="submit" 
         disabled={isSubmitting}
-        className="w-full bg-brand text-white font-bold py-4 rounded-xl hover:bg-brand-dark transition-all shadow-lg hover:shadow-brand/20 disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center gap-2"
+        className="w-full bg-primary text-primary-foreground font-bold py-4 rounded-xl hover:bg-brand-dark transition-all shadow-lg hover:shadow-brand/20 disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center gap-2"
       >
         {isSubmitting ? <Loader2 className="animate-spin" /> : <Send size={20} />}
         {isSubmitting ? 'Sending...' : 'Send Message'}

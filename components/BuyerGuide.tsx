@@ -57,32 +57,32 @@ const MortgageCalculator = () => {
   const totalMonthly = monthlyPayment + taxes + insurance;
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-      <div className="bg-charcoal p-6 text-white flex items-center gap-3">
+    <div className="bg-background rounded-2xl shadow-lg border border-border overflow-hidden">
+      <div className="bg-foreground p-6 text-white flex items-center gap-3">
         <Calculator className="text-brand" size={24} />
         <h3 className="text-xl font-bold">Mortgage Calculator</h3>
       </div>
       <div className="p-6 md:p-8 grid md:grid-cols-2 gap-8">
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-semibold text-gray-600 mb-2">Home Price: ${price.toLocaleString()}</label>
+            <label className="block text-sm font-semibold text-muted-foreground mb-2">Home Price: ${price.toLocaleString()}</label>
             <input 
               type="range" min="100000" max="2000000" step="5000" 
               value={price} onChange={(e) => setPrice(Number(e.target.value))}
-              className="w-full accent-brand h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer touch-manipulation py-4"
+              className="w-full accent-brand h-2 bg-muted rounded-lg appearance-none cursor-pointer touch-manipulation py-4"
             />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-600 mb-2">Down Payment: {downPaymentPercent}% (${downPaymentAmount.toLocaleString()})</label>
+            <label className="block text-sm font-semibold text-muted-foreground mb-2">Down Payment: {downPaymentPercent}% (${downPaymentAmount.toLocaleString()})</label>
             <input 
               type="range" min="3" max="50" step="1" 
               value={downPaymentPercent} onChange={(e) => setDownPaymentPercent(Number(e.target.value))}
-              className="w-full accent-brand h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer touch-manipulation py-4"
+              className="w-full accent-brand h-2 bg-muted rounded-lg appearance-none cursor-pointer touch-manipulation py-4"
             />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-semibold text-gray-600 mb-1">Interest Rate (%)</label>
+              <label className="block text-sm font-semibold text-muted-foreground mb-1">Interest Rate (%)</label>
               <input 
                 type="number" step="0.1" min="0" max="15" 
                 value={interestRate} 
@@ -94,10 +94,10 @@ const MortgageCalculator = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-600 mb-1">Loan Term (Years)</label>
+              <label className="block text-sm font-semibold text-muted-foreground mb-1">Loan Term (Years)</label>
               <select 
                 value={term} onChange={(e) => setTerm(Number(e.target.value))}
-                className="w-full border border-gray-300 rounded-md px-3 py-3 focus:ring-2 focus:ring-brand outline-none bg-white"
+                className="w-full border border-gray-300 rounded-md px-3 py-3 focus:ring-2 focus:ring-brand outline-none bg-background"
               >
                 <option value={30}>30 Years</option>
                 <option value={15}>15 Years</option>
@@ -106,9 +106,9 @@ const MortgageCalculator = () => {
           </div>
         </div>
 
-        <div className="flex flex-col justify-center items-center bg-gray-50 rounded-xl p-6 border border-gray-100">
-          <span className="text-gray-500 font-medium mb-1">Estimated Monthly Payment</span>
-          <span className="text-4xl md:text-5xl font-extrabold text-charcoal mb-6">
+        <div className="flex flex-col justify-center items-center bg-accent rounded-xl p-6 border border-border">
+          <span className="text-muted-foreground font-medium mb-1">Estimated Monthly Payment</span>
+          <span className="text-4xl md:text-5xl font-extrabold text-foreground mb-6">
             ${Math.round(totalMonthly).toLocaleString()}
           </span>
           <div className="w-full space-y-3 text-sm">
@@ -318,11 +318,11 @@ export const BuyerGuide = () => {
   const heroBg = "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1920&q=80";
 
   return (
-    <div className="font-sans bg-white min-h-screen">
+    <div className="font-sans bg-background min-h-screen">
       <Navbar />
 
       {/* Hero Section */}
-      <div className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-charcoal-dark overflow-hidden">
+      <div className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-background overflow-hidden">
         <div 
           className="absolute inset-0 opacity-20 bg-cover bg-center" 
           style={{ backgroundImage: `url(${getOptimizedImageUrl(heroBg, 1200)})` }}
@@ -344,7 +344,7 @@ export const BuyerGuide = () => {
             </p>
             <button 
               onClick={() => document.getElementById('step-1')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-brand text-white hover:bg-brand-dark px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-brand/25 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand focus-visible:ring-offset-charcoal-dark"
+              className="bg-primary text-primary-foreground hover:bg-brand-dark px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-brand/25 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand focus-visible:ring-offset-charcoal-dark"
             >
               Start Your Journey
             </button>
@@ -353,14 +353,14 @@ export const BuyerGuide = () => {
       </div>
 
       {/* Intro Quote */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-accent">
         <div className="max-w-4xl mx-auto px-5 text-center">
           <div className="relative">
             <span className="text-6xl text-brand/20 absolute -top-8 -left-4 font-serif">"</span>
-            <blockquote className="text-2xl md:text-3xl font-medium text-charcoal leading-relaxed relative z-10">
+            <blockquote className="text-2xl md:text-3xl font-medium text-foreground leading-relaxed relative z-10">
               Buying a home is more than just a transaction—it's a life-changing experience. I pledge to be in constant communication, keeping you fully informed throughout the entire process.
             </blockquote>
-            <cite className="block mt-6 text-gray-500 font-bold not-italic text-sm tracking-wide uppercase">
+            <cite className="block mt-6 text-muted-foreground font-bold not-italic text-sm tracking-wide uppercase">
               — Jared Lofton, Founder
             </cite>
           </div>
@@ -372,7 +372,7 @@ export const BuyerGuide = () => {
         
         {/* Sticky Sidebar Navigation (Desktop) */}
         <aside className="hidden lg:block h-fit sticky top-28">
-          <nav className="space-y-1 border-l-2 border-gray-100 pl-4">
+          <nav className="space-y-1 border-l-2 border-border pl-4">
             {steps.map((step) => (
               <a
                 key={step.id}
@@ -382,7 +382,7 @@ export const BuyerGuide = () => {
                   document.getElementById(step.id)?.scrollIntoView({ behavior: 'smooth' });
                 }}
                 className={`block py-2 text-sm font-bold transition-colors ${
-                  activeStep === step.id ? 'text-brand -ml-[18px] pl-[14px] border-l-2 border-brand' : 'text-gray-400 hover:text-charcoal'
+                  activeStep === step.id ? 'text-brand -ml-[18px] pl-[14px] border-l-2 border-brand' : 'text-muted-foreground/60 hover:text-foreground'
                 }`}
               >
                 {step.title}
@@ -391,8 +391,8 @@ export const BuyerGuide = () => {
           </nav>
           
           <div className="mt-10 bg-brand-light/50 p-6 rounded-xl border border-brand/20">
-            <h4 className="font-bold text-charcoal mb-2">Need Help?</h4>
-            <p className="text-sm text-gray-600 mb-4">Our team is ready to answer your questions.</p>
+            <h4 className="font-bold text-foreground mb-2">Need Help?</h4>
+            <p className="text-sm text-muted-foreground mb-4">Our team is ready to answer your questions.</p>
             <a href="tel:713-203-7661" className="flex items-center gap-2 text-brand font-bold text-sm hover:underline">
               <Phone size={16} /> (713) 203-7661
             </a>
@@ -402,17 +402,17 @@ export const BuyerGuide = () => {
         {/* Step-by-Step Timeline */}
         <div ref={sectionRef} className="space-y-16">
           <div className="lg:hidden mb-8">
-            <h2 className="text-3xl font-extrabold text-charcoal">7 Steps to Homeownership</h2>
+            <h2 className="text-3xl font-extrabold text-foreground">7 Steps to Homeownership</h2>
           </div>
 
           <div className="relative">
              {/* Timeline Line */}
-             <div className="absolute left-8 top-4 bottom-4 w-0.5 bg-gray-200 hidden md:block" />
+             <div className="absolute left-8 top-4 bottom-4 w-0.5 bg-muted hidden md:block" />
 
              {steps.map((step, index) => (
                <div key={step.id} id={step.id} className="gsap-step-card relative mb-16 last:mb-0 md:pl-24 scroll-mt-32" style={{ perspective: "1200px", transformStyle: "preserve-3d", willChange: "transform, opacity" }}>
                  {/* Timeline Icon Bubble */}
-                 <div className="hidden md:flex absolute left-0 top-0 w-16 h-16 rounded-full bg-white border-4 border-gray-100 items-center justify-center text-brand z-10 shadow-sm">
+                 <div className="hidden md:flex absolute left-0 top-0 w-16 h-16 rounded-full bg-background border-4 border-border items-center justify-center text-brand z-10 shadow-sm">
                    <step.icon size={28} />
                  </div>
 
@@ -421,17 +421,17 @@ export const BuyerGuide = () => {
                    <div className="w-12 h-12 rounded-full bg-brand-light flex items-center justify-center text-brand">
                      <step.icon size={24} />
                    </div>
-                   <h3 className="text-xl font-bold text-charcoal">Step {index + 1}</h3>
+                   <h3 className="text-xl font-bold text-foreground">Step {index + 1}</h3>
                  </div>
 
-                 <div className="bg-white border border-gray-100 rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-md transition-shadow">
-                   <h3 className="hidden md:block text-2xl font-bold text-charcoal mb-2">{step.title}</h3>
-                   <h3 className="md:hidden text-2xl font-bold text-charcoal mb-2">{step.title}</h3>
-                   <p className="text-lg text-gray-500 mb-6">{step.description}</p>
+                 <div className="bg-background border border-border rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-md transition-shadow">
+                   <h3 className="hidden md:block text-2xl font-bold text-foreground mb-2">{step.title}</h3>
+                   <h3 className="md:hidden text-2xl font-bold text-foreground mb-2">{step.title}</h3>
+                   <p className="text-lg text-muted-foreground mb-6">{step.description}</p>
                    
                    <ul className="space-y-3 mb-6">
                      {step.details.map((detail, idx) => (
-                       <li key={idx} className="flex items-start gap-3 text-gray-700">
+                       <li key={idx} className="flex items-start gap-3 text-foreground">
                          <CheckCircle2 size={18} className="text-brand flex-shrink-0 mt-1" />
                          <span>{detail}</span>
                        </li>
@@ -441,7 +441,7 @@ export const BuyerGuide = () => {
                    {step.cta && (
                      <button 
                        onClick={step.cta.action}
-                       className="inline-flex items-center gap-2 text-charcoal font-bold hover:text-brand transition-colors"
+                       className="inline-flex items-center gap-2 text-foreground font-bold hover:text-brand transition-colors"
                      >
                        {step.cta.text} <ArrowRight size={18} />
                      </button>
@@ -454,11 +454,11 @@ export const BuyerGuide = () => {
       </div>
 
       {/* Interactive Tools Section */}
-      <section className="py-20 bg-gray-50 border-t border-gray-100">
+      <section className="py-20 bg-accent border-t border-border">
         <div className="max-w-7xl mx-auto px-5 md:px-10">
           <div className="text-center mb-12">
             <span className="text-brand font-bold tracking-widest uppercase text-sm">Planning Tools</span>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-charcoal mt-2">Plan Your Purchase</h2>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-foreground mt-2">Plan Your Purchase</h2>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12">
@@ -468,8 +468,8 @@ export const BuyerGuide = () => {
             {/* Resources & Downloads */}
             <div className="space-y-8">
               {/* FAQ Accordion */}
-              <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                 <h3 className="text-xl font-bold text-charcoal mb-6">Common Questions</h3>
+              <div className="bg-background p-8 rounded-2xl shadow-sm border border-border">
+                 <h3 className="text-xl font-bold text-foreground mb-6">Common Questions</h3>
                  <div className="space-y-2">
                    {faqs.map((faq, idx) => (
                      <FAQItem key={idx} faq={faq} />
@@ -482,17 +482,17 @@ export const BuyerGuide = () => {
       </section>
 
       {/* Buyer Testimonials */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-background">
         <div className="max-w-7xl mx-auto px-5 md:px-10">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-charcoal">Buyer Success Stories</h2>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-foreground">Buyer Success Stories</h2>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {buyerTestimonials.map((t) => (
-               <div key={t.id} className="bg-gray-50 p-8 rounded-2xl border border-gray-100">
-                 <p className="text-gray-600 italic mb-6">"{t.quote}"</p>
+               <div key={t.id} className="bg-accent p-8 rounded-2xl border border-border">
+                 <p className="text-muted-foreground italic mb-6">"{t.quote}"</p>
                  <div>
-                   <h5 className="font-bold text-charcoal">{t.author}</h5>
+                   <h5 className="font-bold text-foreground">{t.author}</h5>
                    <span className="text-xs font-bold text-brand uppercase">{t.role}</span>
                  </div>
                </div>
@@ -502,15 +502,15 @@ export const BuyerGuide = () => {
       </section>
 
       {/* Contact Form CTA (Dark Card Theme) */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-background">
         <div className="max-w-4xl mx-auto px-5 md:px-10">
-          <div className="bg-charcoal-dark rounded-[32px] p-8 md:p-16 overflow-hidden relative shadow-2xl">
+          <div className="bg-background rounded-[32px] p-8 md:p-16 overflow-hidden relative shadow-2xl">
             {/* Decor */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-brand rounded-full blur-[80px] opacity-20 translate-x-1/2 -translate-y-1/2" />
 
             <div className="relative z-10 text-center mb-10">
               <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Ready to Start Your Journey?</h2>
-              <p className="text-gray-400 text-lg">Schedule a free consultation with our buying experts.</p>
+              <p className="text-muted-foreground/60 text-lg">Schedule a free consultation with our buying experts.</p>
             </div>
             
             <div className="relative z-10 max-w-2xl mx-auto">
@@ -518,7 +518,7 @@ export const BuyerGuide = () => {
             </div>
 
             <div className="relative z-10 pt-6 text-center">
-                <p className="text-gray-400 text-sm mb-2">Or call us directly</p>
+                <p className="text-muted-foreground/60 text-sm mb-2">Or call us directly</p>
                 <a href="tel:7132037661" className="text-white font-bold text-xl hover:text-brand transition-colors">
                   (713) 203-7661
                 </a>
@@ -537,15 +537,15 @@ const FAQItem: React.FC<{ faq: FAQ }> = ({ faq }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border-b border-gray-100 last:border-0">
+    <div className="border-b border-border last:border-0">
       <button 
         onClick={() => setIsOpen(!isOpen)}
         className="w-full py-4 flex justify-between items-center text-left focus:outline-none group"
       >
-        <span className={`font-bold transition-colors ${isOpen ? 'text-brand' : 'text-gray-700 group-hover:text-charcoal'}`}>
+        <span className={`font-bold transition-colors ${isOpen ? 'text-brand' : 'text-foreground group-hover:text-foreground'}`}>
           {faq.question}
         </span>
-        {isOpen ? <ChevronUp size={18} className="text-brand" /> : <ChevronDown size={18} className="text-gray-400" />}
+        {isOpen ? <ChevronUp size={18} className="text-brand" /> : <ChevronDown size={18} className="text-muted-foreground/60" />}
       </button>
       <AnimatePresence>
         {isOpen && (
@@ -556,7 +556,7 @@ const FAQItem: React.FC<{ faq: FAQ }> = ({ faq }) => {
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <p className="pb-4 text-gray-500 text-sm leading-relaxed">
+            <p className="pb-4 text-muted-foreground text-sm leading-relaxed">
               {faq.answer}
             </p>
           </motion.div>

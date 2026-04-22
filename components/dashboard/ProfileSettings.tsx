@@ -78,9 +78,9 @@ export const ProfileSettings = () => {
 
   const InputField = ({ icon: Icon, label, type, value, onChange, disabled = false, placeholder, required = false }: any) => (
     <div className="space-y-2">
-      <label className="text-sm font-bold text-charcoal ml-1">{label}</label>
+      <label className="text-sm font-bold text-foreground ml-1">{label}</label>
       <div className="relative group">
-        <Icon className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors ${disabled ? 'text-gray-300' : 'text-gray-400 group-focus-within:text-brand'}`} size={20} />
+        <Icon className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors ${disabled ? 'text-gray-300' : 'text-muted-foreground/60 group-focus-within:text-brand'}`} size={20} />
         <input
           type={type}
           value={value}
@@ -90,8 +90,8 @@ export const ProfileSettings = () => {
           placeholder={placeholder}
           className={`w-full pl-11 pr-4 py-3.5 rounded-xl border transition-all duration-200 font-medium ${
             disabled 
-              ? 'bg-gray-50 border-gray-200 text-gray-400 cursor-not-allowed' 
-              : 'bg-white border-gray-200 focus:bg-white focus:ring-2 focus:ring-brand focus:border-transparent text-charcoal'
+              ? 'bg-accent border-border text-muted-foreground/60 cursor-not-allowed' 
+              : 'bg-background border-border focus:bg-background focus:ring-2 focus:ring-brand focus:border-transparent text-foreground'
           }`}
         />
       </div>
@@ -105,15 +105,15 @@ export const ProfileSettings = () => {
       className="max-w-3xl"
     >
       <div className="mb-8">
-        <h1 className="text-3xl font-extrabold text-charcoal tracking-tight mb-2">Profile Settings</h1>
-        <p className="text-gray-500">Manage your personal information and security preferences.</p>
+        <h1 className="text-3xl font-extrabold text-foreground tracking-tight mb-2">Profile Settings</h1>
+        <p className="text-muted-foreground">Manage your personal information and security preferences.</p>
       </div>
 
       <div className="space-y-8">
         {/* Personal Info Card */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-background rounded-2xl shadow-sm border border-border overflow-hidden">
           <div className="p-6 md:p-8">
-            <h2 className="text-xl font-bold text-charcoal mb-6 flex items-center gap-2">
+            <h2 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
               <User className="text-brand" size={24} /> Personal Information
             </h2>
             
@@ -152,7 +152,7 @@ export const ProfileSettings = () => {
                   <button
                     type="submit"
                     disabled={nameLoading}
-                    className="bg-charcoal text-white px-8 py-3 rounded-xl font-bold hover:bg-black transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg shadow-charcoal/20"
+                    className="bg-foreground text-background px-8 py-3 rounded-xl font-bold hover:bg-black transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg shadow-charcoal/20"
                   >
                     {nameLoading && <Loader2 className="animate-spin" size={18} />}
                     {nameLoading ? 'Saving...' : 'Save Changes'}
@@ -163,9 +163,9 @@ export const ProfileSettings = () => {
         </div>
 
         {/* Security Card */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-background rounded-2xl shadow-sm border border-border overflow-hidden">
           <div className="p-6 md:p-8">
-            <h2 className="text-xl font-bold text-charcoal mb-6 flex items-center gap-2">
+            <h2 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
               <Shield className="text-brand" size={24} /> Security
             </h2>
 
@@ -218,7 +218,7 @@ export const ProfileSettings = () => {
                       <button
                         type="submit"
                         disabled={passwordLoading}
-                        className="bg-white border-2 border-charcoal text-charcoal px-8 py-3 rounded-xl font-bold hover:bg-gray-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                        className="bg-background border-2 border-charcoal text-foreground px-8 py-3 rounded-xl font-bold hover:bg-accent transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                       >
                         {passwordLoading && <Loader2 className="animate-spin" size={18} />}
                         {passwordLoading ? 'Updating...' : 'Update Password'}

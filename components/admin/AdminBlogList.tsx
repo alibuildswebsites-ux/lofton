@@ -46,12 +46,12 @@ export const AdminBlogList: React.FC<AdminBlogListProps> = ({ onEdit, onAddNew }
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-charcoal tracking-tight">Blog Management</h1>
-          <p className="text-gray-500">Create, edit, and manage your articles.</p>
+          <h1 className="text-3xl font-extrabold text-foreground tracking-tight">Blog Management</h1>
+          <p className="text-muted-foreground">Create, edit, and manage your articles.</p>
         </div>
         <button 
           onClick={onAddNew}
-          className="flex items-center gap-2 bg-brand text-white px-5 py-2.5 rounded-xl font-bold hover:bg-brand-dark transition-colors shadow-lg shadow-brand/20"
+          className="flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-xl font-bold hover:bg-brand-dark transition-colors shadow-lg shadow-brand/20"
         >
           <Plus size={20} /> Create New Blog
         </button>
@@ -59,13 +59,13 @@ export const AdminBlogList: React.FC<AdminBlogListProps> = ({ onEdit, onAddNew }
 
       {/* Search Bar */}
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/60" size={20} />
         <input 
           type="text" 
           placeholder="Search by title or category..." 
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-11 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent"
+          className="w-full pl-11 pr-4 py-3 bg-background border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent"
         />
       </div>
 
@@ -75,42 +75,42 @@ export const AdminBlogList: React.FC<AdminBlogListProps> = ({ onEdit, onAddNew }
           <Loader2 className="animate-spin text-brand" size={40} />
         </div>
       ) : filteredBlogs.length === 0 ? (
-        <div className="text-center py-12 bg-white rounded-2xl border border-gray-100">
-           <p className="text-gray-500 font-medium">No blog posts found.</p>
+        <div className="text-center py-12 bg-background rounded-2xl border border-border">
+           <p className="text-muted-foreground font-medium">No blog posts found.</p>
         </div>
       ) : (
-        <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+        <div className="bg-background rounded-2xl border border-border overflow-hidden shadow-sm">
            <div className="overflow-x-auto">
              <table className="w-full text-left">
-               <thead className="bg-gray-50 border-b border-gray-200">
+               <thead className="bg-accent border-b border-border">
                  <tr>
-                   <th className="px-6 py-4 font-bold text-gray-600 text-sm uppercase tracking-wider">Title</th>
-                   <th className="px-6 py-4 font-bold text-gray-600 text-sm uppercase tracking-wider">Category</th>
-                   <th className="px-6 py-4 font-bold text-gray-600 text-sm uppercase tracking-wider">Status</th>
-                   <th className="px-6 py-4 font-bold text-gray-600 text-sm uppercase tracking-wider">Date</th>
-                   <th className="px-6 py-4 font-bold text-gray-600 text-sm uppercase tracking-wider text-right">Actions</th>
+                   <th className="px-6 py-4 font-bold text-muted-foreground text-sm uppercase tracking-wider">Title</th>
+                   <th className="px-6 py-4 font-bold text-muted-foreground text-sm uppercase tracking-wider">Category</th>
+                   <th className="px-6 py-4 font-bold text-muted-foreground text-sm uppercase tracking-wider">Status</th>
+                   <th className="px-6 py-4 font-bold text-muted-foreground text-sm uppercase tracking-wider">Date</th>
+                   <th className="px-6 py-4 font-bold text-muted-foreground text-sm uppercase tracking-wider text-right">Actions</th>
                  </tr>
                </thead>
                <tbody className="divide-y divide-gray-100">
                  {filteredBlogs.map(blog => (
-                   <tr key={blog.id} className="hover:bg-gray-50 transition-colors">
+                   <tr key={blog.id} className="hover:bg-accent transition-colors">
                      <td className="px-6 py-4">
                        <div className="flex items-center gap-4">
-                         <div className="w-12 h-12 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
+                         <div className="w-12 h-12 rounded-lg bg-muted overflow-hidden flex-shrink-0">
                            {blog.featuredImage ? (
                              <img src={blog.featuredImage} alt={blog.title} className="w-full h-full object-cover" />
                            ) : (
-                             <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">No Img</div>
+                             <div className="w-full h-full flex items-center justify-center text-muted-foreground/60 text-xs">No Img</div>
                            )}
                          </div>
                          <div>
-                           <h4 className="font-bold text-charcoal line-clamp-1">{blog.title}</h4>
+                           <h4 className="font-bold text-foreground line-clamp-1">{blog.title}</h4>
                            <Link to={`/blog/${blog.slug}`} className="text-xs text-brand hover:underline" target="_blank">View Live</Link>
                          </div>
                        </div>
                      </td>
                      <td className="px-6 py-4">
-                        <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs font-medium">
+                        <span className="bg-muted text-muted-foreground px-2 py-1 rounded text-xs font-medium">
                           {blog.category}
                         </span>
                      </td>
@@ -121,20 +121,20 @@ export const AdminBlogList: React.FC<AdminBlogListProps> = ({ onEdit, onAddNew }
                           {blog.published ? 'Published' : 'Draft'}
                         </span>
                      </td>
-                     <td className="px-6 py-4 text-sm text-gray-500">
+                     <td className="px-6 py-4 text-sm text-muted-foreground">
                        {new Date(blog.createdAt).toLocaleDateString()}
                      </td>
                      <td className="px-6 py-4 text-right">
                        <div className="flex items-center justify-end gap-2">
                          <button 
                            onClick={() => onEdit(blog)}
-                           className="p-2 text-gray-400 hover:text-brand hover:bg-brand-light rounded-lg transition-all"
+                           className="p-2 text-muted-foreground/60 hover:text-brand hover:bg-brand-light rounded-lg transition-all"
                          >
                            <Pencil size={18} />
                          </button>
                          <button 
                            onClick={() => handleDelete(blog.id)}
-                           className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                           className="p-2 text-muted-foreground/60 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
                          >
                            <Trash2 size={18} />
                          </button>

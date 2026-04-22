@@ -63,16 +63,16 @@ export const DashboardHome = () => {
       {/* Welcome Header */}
       <motion.div variants={item} className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-charcoal tracking-tight">
+          <h1 className="text-3xl font-extrabold text-foreground tracking-tight">
             Dashboard
           </h1>
-          <p className="text-gray-500 mt-1">
-            Welcome back, <span className="text-charcoal font-bold">{user?.displayName || 'Friend'}</span>.
+          <p className="text-muted-foreground mt-1">
+            Welcome back, <span className="text-foreground font-bold">{user?.displayName || 'Friend'}</span>.
           </p>
         </div>
         <Link 
           to="/property-listings"
-          className="inline-flex items-center justify-center gap-2 bg-charcoal text-white px-5 py-2.5 rounded-lg font-bold hover:bg-black transition-colors shadow-lg shadow-charcoal/20"
+          className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-5 py-2.5 rounded-lg font-bold hover:bg-black transition-colors shadow-lg shadow-charcoal/20"
         >
           Find a Home <ArrowRight size={18} />
         </Link>
@@ -80,20 +80,20 @@ export const DashboardHome = () => {
 
       {/* Quick Actions */}
       <motion.div variants={item}>
-        <h2 className="text-xl font-bold text-charcoal mb-4">Quick Actions</h2>
+        <h2 className="text-xl font-bold text-foreground mb-4">Quick Actions</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {quickActions.map((action, index) => (
             <Link
               key={index}
               to={action.link}
-              className="flex items-center gap-4 p-4 bg-white border border-gray-100 rounded-2xl hover:shadow-lg hover:border-gray-200 transition-[box-shadow,border-color] duration-300 group"
+              className="flex items-center gap-4 p-4 bg-background border border-border rounded-2xl hover:shadow-lg hover:border-border transition-[box-shadow,border-color] duration-300 group"
             >
               <div className={`w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center ${action.color}`}>
                 <action.icon size={22} />
               </div>
               <div className="flex-grow">
-                <h3 className="font-bold text-charcoal group-hover:text-brand transition-colors">{action.title}</h3>
-                <p className="text-sm text-gray-500">{action.desc}</p>
+                <h3 className="font-bold text-foreground group-hover:text-brand transition-colors">{action.title}</h3>
+                <p className="text-sm text-muted-foreground">{action.desc}</p>
               </div>
               <ArrowRight size={18} className="text-gray-300 group-hover:text-brand transition-colors duration-300" />
             </Link>
@@ -102,26 +102,26 @@ export const DashboardHome = () => {
       </motion.div>
 
       {/* Account Info Card */}
-      <motion.div variants={item} className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
-        <div className="p-6 border-b border-gray-100 bg-gray-50/50">
-           <h2 className="text-lg font-bold text-charcoal">Account Details</h2>
+      <motion.div variants={item} className="bg-background rounded-2xl border border-border overflow-hidden">
+        <div className="p-6 border-b border-border bg-accent/50">
+           <h2 className="text-lg font-bold text-foreground">Account Details</h2>
         </div>
         <div className="p-6">
           <div className="grid md:grid-cols-2 gap-6">
              <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-400 uppercase tracking-wide">Email Address</label>
-                <p className="font-medium text-charcoal">{user?.email}</p>
+                <label className="text-xs font-bold text-muted-foreground/60 uppercase tracking-wide">Email Address</label>
+                <p className="font-medium text-foreground">{user?.email}</p>
              </div>
              <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-400 uppercase tracking-wide">Last Sign In</label>
-                <p className="font-medium text-charcoal">
+                <label className="text-xs font-bold text-muted-foreground/60 uppercase tracking-wide">Last Sign In</label>
+                <p className="font-medium text-foreground">
                     {user?.metadata?.lastSignInTime 
                         ? new Date(user.metadata.lastSignInTime).toLocaleDateString(undefined, { dateStyle: 'full' }) 
                         : 'Just now'}
                 </p>
              </div>
              <div className="space-y-1">
-                <label className="text-xs font-bold text-gray-400 uppercase tracking-wide">Account Status</label>
+                <label className="text-xs font-bold text-muted-foreground/60 uppercase tracking-wide">Account Status</label>
                 <div className="flex items-center gap-2">
                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                    <span className="font-bold text-green-600 text-sm">Verified Active</span>

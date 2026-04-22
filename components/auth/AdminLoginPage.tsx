@@ -48,7 +48,7 @@ export const AdminLoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 flex flex-col font-sans relative overflow-hidden">
+    <div className="min-h-screen bg-background flex flex-col font-sans relative overflow-hidden">
         {/* Background Overlay */}
         <div className="absolute inset-0 z-0 opacity-20">
             <img 
@@ -63,15 +63,15 @@ export const AdminLoginPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden"
+            className="w-full max-w-md bg-background rounded-2xl shadow-2xl overflow-hidden"
         >
             <div className="p-8 sm:p-12">
                 <div className="text-center mb-8">
-                    <div className="w-16 h-16 bg-gray-900 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <div className="w-16 h-16 bg-background rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                         <ShieldCheck className="text-white" size={32} />
                     </div>
-                    <h1 className="text-2xl font-extrabold text-gray-900 tracking-tight">Admin Portal</h1>
-                    <p className="mt-2 text-sm text-gray-500">
+                    <h1 className="text-2xl font-extrabold text-foreground tracking-tight">Admin Portal</h1>
+                    <p className="mt-2 text-sm text-muted-foreground">
                         Secure access for Lofton Realty administrators
                     </p>
                 </div>
@@ -89,32 +89,32 @@ export const AdminLoginPage = () => {
 
                 <form onSubmit={handleLogin} className="space-y-5">
                     <div className="space-y-2">
-                        <label className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Email Address</label>
+                        <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider ml-1">Email Address</label>
                         <div className="relative group">
-                            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-gray-900 transition-colors" size={20} />
+                            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/60 group-focus-within:text-foreground transition-colors" size={20} />
                             <input
                                 type="email"
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
                                 required
-                                className="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all font-medium text-gray-900"
+                                className="w-full pl-11 pr-4 py-3.5 bg-accent border border-border rounded-xl focus:bg-background focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all font-medium text-foreground"
                                 placeholder="admin@loftonrealty.com"
                             />
                         </div>
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Password</label>
+                        <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider ml-1">Password</label>
                         <div className="relative group">
-                            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-gray-900 transition-colors" size={20} />
+                            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/60 group-focus-within:text-foreground transition-colors" size={20} />
                             <input
                                 type="password"
                                 name="password"
                                 value={formData.password}
                                 onChange={handleChange}
                                 required
-                                className="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all font-medium text-gray-900"
+                                className="w-full pl-11 pr-4 py-3.5 bg-accent border border-border rounded-xl focus:bg-background focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all font-medium text-foreground"
                                 placeholder="••••••••"
                             />
                         </div>
@@ -123,7 +123,7 @@ export const AdminLoginPage = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-gray-900 text-white py-3.5 rounded-xl font-bold hover:bg-black transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-4"
+                        className="w-full bg-background text-white py-3.5 rounded-xl font-bold hover:bg-black transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-4"
                     >
                         {loading ? <Loader2 className="animate-spin" size={20} /> : (
                             <>
@@ -136,14 +136,14 @@ export const AdminLoginPage = () => {
                 <div className="mt-8 text-center">
                     <button 
                         onClick={() => navigate('/')}
-                        className="text-sm font-medium text-gray-400 hover:text-gray-600 transition-colors"
+                        className="text-sm font-medium text-muted-foreground/60 hover:text-muted-foreground transition-colors"
                     >
                         Return to Website
                     </button>
                 </div>
             </div>
             
-            <div className="bg-gray-50 px-8 py-4 border-t border-gray-100 flex justify-between items-center text-xs text-gray-400">
+            <div className="bg-accent px-8 py-4 border-t border-border flex justify-between items-center text-xs text-muted-foreground/60">
                 <span>&copy; 2024 Lofton Realty</span>
                 <span>Restricted Access</span>
             </div>

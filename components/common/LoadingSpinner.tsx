@@ -94,7 +94,7 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
 
       <div className="flex flex-col items-center">
         <motion.span 
-          className="text-charcoal font-sans font-bold tracking-[0.2em] uppercase text-sm"
+          className="text-foreground font-sans font-bold tracking-[0.2em] uppercase text-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
@@ -118,7 +118,7 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
         variants={containerVariants}
         initial={{ opacity: 1 }}
         exit="exit"
-        className="fixed inset-0 bg-white z-[99999] flex items-center justify-center overflow-hidden"
+        className="fixed inset-0 bg-background z-[99999] flex items-center justify-center overflow-hidden"
       >
         {content}
       </motion.div>

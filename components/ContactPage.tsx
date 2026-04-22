@@ -72,11 +72,11 @@ export const ContactPage = () => {
   }, []);
 
   return (
-    <div className="font-sans bg-gray-50 min-h-screen">
+    <div className="font-sans bg-accent min-h-screen">
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-charcoal-dark overflow-hidden">
+      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-background overflow-hidden">
         <div 
           className="absolute inset-0 opacity-20 bg-cover bg-center" 
           style={{ backgroundImage: `url(${getOptimizedImageUrl('https://images.unsplash.com/photo-1497366216548-37526070297c', 1200)})` }}
@@ -119,14 +119,14 @@ export const ContactPage = () => {
           ].map((item, idx) => (
             <div
               key={idx}
-              className="gsap-contact-card bg-white p-8 rounded-2xl shadow-lg border border-gray-100 flex flex-col items-center text-center group hover:border-brand/30 transition-[box-shadow,border-color] duration-300 opacity-0"
+              className="gsap-contact-card bg-background p-8 rounded-2xl shadow-lg border border-border flex flex-col items-center text-center group hover:border-brand/30 transition-[box-shadow,border-color] duration-300 opacity-0"
             >
               <div className="w-14 h-14 bg-brand-light rounded-full flex items-center justify-center text-brand mb-4 transition-colors duration-300">
                 <item.icon size={24} />
               </div>
-              <h3 className="text-xl font-bold text-charcoal mb-1">{item.title}</h3>
-              <p className="text-lg font-medium text-gray-900 mb-1">{item.detail}</p>
-              <p className="text-sm text-gray-500 mb-6">{item.sub}</p>
+              <h3 className="text-xl font-bold text-foreground mb-1">{item.title}</h3>
+              <p className="text-lg font-medium text-foreground mb-1">{item.detail}</p>
+              <p className="text-sm text-muted-foreground mb-6">{item.sub}</p>
               <a 
                 href={item.href}
                 target={item.action === 'Get Directions' ? "_blank" : undefined}
@@ -147,11 +147,11 @@ export const ContactPage = () => {
           {/* Left Column: Form */}
           <div>
             <div className="mb-10">
-              <h2 className="text-3xl font-extrabold text-charcoal mb-4">Send us a Message</h2>
-              <p className="text-gray-500">Fill out the form below and a member of our team will get back to you shortly.</p>
+              <h2 className="text-3xl font-extrabold text-foreground mb-4">Send us a Message</h2>
+              <p className="text-muted-foreground">Fill out the form below and a member of our team will get back to you shortly.</p>
             </div>
 
-            <div className="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-gray-100">
+            <div className="bg-background p-8 md:p-10 rounded-3xl shadow-sm border border-border">
                <SharedContactForm variant="light" />
             </div>
           </div>
@@ -161,56 +161,56 @@ export const ContactPage = () => {
             
             {/* Team Section */}
             <div>
-              <h3 className="text-xl font-bold text-charcoal mb-6 flex items-center gap-2">
+              <h3 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
                 <Building size={20} className="text-brand" /> Meet the Team
               </h3>
               
               {/* Jared Card */}
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-6">
+              <div className="bg-background p-6 rounded-2xl shadow-sm border border-border mb-6">
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="w-16 h-16 rounded-full bg-gray-200 overflow-hidden flex-shrink-0">
+                  <div className="w-16 h-16 rounded-full bg-muted overflow-hidden flex-shrink-0">
                     <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&q=80" alt="Jared Lofton" className="w-full h-full object-cover" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-charcoal text-lg">Jared Lofton, MBA</h4>
+                    <h4 className="font-bold text-foreground text-lg">Jared Lofton, MBA</h4>
                     <p className="text-brand text-sm font-bold uppercase tracking-wide">Founder & Broker</p>
                   </div>
                 </div>
-                <p className="text-gray-500 text-sm mb-4 leading-relaxed">
+                <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
                   Real Estate Broker with 19+ years experience. MBA in Finance. Former Financial Planner. Philosophy: Clients come first.
                 </p>
                 <div className="flex gap-3">
-                  <a href={COMPANY_INFO.SOCIAL.LINKEDIN} className="p-2 text-gray-400 hover:text-blue-600 transition-colors bg-gray-50 rounded-lg"><Linkedin size={18} /></a>
-                  <a href={`mailto:${COMPANY_INFO.EMAIL}`} className="p-2 text-gray-400 hover:text-brand transition-colors bg-gray-50 rounded-lg"><Mail size={18} /></a>
+                  <a href={COMPANY_INFO.SOCIAL.LINKEDIN} className="p-2 text-muted-foreground/60 hover:text-blue-600 transition-colors bg-accent rounded-lg"><Linkedin size={18} /></a>
+                  <a href={`mailto:${COMPANY_INFO.EMAIL}`} className="p-2 text-muted-foreground/60 hover:text-brand transition-colors bg-accent rounded-lg"><Mail size={18} /></a>
                 </div>
               </div>
 
               {/* Placeholder Card */}
-              <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200 border-dashed text-center">
-                 <p className="text-gray-400 text-sm font-medium">Looking to join our team?</p>
+              <div className="bg-accent p-6 rounded-2xl border border-border border-dashed text-center">
+                 <p className="text-muted-foreground/60 text-sm font-medium">Looking to join our team?</p>
                  <a href="#" className="text-brand font-bold text-sm hover:underline">View Careers</a>
               </div>
             </div>
 
             {/* Office Hours */}
             <div>
-              <h3 className="text-xl font-bold text-charcoal mb-6 flex items-center gap-2">
+              <h3 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
                 <Clock size={20} className="text-brand" /> Office Hours
               </h3>
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-3">
+              <div className="bg-background p-6 rounded-2xl shadow-sm border border-border space-y-3">
                  <div className="flex justify-between text-sm">
-                    <span className="font-medium text-gray-600">Mon - Fri</span>
-                    <span className="font-bold text-charcoal">8:00 AM - 8:00 PM</span>
+                    <span className="font-medium text-muted-foreground">Mon - Fri</span>
+                    <span className="font-bold text-foreground">8:00 AM - 8:00 PM</span>
                  </div>
                  <div className="flex justify-between text-sm">
-                    <span className="font-medium text-gray-600">Saturday</span>
-                    <span className="font-bold text-charcoal">9:00 AM - 6:00 PM</span>
+                    <span className="font-medium text-muted-foreground">Saturday</span>
+                    <span className="font-bold text-foreground">9:00 AM - 6:00 PM</span>
                  </div>
                  <div className="flex justify-between text-sm">
-                    <span className="font-medium text-gray-600">Sunday</span>
-                    <span className="font-bold text-charcoal">12:00 PM - 5:00 PM</span>
+                    <span className="font-medium text-muted-foreground">Sunday</span>
+                    <span className="font-bold text-foreground">12:00 PM - 5:00 PM</span>
                  </div>
-                 <div className="pt-3 mt-3 border-t border-gray-100 flex items-center gap-2 text-brand font-bold text-sm">
+                 <div className="pt-3 mt-3 border-t border-border flex items-center gap-2 text-brand font-bold text-sm">
                     <CheckCircle2 size={16} /> 24/7 Emergency Support Available
                  </div>
               </div>
@@ -218,7 +218,7 @@ export const ContactPage = () => {
 
             {/* FAQ Links */}
             <div>
-              <h3 className="text-xl font-bold text-charcoal mb-6 flex items-center gap-2">
+              <h3 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
                 <MessageSquare size={20} className="text-brand" /> Common Questions
               </h3>
               <div className="space-y-3">
@@ -230,9 +230,9 @@ export const ContactPage = () => {
                   <button 
                     key={i}
                     onClick={link.action}
-                    className="w-full flex items-center justify-between p-4 bg-white border border-gray-100 rounded-xl hover:border-brand/30 hover:shadow-md transition-[box-shadow,border-color] duration-300 group text-left"
+                    className="w-full flex items-center justify-between p-4 bg-background border border-border rounded-xl hover:border-brand/30 hover:shadow-md transition-[box-shadow,border-color] duration-300 group text-left"
                   >
-                    <span className="text-gray-600 font-medium group-hover:text-charcoal">{link.label}</span>
+                    <span className="text-muted-foreground font-medium group-hover:text-foreground">{link.label}</span>
                     <ArrowRight size={16} className="text-gray-300 group-hover:text-brand" />
                   </button>
                 ))}
@@ -244,16 +244,16 @@ export const ContactPage = () => {
       </section>
 
       {/* Map & Service Area */}
-      <section className="bg-white py-20 border-t border-gray-100">
+      <section className="bg-background py-20 border-t border-border">
         <div className="max-w-7xl mx-auto px-5 md:px-10">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-extrabold text-charcoal mb-4">Serving Houston & Beyond</h2>
-            <p className="text-gray-500">Visit our headquarters or connect with us in any of our 6 major markets.</p>
+            <h2 className="text-3xl font-extrabold text-foreground mb-4">Serving Houston & Beyond</h2>
+            <p className="text-muted-foreground">Visit our headquarters or connect with us in any of our 6 major markets.</p>
           </div>
 
           <div className="max-w-5xl mx-auto">
              {/* Map Embed */}
-             <div className="rounded-3xl overflow-hidden shadow-lg border border-gray-200 h-[450px] relative bg-gray-100 w-full">
+             <div className="rounded-3xl overflow-hidden shadow-lg border border-border h-[450px] relative bg-muted w-full">
                 <iframe 
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d443088.0518320649!2d-95.68266224375!3d29.817478200000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640b8b4488d8501%3A0xca0d02def365053b!2sHouston%2C%20TX!5e0!3m2!1sen!2sus!4v1652822453673!5m2!1sen!2sus" 
                   width="100%" 
@@ -270,7 +270,7 @@ export const ContactPage = () => {
       </section>
 
       {/* Social Proof Bar */}
-      <section className="bg-charcoal-dark py-16 border-t border-gray-800">
+      <section className="bg-background py-16 border-t border-border/50">
         <div className="max-w-7xl mx-auto px-5 md:px-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {STATS.map((stat, idx) => (
@@ -281,7 +281,7 @@ export const ContactPage = () => {
                 <div className="text-3xl font-extrabold text-white mb-1">
                   {stat.value}{stat.suffix}
                 </div>
-                <div className="text-gray-400 text-sm uppercase tracking-wider font-medium">
+                <div className="text-muted-foreground/60 text-sm uppercase tracking-wider font-medium">
                   {stat.label}
                 </div>
               </div>

@@ -43,51 +43,51 @@ const LoftonRealtyHome = () => {
   }, []);
 
   return (
-    <div className="font-sans text-gray-900 bg-white selection:bg-brand selection:text-white">
+    <div className="font-sans text-foreground bg-background selection:bg-brand selection:text-white">
       <Navbar />
       <main>
-        <div className="border-b border-gray-500/30">
+        <div className="border-b border-border/50">
           <Hero />
         </div>
         
         <SectionErrorBoundary>
-          <div className="border-b border-gray-500/30">
+          <div className="border-b border-border/50">
             <StatsBar />
           </div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <div className="border-b border-gray-500/30">
+          <div className="border-b border-border/50">
             <ServicesSection />
           </div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <div className="border-b border-gray-500/30">
+          <div className="border-b border-border/50">
             <FeaturedProperties />
           </div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <div className="border-b border-gray-500/30">
+          <div className="border-b border-border/50">
             <TrustSection />
           </div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <div className="border-b border-gray-500/30">
+          <div className="border-b border-border/50">
             <LocationsSection />
           </div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <div className="border-b border-gray-500/30">
+          <div className="border-b border-border/50">
             <TestimonialsSection />
           </div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <div className="border-b border-gray-500/30">
+          <div className="border-b border-border/50">
             <ContactFormSection />
           </div>
         </SectionErrorBoundary>

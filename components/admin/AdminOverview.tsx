@@ -78,7 +78,7 @@ export const AdminOverview = () => {
   // --- Top Viewed ---
   const topViewed = [...properties].sort((a, b) => (b.views || 0) - (a.views || 0)).slice(0, 5);
 
-  if (loading) return <div className="p-8 text-center text-gray-500">Loading Dashboard...</div>;
+  if (loading) return <div className="p-8 text-center text-muted-foreground">Loading Dashboard...</div>;
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -86,13 +86,13 @@ export const AdminOverview = () => {
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, i) => (
-          <div key={i} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
+          <div key={i} className="bg-background p-6 rounded-2xl border border-border shadow-sm flex items-center gap-4">
             <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${stat.color}`}>
               <stat.icon size={24} />
             </div>
             <div>
-              <p className="text-gray-500 text-sm font-medium">{stat.label}</p>
-              <h3 className="text-2xl font-bold text-charcoal">{stat.value}</h3>
+              <p className="text-muted-foreground text-sm font-medium">{stat.label}</p>
+              <h3 className="text-2xl font-bold text-foreground">{stat.value}</h3>
             </div>
           </div>
         ))}
@@ -104,8 +104,8 @@ export const AdminOverview = () => {
         <div className="lg:col-span-2 space-y-8">
           
           {/* User Growth */}
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-            <h3 className="font-bold text-charcoal mb-6">Client Growth</h3>
+          <div className="bg-background p-6 rounded-2xl border border-border shadow-sm">
+            <h3 className="font-bold text-foreground mb-6">Client Growth</h3>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={userChartData}>
@@ -126,8 +126,8 @@ export const AdminOverview = () => {
 
           <div className="grid md:grid-cols-2 gap-8">
              {/* Property Adds */}
-             <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-                <h3 className="font-bold text-charcoal mb-6">Properties Added</h3>
+             <div className="bg-background p-6 rounded-2xl border border-border shadow-sm">
+                <h3 className="font-bold text-foreground mb-6">Properties Added</h3>
                 <div className="h-48">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={propChartData}>
@@ -141,8 +141,8 @@ export const AdminOverview = () => {
              </div>
 
              {/* Blog Categories */}
-             <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-                <h3 className="font-bold text-charcoal mb-6">Content Mix</h3>
+             <div className="bg-background p-6 rounded-2xl border border-border shadow-sm">
+                <h3 className="font-bold text-foreground mb-6">Content Mix</h3>
                 <div className="h-48">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={blogChartData}>
@@ -162,17 +162,17 @@ export const AdminOverview = () => {
         <div className="space-y-8">
           
           {/* Top Viewed */}
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-            <h3 className="font-bold text-charcoal mb-4">Most Viewed Properties</h3>
+          <div className="bg-background p-6 rounded-2xl border border-border shadow-sm">
+            <h3 className="font-bold text-foreground mb-4">Most Viewed Properties</h3>
             <div className="space-y-4">
               {topViewed.map(p => (
                 <div key={p.id} className="flex items-center gap-3">
-                  <img src={p.images[0]} alt={p.title} className="w-12 h-12 rounded-lg object-cover bg-gray-100" />
+                  <img src={p.images[0]} alt={p.title} className="w-12 h-12 rounded-lg object-cover bg-muted" />
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-sm font-bold text-charcoal truncate">{p.title}</h4>
-                    <p className="text-xs text-gray-500 truncate">{p.address}</p>
+                    <h4 className="text-sm font-bold text-foreground truncate">{p.title}</h4>
+                    <p className="text-xs text-muted-foreground truncate">{p.address}</p>
                   </div>
-                  <div className="flex items-center gap-1 text-xs font-bold text-gray-600 bg-gray-50 px-2 py-1 rounded">
+                  <div className="flex items-center gap-1 text-xs font-bold text-muted-foreground bg-accent px-2 py-1 rounded">
                     <Eye size={12} /> {p.views || 0}
                   </div>
                 </div>
@@ -181,8 +181,8 @@ export const AdminOverview = () => {
           </div>
 
           {/* Activity Feed */}
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm max-h-[400px] overflow-y-auto">
-            <h3 className="font-bold text-charcoal mb-4">Recent Activity</h3>
+          <div className="bg-background p-6 rounded-2xl border border-border shadow-sm max-h-[400px] overflow-y-auto">
+            <h3 className="font-bold text-foreground mb-4">Recent Activity</h3>
             <div className="space-y-4">
               {activityFeed.map((item, i) => (
                 <div key={i} className="flex gap-3 text-sm">
@@ -191,8 +191,8 @@ export const AdminOverview = () => {
                     item.type === 'blog' ? 'bg-purple-500' : 'bg-green-500'
                   }`} />
                   <div>
-                    <p className="text-gray-800">{item.msg}</p>
-                    <p className="text-xs text-gray-400">
+                    <p className="text-foreground">{item.msg}</p>
+                    <p className="text-xs text-muted-foreground/60">
                       {item.date ? new Date(item.date).toLocaleDateString() : 'N/A'}
                     </p>
                   </div>

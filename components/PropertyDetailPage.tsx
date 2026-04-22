@@ -106,7 +106,7 @@ export const PropertyDetailPage = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      <div className="flex items-center justify-center min-h-screen bg-accent">
         <LoadingSpinner />
       </div>
     );
@@ -114,12 +114,12 @@ export const PropertyDetailPage = () => {
 
   if (!property) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-accent">
         <Navbar />
         <div className="text-center p-8">
-          <h2 className="text-3xl font-bold text-charcoal mb-4">Property Not Found</h2>
-          <p className="text-gray-500 mb-8">The listing you are looking for may have been removed or does not exist.</p>
-          <Link to="/property-listings" className="bg-brand text-white px-6 py-3 rounded-full font-bold hover:bg-brand-dark transition-colors">
+          <h2 className="text-3xl font-bold text-foreground mb-4">Property Not Found</h2>
+          <p className="text-muted-foreground mb-8">The listing you are looking for may have been removed or does not exist.</p>
+          <Link to="/property-listings" className="bg-primary text-primary-foreground px-6 py-3 rounded-full font-bold hover:bg-brand-dark transition-colors">
             Return to Properties
           </Link>
         </div>
@@ -139,19 +139,19 @@ export const PropertyDetailPage = () => {
   };
 
   return (
-    <div className="font-sans bg-gray-50 min-h-screen">
+    <div className="font-sans bg-accent min-h-screen">
       <Navbar />
 
       {/* Breadcrumb Navigation */}
-      <div className="bg-white border-b border-gray-200 pt-24 pb-4">
-        <div className="max-w-[1280px] mx-auto px-5 md:px-10 flex items-center gap-2 text-sm text-gray-500 overflow-x-auto whitespace-nowrap">
+      <div className="bg-background border-b border-border pt-24 pb-4">
+        <div className="max-w-[1280px] mx-auto px-5 md:px-10 flex items-center gap-2 text-sm text-muted-foreground overflow-x-auto whitespace-nowrap">
           <Link to="/" className="hover:text-brand transition-colors">Home</Link>
           <span className="text-gray-300">/</span>
           <Link to="/property-listings" className="hover:text-brand transition-colors">Properties</Link>
           <span className="text-gray-300">/</span>
           <span className="hover:text-brand transition-colors cursor-pointer">{property.city}</span>
           <span className="text-gray-300">/</span>
-          <span className="font-semibold text-charcoal truncate">{property.address}</span>
+          <span className="font-semibold text-foreground truncate">{property.address}</span>
         </div>
       </div>
 
@@ -160,10 +160,10 @@ export const PropertyDetailPage = () => {
         {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
           <div>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-charcoal mb-2 tracking-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-foreground mb-2 tracking-tight">
               {property.address}
             </h1>
-            <div className="flex items-center gap-2 text-lg text-gray-500 font-medium">
+            <div className="flex items-center gap-2 text-lg text-muted-foreground font-medium">
               <MapPin size={20} className="text-brand" />
               {property.city}, {property.state} {property.zip}
             </div>
@@ -183,10 +183,10 @@ export const PropertyDetailPage = () => {
         {/* Hero Image Gallery */}
         <div className="grid lg:grid-cols-[2fr_1fr] gap-4 mb-12 h-[400px] md:h-[500px] lg:h-[600px]">
           {/* Main Image */}
-          <div className="relative rounded-2xl overflow-hidden bg-gray-100 h-full group">
+          <div className="relative rounded-2xl overflow-hidden bg-muted h-full group">
              
              {!mainImageLoaded && !imageError && (
-               <div className="absolute inset-0 bg-gray-200 animate-pulse z-10" />
+               <div className="absolute inset-0 bg-muted animate-pulse z-10" />
              )}
 
              {!imageError ? (
@@ -199,7 +199,7 @@ export const PropertyDetailPage = () => {
                  loading="eager"
                />
              ) : (
-               <div className="w-full h-full flex flex-col items-center justify-center bg-gray-100 text-gray-400">
+               <div className="w-full h-full flex flex-col items-center justify-center bg-muted text-muted-foreground/60">
                   <ImageOff size={64} className="mb-4" />
                   <p className="font-medium">Image not available</p>
                </div>
@@ -210,14 +210,14 @@ export const PropertyDetailPage = () => {
                <>
                  <button 
                    onClick={handlePrevImage}
-                   className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 z-20"
+                   className="absolute left-4 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background p-3 rounded-full backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 z-20"
                    aria-label="Previous image"
                  >
                    <ChevronLeft size={24} />
                  </button>
                  <button 
                    onClick={handleNextImage}
-                   className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 z-20"
+                   className="absolute right-4 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background p-3 rounded-full backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 z-20"
                    aria-label="Next image"
                  >
                    <ChevronRight size={24} />
@@ -236,7 +236,7 @@ export const PropertyDetailPage = () => {
               <button 
                 key={idx} 
                 onClick={() => { setActiveImage(idx); setImageError(false); }}
-                className={`relative rounded-xl overflow-hidden w-full h-full cursor-pointer transition-all bg-gray-100 ${activeImage === idx ? 'ring-4 ring-brand' : 'opacity-80 hover:opacity-100'}`}
+                className={`relative rounded-xl overflow-hidden w-full h-full cursor-pointer transition-all bg-muted ${activeImage === idx ? 'ring-4 ring-brand' : 'opacity-80 hover:opacity-100'}`}
               >
                 <img 
                   src={getOptimizedImageUrl(img, 400)} 
@@ -261,41 +261,41 @@ export const PropertyDetailPage = () => {
           {/* Details */}
           <div>
             {/* Quick Facts */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 bg-background p-8 rounded-2xl border border-border shadow-sm">
                <div className="flex flex-col gap-1">
-                 <span className="flex items-center gap-2 text-gray-400 text-sm font-bold uppercase tracking-wide"><Bed size={16} /> Bedrooms</span>
-                 <span className="text-2xl font-bold text-charcoal">{property.beds}</span>
+                 <span className="flex items-center gap-2 text-muted-foreground/60 text-sm font-bold uppercase tracking-wide"><Bed size={16} /> Bedrooms</span>
+                 <span className="text-2xl font-bold text-foreground">{property.beds}</span>
                </div>
                <div className="flex flex-col gap-1">
-                 <span className="flex items-center gap-2 text-gray-400 text-sm font-bold uppercase tracking-wide"><Bath size={16} /> Bathrooms</span>
-                 <span className="text-2xl font-bold text-charcoal">{property.baths}</span>
+                 <span className="flex items-center gap-2 text-muted-foreground/60 text-sm font-bold uppercase tracking-wide"><Bath size={16} /> Bathrooms</span>
+                 <span className="text-2xl font-bold text-foreground">{property.baths}</span>
                </div>
                <div className="flex flex-col gap-1">
-                 <span className="flex items-center gap-2 text-gray-400 text-sm font-bold uppercase tracking-wide"><Maximize size={16} /> Sq Ft</span>
-                 <span className="text-2xl font-bold text-charcoal">{property.sqft.toLocaleString()}</span>
+                 <span className="flex items-center gap-2 text-muted-foreground/60 text-sm font-bold uppercase tracking-wide"><Maximize size={16} /> Sq Ft</span>
+                 <span className="text-2xl font-bold text-foreground">{property.sqft.toLocaleString()}</span>
                </div>
                <div className="flex flex-col gap-1">
-                 <span className="flex items-center gap-2 text-gray-400 text-sm font-bold uppercase tracking-wide"><Calendar size={16} /> Year Built</span>
-                 <span className="text-2xl font-bold text-charcoal">{property.yearBuilt || 'N/A'}</span>
+                 <span className="flex items-center gap-2 text-muted-foreground/60 text-sm font-bold uppercase tracking-wide"><Calendar size={16} /> Year Built</span>
+                 <span className="text-2xl font-bold text-foreground">{property.yearBuilt || 'N/A'}</span>
                </div>
             </div>
 
             {/* Description */}
             <div className="mb-12">
-              <h2 className="text-2xl font-bold text-charcoal mb-6">About This Home</h2>
-              <div className="prose prose-lg text-gray-600 leading-relaxed whitespace-pre-line max-w-none">
+              <h2 className="text-2xl font-bold text-foreground mb-6">About This Home</h2>
+              <div className="prose prose-lg text-muted-foreground leading-relaxed whitespace-pre-line max-w-none">
                 {property.description}
               </div>
             </div>
 
             {/* Features */}
             <div className="mb-12">
-               <h2 className="text-2xl font-bold text-charcoal mb-6">Key Features & Amenities</h2>
+               <h2 className="text-2xl font-bold text-foreground mb-6">Key Features & Amenities</h2>
                <div className="grid md:grid-cols-2 gap-4">
                  {property.features?.map((feature, idx) => (
-                   <div key={idx} className="flex items-center gap-3 bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                   <div key={idx} className="flex items-center gap-3 bg-background p-4 rounded-xl border border-border shadow-sm">
                      <CheckCircle2 size={20} className="text-brand flex-shrink-0" />
-                     <span className="text-gray-700 font-medium">{feature}</span>
+                     <span className="text-foreground font-medium">{feature}</span>
                    </div>
                  ))}
                </div>
@@ -306,9 +306,9 @@ export const PropertyDetailPage = () => {
           <div className="relative">
              <div className="sticky top-28 space-y-8">
                 
-                <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                <div className="bg-background p-6 rounded-2xl shadow-lg border border-border">
                    <div className="flex items-center gap-4 mb-6">
-                     <div className="w-16 h-16 rounded-full bg-gray-100 overflow-hidden border-2 border-brand">
+                     <div className="w-16 h-16 rounded-full bg-muted overflow-hidden border-2 border-brand">
                         <img 
                           src={getOptimizedImageUrl('https://images.unsplash.com/photo-1560250097-0b93528c311a', 200)} 
                           alt="Agent" 
@@ -316,31 +316,31 @@ export const PropertyDetailPage = () => {
                         />
                      </div>
                      <div>
-                       <h3 className="font-bold text-lg text-charcoal">Jared Lofton, MBA</h3>
+                       <h3 className="font-bold text-lg text-foreground">Jared Lofton, MBA</h3>
                        <p className="text-xs font-bold text-brand uppercase tracking-wide">Listing Agent</p>
-                       <p className="text-xs text-gray-400">Lofton Realty</p>
+                       <p className="text-xs text-muted-foreground/60">Lofton Realty</p>
                      </div>
                    </div>
                    
-                   <p className="text-sm text-gray-500 mb-6 leading-relaxed">
+                   <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
                      Interested in this property? I'm available 24/7 to answer your questions or schedule a private showing.
                    </p>
 
                    <div className="space-y-3">
-                     <a href="tel:7132037661" className="flex items-center justify-center gap-2 w-full bg-brand text-white py-3 rounded-lg font-bold hover:bg-brand-dark transition-colors shadow-lg shadow-brand/20">
+                     <a href="tel:7132037661" className="flex items-center justify-center gap-2 w-full bg-primary text-primary-foreground py-3 rounded-lg font-bold hover:bg-brand-dark transition-colors shadow-lg shadow-brand/20">
                        <Phone size={18} /> Call Agent
                      </a>
-                     <Link to="/contact-us" className="flex items-center justify-center gap-2 w-full bg-white border-2 border-charcoal text-charcoal py-3 rounded-lg font-bold hover:bg-gray-50 transition-colors">
+                     <Link to="/contact-us" className="flex items-center justify-center gap-2 w-full bg-background border-2 border-charcoal text-foreground py-3 rounded-lg font-bold hover:bg-accent transition-colors">
                        <Mail size={18} /> Message Agent
                      </Link>
                    </div>
                 </div>
 
-                <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 flex items-start gap-3">
-                   <Building size={20} className="text-gray-400 mt-1" />
+                <div className="bg-accent p-4 rounded-xl border border-border flex items-start gap-3">
+                   <Building size={20} className="text-muted-foreground/60 mt-1" />
                    <div>
-                     <h4 className="font-bold text-sm text-charcoal">Brokerage Verified</h4>
-                     <p className="text-xs text-gray-500 mt-1">Lofton Realty verifies all listing data. Information deemed reliable but not guaranteed.</p>
+                     <h4 className="font-bold text-sm text-foreground">Brokerage Verified</h4>
+                     <p className="text-xs text-muted-foreground mt-1">Lofton Realty verifies all listing data. Information deemed reliable but not guaranteed.</p>
                    </div>
                 </div>
 
@@ -351,9 +351,9 @@ export const PropertyDetailPage = () => {
       </main>
 
       {/* Similar Properties */}
-      <section className="bg-white py-20 border-t border-gray-100">
+      <section className="bg-background py-20 border-t border-border">
          <div className="max-w-[1280px] mx-auto px-5 md:px-10">
-            <h2 className="text-3xl font-extrabold text-charcoal mb-8">Similar Properties You Might Like</h2>
+            <h2 className="text-3xl font-extrabold text-foreground mb-8">Similar Properties You Might Like</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                {similarProperties.map(prop => (
                  <PropertyCard key={prop.id} property={prop} />

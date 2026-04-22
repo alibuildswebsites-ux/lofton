@@ -50,12 +50,12 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col font-sans">
+    <div className="min-h-screen bg-background flex flex-col font-sans">
       <Navbar />
       
       <main className="flex-grow flex pt-16">
         {/* Left Side - Form */}
-        <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12 sm:px-12 sm:py-16 lg:p-24 relative bg-white">
+        <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12 sm:px-12 sm:py-16 lg:p-24 relative bg-background">
             <motion.div 
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -63,8 +63,8 @@ export const LoginPage = () => {
                 className="w-full max-w-md space-y-8"
             >
                 <div className="text-center lg:text-left">
-                    <h1 className="text-3xl md:text-4xl font-extrabold text-charcoal tracking-tight">Welcome Back</h1>
-                    <p className="mt-2 text-gray-500 text-lg">
+                    <h1 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight">Welcome Back</h1>
+                    <p className="mt-2 text-muted-foreground text-lg">
                         Enter your details to access your account.
                     </p>
                 </div>
@@ -82,16 +82,16 @@ export const LoginPage = () => {
 
                 <form onSubmit={handleEmailLogin} className="space-y-6">
                     <div className="space-y-2">
-                        <label className="text-sm font-bold text-gray-700 ml-1">Email Address</label>
+                        <label className="text-sm font-bold text-foreground ml-1">Email Address</label>
                         <div className="relative group">
-                            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-brand transition-colors" size={20} />
+                            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/60 group-focus-within:text-brand transition-colors" size={20} />
                             <input
                                 type="email"
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
                                 required
-                                className="w-full pl-11 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all font-medium"
+                                className="w-full pl-11 pr-4 py-4 bg-accent border border-border rounded-xl focus:bg-background focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all font-medium"
                                 placeholder="name@example.com"
                             />
                         </div>
@@ -99,20 +99,20 @@ export const LoginPage = () => {
 
                     <div className="space-y-2">
                         <div className="flex justify-between items-center ml-1">
-                            <label className="text-sm font-bold text-gray-700">Password</label>
+                            <label className="text-sm font-bold text-foreground">Password</label>
                             <Link to="/forgot-password" className="text-xs font-bold text-brand hover:text-brand-dark hover:underline">
                                 Forgot password?
                             </Link>
                         </div>
                         <div className="relative group">
-                            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-brand transition-colors" size={20} />
+                            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/60 group-focus-within:text-brand transition-colors" size={20} />
                             <input
                                 type="password"
                                 name="password"
                                 value={formData.password}
                                 onChange={handleChange}
                                 required
-                                className="w-full pl-11 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all font-medium"
+                                className="w-full pl-11 pr-4 py-4 bg-accent border border-border rounded-xl focus:bg-background focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all font-medium"
                                 placeholder="••••••••"
                             />
                         </div>
@@ -121,7 +121,7 @@ export const LoginPage = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-charcoal text-white py-4 rounded-xl font-bold hover:bg-black transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
+                        className="w-full bg-foreground text-background py-4 rounded-xl font-bold hover:bg-black transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
                     >
                         {loading ? <Loader2 className="animate-spin" size={20} /> : (
                             <>
@@ -133,17 +133,17 @@ export const LoginPage = () => {
 
                 <div className="relative">
                     <div className="absolute inset-0 flex items-center">
-                        <div className="w-full border-t border-gray-100"></div>
+                        <div className="w-full border-t border-border"></div>
                     </div>
                     <div className="relative flex justify-center text-sm">
-                        <span className="px-4 bg-white text-gray-400 font-medium">Or continue with</span>
+                        <span className="px-4 bg-background text-muted-foreground/60 font-medium">Or continue with</span>
                     </div>
                 </div>
 
                 <button
                     onClick={handleGoogleLogin}
                     disabled={loading}
-                    className="w-full bg-white border border-gray-200 text-charcoal py-4 rounded-xl font-bold hover:bg-gray-50 hover:border-gray-300 transition-all flex items-center justify-center gap-3 disabled:opacity-70"
+                    className="w-full bg-background border border-border text-foreground py-4 rounded-xl font-bold hover:bg-accent hover:border-gray-300 transition-all flex items-center justify-center gap-3 disabled:opacity-70"
                 >
                     <svg className="w-5 h-5" viewBox="0 0 24 24">
                         <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -154,7 +154,7 @@ export const LoginPage = () => {
                     Google
                 </button>
 
-                <p className="text-center text-sm text-gray-500 font-medium">
+                <p className="text-center text-sm text-muted-foreground font-medium">
                     Don't have an account?{' '}
                     <Link to="/signup" className="text-brand font-bold hover:text-brand-dark hover:underline transition-colors">
                         Create account
@@ -164,7 +164,7 @@ export const LoginPage = () => {
         </div>
 
         {/* Right Side - Image */}
-        <div className="hidden lg:block w-1/2 bg-gray-100 relative overflow-hidden">
+        <div className="hidden lg:block w-1/2 bg-muted relative overflow-hidden">
             <motion.div 
                initial={{ opacity: 0 }}
                animate={{ opacity: 1 }}
@@ -187,7 +187,7 @@ export const LoginPage = () => {
                         "Lofton Realty made finding our dream home effortless. The platform is intuitive and the service is unmatched."
                     </blockquote>
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center font-bold">SJ</div>
+                        <div className="w-12 h-12 rounded-full bg-background/20 backdrop-blur border border-white/30 flex items-center justify-center font-bold">SJ</div>
                         <div>
                             <p className="font-bold text-lg">Sarah Jenkins</p>
                             <p className="text-white/70">Homeowner in Houston, TX</p>

@@ -12,9 +12,9 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   if (loading) {
     return (
-      <div className="fixed inset-0 bg-white z-[9999] flex flex-col items-center justify-center">
+      <div className="fixed inset-0 bg-background z-[9999] flex flex-col items-center justify-center">
         <Loader2 className="w-10 h-10 text-brand animate-spin mb-4" />
-        <p className="text-gray-400 text-sm font-medium tracking-widest uppercase animate-pulse">
+        <p className="text-muted-foreground/60 text-sm font-medium tracking-widest uppercase animate-pulse">
           Loading...
         </p>
       </div>

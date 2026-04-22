@@ -57,15 +57,15 @@ export const AdminAgentList: React.FC<AdminAgentListProps> = ({ onEdit, onAddNew
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-charcoal tracking-tight">Team Management</h1>
-          <p className="text-gray-500">Manage agent profiles and display order.</p>
+          <h1 className="text-3xl font-extrabold text-foreground tracking-tight">Team Management</h1>
+          <p className="text-muted-foreground">Manage agent profiles and display order.</p>
         </div>
         <div className="flex gap-2">
           {hasOrderChanged && (
             <button 
               onClick={saveOrder}
               disabled={isSavingOrder}
-              className="flex items-center gap-2 bg-charcoal text-white px-5 py-2.5 rounded-xl font-bold hover:bg-black transition-colors shadow-lg"
+              className="flex items-center gap-2 bg-foreground text-background px-5 py-2.5 rounded-xl font-bold hover:bg-black transition-colors shadow-lg"
             >
               {isSavingOrder ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />} 
               Save Order
@@ -73,7 +73,7 @@ export const AdminAgentList: React.FC<AdminAgentListProps> = ({ onEdit, onAddNew
           )}
           <button 
             onClick={onAddNew}
-            className="flex items-center gap-2 bg-brand text-white px-5 py-2.5 rounded-xl font-bold hover:bg-brand-dark transition-colors shadow-lg shadow-brand/20"
+            className="flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-xl font-bold hover:bg-brand-dark transition-colors shadow-lg shadow-brand/20"
           >
             <Plus size={20} /> Add Agent
           </button>
@@ -89,47 +89,47 @@ export const AdminAgentList: React.FC<AdminAgentListProps> = ({ onEdit, onAddNew
           <Loader2 className="animate-spin text-brand" size={40} />
         </div>
       ) : agents.length === 0 ? (
-        <div className="text-center py-12 bg-white rounded-2xl border border-gray-100">
-           <p className="text-gray-500 font-medium">No agents found.</p>
+        <div className="text-center py-12 bg-background rounded-2xl border border-border">
+           <p className="text-muted-foreground font-medium">No agents found.</p>
         </div>
       ) : (
-        <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+        <div className="bg-background rounded-2xl border border-border overflow-hidden shadow-sm">
            <div className="overflow-x-auto">
              <table className="w-full text-left">
-               <thead className="bg-gray-50 border-b border-gray-200">
+               <thead className="bg-accent border-b border-border">
                  <tr>
                    <th className="w-12 px-4 py-4"></th>
-                   <th className="px-6 py-4 font-bold text-gray-600 text-sm uppercase tracking-wider">Agent</th>
-                   <th className="px-6 py-4 font-bold text-gray-600 text-sm uppercase tracking-wider">Experience</th>
-                   <th className="px-6 py-4 font-bold text-gray-600 text-sm uppercase tracking-wider">Contact</th>
-                   <th className="px-6 py-4 font-bold text-gray-600 text-sm uppercase tracking-wider text-right">Actions</th>
+                   <th className="px-6 py-4 font-bold text-muted-foreground text-sm uppercase tracking-wider">Agent</th>
+                   <th className="px-6 py-4 font-bold text-muted-foreground text-sm uppercase tracking-wider">Experience</th>
+                   <th className="px-6 py-4 font-bold text-muted-foreground text-sm uppercase tracking-wider">Contact</th>
+                   <th className="px-6 py-4 font-bold text-muted-foreground text-sm uppercase tracking-wider text-right">Actions</th>
                  </tr>
                </thead>
                <Reorder.Group as="tbody" axis="y" values={agents} onReorder={handleReorder} className="divide-y divide-gray-100">
                  {agents.map(agent => (
-                   <Reorder.Item key={agent.id} value={agent} as="tr" className="hover:bg-gray-50 transition-colors bg-white relative">
-                     <td className="px-4 py-4 text-gray-400 cursor-grab active:cursor-grabbing">
+                   <Reorder.Item key={agent.id} value={agent} as="tr" className="hover:bg-accent transition-colors bg-background relative">
+                     <td className="px-4 py-4 text-muted-foreground/60 cursor-grab active:cursor-grabbing">
                        <GripVertical size={20} />
                      </td>
                      <td className="px-6 py-4">
                        <div className="flex items-center gap-4">
-                         <div className="w-12 h-12 rounded-full bg-gray-100 overflow-hidden flex-shrink-0">
+                         <div className="w-12 h-12 rounded-full bg-muted overflow-hidden flex-shrink-0">
                            {agent.photo ? (
                              <img src={agent.photo} alt={agent.name} className="w-full h-full object-cover" />
                            ) : (
-                             <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">No Img</div>
+                             <div className="w-full h-full flex items-center justify-center text-muted-foreground/60 text-xs">No Img</div>
                            )}
                          </div>
                          <div>
-                           <h4 className="font-bold text-charcoal">{agent.name}</h4>
-                           <p className="text-xs text-gray-500">{agent.licenseNumber}</p>
+                           <h4 className="font-bold text-foreground">{agent.name}</h4>
+                           <p className="text-xs text-muted-foreground">{agent.licenseNumber}</p>
                          </div>
                        </div>
                      </td>
-                     <td className="px-6 py-4 text-sm text-gray-600 font-medium">
+                     <td className="px-6 py-4 text-sm text-muted-foreground font-medium">
                         {agent.yearsOfExperience} Years
                      </td>
-                     <td className="px-6 py-4 text-sm text-gray-500">
+                     <td className="px-6 py-4 text-sm text-muted-foreground">
                         <div>{agent.email}</div>
                         <div>{agent.phone}</div>
                      </td>
@@ -137,13 +137,13 @@ export const AdminAgentList: React.FC<AdminAgentListProps> = ({ onEdit, onAddNew
                        <div className="flex items-center justify-end gap-2">
                          <button 
                            onClick={() => onEdit(agent)}
-                           className="p-2 text-gray-400 hover:text-brand hover:bg-brand-light rounded-lg transition-all"
+                           className="p-2 text-muted-foreground/60 hover:text-brand hover:bg-brand-light rounded-lg transition-all"
                          >
                            <Pencil size={18} />
                          </button>
                          <button 
                            onClick={() => handleDelete(agent.id, agent.name)}
-                           className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                           className="p-2 text-muted-foreground/60 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
                          >
                            <Trash2 size={18} />
                          </button>

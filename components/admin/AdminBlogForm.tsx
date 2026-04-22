@@ -104,7 +104,7 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
   ];
 
   return (
-    <div className="flex flex-wrap items-center gap-1 p-2 border-b border-gray-200 bg-gray-50/50 sticky top-0 z-10">
+    <div className="flex flex-wrap items-center gap-1 p-2 border-b border-border bg-accent/50 sticky top-0 z-10">
       {buttons.map((btn, index) => (
         btn.type === 'divider' ? (
           <div key={index} className="w-[1px] h-6 bg-gray-300 mx-2" />
@@ -115,8 +115,8 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
             disabled={btn.disabled}
             className={`p-2 rounded-lg transition-all ${
               btn.isActive 
-                ? 'bg-brand text-white shadow-sm' 
-                : 'text-gray-600 hover:bg-gray-200 hover:text-charcoal'
+                ? 'bg-primary text-primary-foreground shadow-sm' 
+                : 'text-muted-foreground hover:bg-muted hover:text-foreground'
             } ${btn.disabled ? 'opacity-30 cursor-not-allowed' : ''}`}
             title={btn.title}
             type="button"
@@ -156,7 +156,7 @@ export const AdminBlogForm: React.FC<AdminBlogFormProps> = ({ initialData, onSuc
     content: formData.content,
     editorProps: {
       attributes: {
-        class: 'prose prose-lg max-w-none focus:outline-none min-h-[300px] p-4 text-gray-700 leading-relaxed',
+        class: 'prose prose-lg max-w-none focus:outline-none min-h-[300px] p-4 text-foreground leading-relaxed',
       },
     },
     onUpdate: ({ editor }) => {
@@ -252,16 +252,16 @@ export const AdminBlogForm: React.FC<AdminBlogFormProps> = ({ initialData, onSuc
 
   if (previewMode) {
     return (
-      <div className="bg-white min-h-screen fixed inset-0 z-[100] overflow-y-auto">
-        <div className="bg-charcoal px-6 py-4 text-white flex justify-between items-center sticky top-0 z-50">
+      <div className="bg-background min-h-screen fixed inset-0 z-[100] overflow-y-auto">
+        <div className="bg-foreground px-6 py-4 text-white flex justify-between items-center sticky top-0 z-50">
           <h3 className="font-bold text-lg">Preview Mode</h3>
           <button onClick={() => setPreviewMode(false)} className="flex items-center gap-2 hover:text-brand">
             <X size={20} /> Close Preview
           </button>
         </div>
         <div className="max-w-3xl mx-auto py-12 px-6">
-           <h1 className="text-4xl font-extrabold text-charcoal mb-4">{formData.title}</h1>
-           <div className="mb-8 h-64 md:h-96 rounded-2xl overflow-hidden bg-gray-100">
+           <h1 className="text-4xl font-extrabold text-foreground mb-4">{formData.title}</h1>
+           <div className="mb-8 h-64 md:h-96 rounded-2xl overflow-hidden bg-muted">
              {formData.featuredImage && <img src={formData.featuredImage} className="w-full h-full object-cover" />}
            </div>
            <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: sanitizeHtml(formData.content) }} />
@@ -271,16 +271,16 @@ export const AdminBlogForm: React.FC<AdminBlogFormProps> = ({ initialData, onSuc
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-      <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+    <div className="bg-background rounded-2xl shadow-sm border border-border overflow-hidden">
+      <div className="px-6 py-4 border-b border-border flex justify-between items-center bg-accent">
         <div className="flex items-center gap-4">
-          <button onClick={onCancel} className="text-gray-500 hover:text-charcoal"><ArrowLeft size={20} /></button>
-          <h2 className="text-lg font-bold text-charcoal">{initialData ? 'Edit Post' : 'New Post'}</h2>
+          <button onClick={onCancel} className="text-muted-foreground hover:text-foreground"><ArrowLeft size={20} /></button>
+          <h2 className="text-lg font-bold text-foreground">{initialData ? 'Edit Post' : 'New Post'}</h2>
         </div>
         <button 
           type="button" 
           onClick={() => setPreviewMode(true)}
-          className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-200 rounded-lg transition-colors"
+          className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-foreground hover:bg-muted rounded-lg transition-colors"
         >
           <Eye size={16} /> Preview
         </button>
@@ -291,58 +291,58 @@ export const AdminBlogForm: React.FC<AdminBlogFormProps> = ({ initialData, onSuc
         {/* Main Content Column */}
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">Title</label>
+            <label className="block text-sm font-bold text-foreground mb-2">Title</label>
             <input 
               name="title" 
               value={formData.title} 
               onChange={handleChange} 
               required 
-              className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand focus:border-transparent outline-none text-lg font-medium"
+              className="w-full px-4 py-3 border border-border rounded-xl focus:ring-2 focus:ring-brand focus:border-transparent outline-none text-lg font-medium"
               placeholder="Enter post title..."
             />
           </div>
 
           <div>
-             <label className="block text-sm font-bold text-gray-700 mb-2">Content</label>
-             <div className="bg-white border border-gray-200 rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-brand focus-within:border-transparent shadow-sm">
+             <label className="block text-sm font-bold text-foreground mb-2">Content</label>
+             <div className="bg-background border border-border rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-brand focus-within:border-transparent shadow-sm">
                <MenuBar editor={editor} />
                <EditorContent editor={editor} />
              </div>
           </div>
 
-          <div className="pt-4 border-t border-gray-100">
-             <h3 className="text-sm font-bold text-gray-900 mb-4">SEO Settings</h3>
+          <div className="pt-4 border-t border-border">
+             <h3 className="text-sm font-bold text-foreground mb-4">SEO Settings</h3>
              <div className="space-y-4">
                <div>
-                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">Meta Title</label>
+                 <label className="block text-xs font-bold text-muted-foreground uppercase tracking-wide mb-1">Meta Title</label>
                  <input 
                     name="metaTitle"
                     value={formData.metaTitle}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-brand outline-none"
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-brand outline-none"
                     placeholder="SEO Title (defaults to title)"
                  />
                </div>
                <div>
-                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">Meta Description</label>
+                 <label className="block text-xs font-bold text-muted-foreground uppercase tracking-wide mb-1">Meta Description</label>
                  <textarea 
                     name="metaDescription"
                     value={formData.metaDescription}
                     onChange={handleChange}
                     rows={3}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-brand outline-none resize-none"
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-brand outline-none resize-none"
                     placeholder="Brief description for search engines..."
                  />
                </div>
                <div>
-                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">Slug URL</label>
+                 <label className="block text-xs font-bold text-muted-foreground uppercase tracking-wide mb-1">Slug URL</label>
                  <div className="flex items-center">
-                   <span className="text-gray-400 text-sm mr-1">/blog/</span>
+                   <span className="text-muted-foreground/60 text-sm mr-1">/blog/</span>
                    <input 
                       name="slug"
                       value={formData.slug}
                       onChange={handleChange}
-                      className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-brand outline-none"
+                      className="flex-1 px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-brand outline-none"
                    />
                  </div>
                </div>
@@ -354,8 +354,8 @@ export const AdminBlogForm: React.FC<AdminBlogFormProps> = ({ initialData, onSuc
         <div className="space-y-6">
           
           {/* Publish Action */}
-          <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 space-y-3">
-             <div className="flex justify-between items-center text-sm text-gray-500">
+          <div className="bg-accent p-4 rounded-xl border border-border space-y-3">
+             <div className="flex justify-between items-center text-sm text-muted-foreground">
                <span>Status:</span>
                <span className={`font-bold ${formData.published ? 'text-green-600' : 'text-yellow-600'}`}>
                  {formData.published ? 'Published' : 'Draft'}
@@ -365,14 +365,14 @@ export const AdminBlogForm: React.FC<AdminBlogFormProps> = ({ initialData, onSuc
                <button 
                  onClick={(e) => handleSubmit(e, false)}
                  disabled={loading}
-                 className="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg text-sm font-bold hover:bg-gray-100"
+                 className="px-4 py-2 bg-background border border-border text-foreground rounded-lg text-sm font-bold hover:bg-muted"
                >
                  Save Draft
                </button>
                <button 
                  onClick={(e) => handleSubmit(e, true)}
                  disabled={loading}
-                 className="px-4 py-2 bg-brand text-white rounded-lg text-sm font-bold hover:bg-brand-dark flex justify-center items-center gap-2"
+                 className="px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-bold hover:bg-brand-dark flex justify-center items-center gap-2"
                >
                  {loading ? <Loader2 className="animate-spin" size={14}/> : 'Publish'}
                </button>
@@ -381,8 +381,8 @@ export const AdminBlogForm: React.FC<AdminBlogFormProps> = ({ initialData, onSuc
 
           {/* Featured Image */}
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">Featured Image</label>
-            <div className="border-2 border-dashed border-gray-200 rounded-xl p-4 text-center hover:border-brand transition-colors bg-gray-50 relative group">
+            <label className="block text-sm font-bold text-foreground mb-2">Featured Image</label>
+            <div className="border-2 border-dashed border-border rounded-xl p-4 text-center hover:border-brand transition-colors bg-accent relative group">
                {formData.featuredImage ? (
                  <div className="relative aspect-video rounded-lg overflow-hidden">
                    <img src={formData.featuredImage} className="w-full h-full object-cover" />
@@ -396,8 +396,8 @@ export const AdminBlogForm: React.FC<AdminBlogFormProps> = ({ initialData, onSuc
                  </div>
                ) : (
                  <div className="py-8">
-                   <ImageIcon className="mx-auto text-gray-400 mb-2" size={32} />
-                   <p className="text-xs text-gray-500">Click to upload cover image</p>
+                   <ImageIcon className="mx-auto text-muted-foreground/60 mb-2" size={32} />
+                   <p className="text-xs text-muted-foreground">Click to upload cover image</p>
                  </div>
                )}
                <input 
@@ -406,39 +406,39 @@ export const AdminBlogForm: React.FC<AdminBlogFormProps> = ({ initialData, onSuc
                  onChange={handleImageUpload} 
                  className={`absolute inset-0 w-full h-full opacity-0 cursor-pointer ${formData.featuredImage ? 'hidden' : ''}`}
                />
-               {uploadingImage && <div className="absolute inset-0 bg-white/80 flex items-center justify-center"><Loader2 className="animate-spin text-brand"/></div>}
+               {uploadingImage && <div className="absolute inset-0 bg-background/80 flex items-center justify-center"><Loader2 className="animate-spin text-brand"/></div>}
             </div>
           </div>
 
           {/* Organization */}
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">Category</label>
+              <label className="block text-sm font-bold text-foreground mb-2">Category</label>
               <select 
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand outline-none bg-white"
+                className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-brand outline-none bg-background"
               >
                 {CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">Author</label>
+              <label className="block text-sm font-bold text-foreground mb-2">Author</label>
               <input 
                 name="author"
                 value={formData.author}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand outline-none"
+                className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-brand outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">Tags</label>
+              <label className="block text-sm font-bold text-foreground mb-2">Tags</label>
               <div className="flex flex-wrap gap-2 mb-2">
                 {formData.tags.map(tag => (
-                  <span key={tag} className="bg-gray-100 text-gray-600 px-2 py-1 rounded-md text-xs flex items-center gap-1">
+                  <span key={tag} className="bg-muted text-muted-foreground px-2 py-1 rounded-md text-xs flex items-center gap-1">
                     {tag} <button type="button" onClick={() => removeTag(tag)}><X size={12}/></button>
                   </span>
                 ))}
@@ -448,7 +448,7 @@ export const AdminBlogForm: React.FC<AdminBlogFormProps> = ({ initialData, onSuc
                 onChange={(e) => setNewTag(e.target.value)}
                 onKeyDown={handleTagAdd}
                 placeholder="Type tag & press Enter"
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-brand outline-none"
+                className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-brand outline-none"
               />
             </div>
           </div>

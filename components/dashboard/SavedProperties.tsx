@@ -34,7 +34,7 @@ export const SavedProperties = () => {
     return (
       <div className="flex flex-col items-center justify-center py-32">
         <Loader2 className="w-10 h-10 text-brand animate-spin mb-4" />
-        <p className="text-gray-400 font-medium animate-pulse uppercase tracking-widest text-xs">Loading Favorites...</p>
+        <p className="text-muted-foreground/60 font-medium animate-pulse uppercase tracking-widest text-xs">Loading Favorites...</p>
       </div>
     );
   }
@@ -47,8 +47,8 @@ export const SavedProperties = () => {
     >
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-           <h1 className="text-3xl font-extrabold text-charcoal tracking-tight mb-2">Saved Properties</h1>
-           <p className="text-gray-500">Keep track of the homes you love.</p>
+           <h1 className="text-3xl font-extrabold text-foreground tracking-tight mb-2">Saved Properties</h1>
+           <p className="text-muted-foreground">Keep track of the homes you love.</p>
         </div>
         <div className="hidden md:block">
            <span className="bg-brand-light text-brand-dark px-4 py-2 rounded-full text-sm font-bold">
@@ -62,21 +62,21 @@ export const SavedProperties = () => {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1 }}
-          className="bg-white rounded-3xl p-12 md:p-16 text-center border border-gray-100 shadow-sm flex flex-col items-center"
+          className="bg-background rounded-3xl p-12 md:p-16 text-center border border-border shadow-sm flex flex-col items-center"
         >
-          <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mb-6 relative">
+          <div className="w-24 h-24 bg-accent rounded-full flex items-center justify-center mb-6 relative">
             <Heart className="text-gray-300" size={40} />
             <div className="absolute top-0 right-0 w-8 h-8 bg-brand rounded-full flex items-center justify-center border-4 border-white">
                 <Home size={14} className="text-white" />
             </div>
           </div>
-          <h2 className="text-2xl font-bold text-charcoal mb-3">No Saved Properties Yet</h2>
-          <p className="text-gray-500 mb-8 max-w-md mx-auto text-lg leading-relaxed">
+          <h2 className="text-2xl font-bold text-foreground mb-3">No Saved Properties Yet</h2>
+          <p className="text-muted-foreground mb-8 max-w-md mx-auto text-lg leading-relaxed">
             Your dream home is out there! Browse our listings and click the heart icon to save your favorites here.
           </p>
           <Link
             to="/property-listings"
-            className="inline-flex items-center gap-2 bg-charcoal text-white px-8 py-4 rounded-full font-bold hover:bg-black transition-all shadow-lg hover:shadow-xl hover:-translate-y-1"
+            className="inline-flex items-center gap-2 bg-foreground text-background px-8 py-4 rounded-full font-bold hover:bg-black transition-all shadow-lg hover:shadow-xl hover:-translate-y-1"
           >
             <Search size={20} />
             Start Browsing

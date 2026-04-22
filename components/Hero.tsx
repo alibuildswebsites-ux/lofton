@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Home, Mail } from 'lucide-react';
 import { motion } from 'motion/react';
-import { InfiniteGrid } from './ui/infinite-grid';
 
 export const Hero = () => {
   const avatars = [
@@ -33,14 +32,12 @@ export const Hero = () => {
       className="relative flex items-center overflow-hidden bg-background h-screen min-h-[600px] w-full" 
       id="home"
     >
-      <InfiniteGrid />
-
       <div className="max-w-[1280px] mx-auto px-5 md:px-10 lg:px-[40px] w-full h-full relative z-10 flex flex-col items-center justify-center text-center">
         <motion.div 
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="z-10 flex flex-col items-center justify-center max-w-4xl mx-auto px-4 pointer-events-none"
+          className="z-10 flex flex-col items-center justify-center max-w-4xl mx-auto px-4"
         >
           {/* Social Proof Badge */}
           <motion.div 
@@ -89,11 +86,11 @@ export const Hero = () => {
           {/* Buttons */}
           <motion.div 
             variants={itemVariants}
-            className="mt-8 md:mt-12 flex flex-col sm:flex-row gap-[16px] w-full sm:w-auto justify-center pointer-events-auto"
+            className="mt-8 md:mt-12 flex flex-col sm:flex-row gap-[16px] w-full sm:w-auto justify-center"
           >
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Link 
-                to="/properties"
+                to="/property-listings"
                 className="flex items-center justify-center gap-2 bg-primary text-primary-foreground px-[32px] py-[14px] rounded-[8px] font-semibold text-[16px] hover:opacity-90 transition-all duration-300 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
                 <Home size={20} />
@@ -103,7 +100,7 @@ export const Hero = () => {
             
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Link 
-                to="/contact"
+                to="/contact-us"
                 className="flex items-center justify-center gap-2 bg-background text-foreground border-2 border-border px-[32px] py-[14px] rounded-[8px] font-semibold text-[16px] hover:bg-accent transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
                 <Mail size={20} />
