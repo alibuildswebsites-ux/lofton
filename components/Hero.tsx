@@ -42,7 +42,7 @@ export const Hero = () => {
           {/* Social Proof Badge */}
           <motion.div 
             variants={itemVariants}
-            className="inline-flex items-center gap-3 bg-accent/80 backdrop-blur-sm border border-border rounded-full px-4 py-2 w-fit mb-4 md:mb-8 hover:shadow-md transition-shadow cursor-default"
+            className="inline-flex items-center gap-3 bg-muted/50 backdrop-blur-sm border border-border rounded-full px-4 py-2 w-fit mb-4 md:mb-8 hover:shadow-md transition-shadow cursor-default"
           >
             <div className="flex -space-x-3">
               {avatars.map((src, i) => (

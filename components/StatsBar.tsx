@@ -36,7 +36,7 @@ const CountUpStats = ({ value, suffix }: { value: number, suffix: string }) => {
 
 export const StatsBar = () => {
   return (
-    <section className="bg-accent border-b border-border py-[40px] md:py-[60px]">
+    <section className="bg-background border-b border-border py-[40px] md:py-[60px]">
       <div className="max-w-[1280px] mx-auto px-5 md:px-10 lg:px-[40px]">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {STATS.map((stat, idx) => (

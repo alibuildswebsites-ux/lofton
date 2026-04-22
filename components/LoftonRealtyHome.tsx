@@ -46,48 +46,48 @@ const LoftonRealtyHome = () => {
     <div className="font-sans text-foreground bg-background selection:bg-brand selection:text-white">
       <Navbar />
       <main>
-        <div className="border-b border-border/50">
+        <div className="border-b border-border/10">
           <Hero />
         </div>
         
         <SectionErrorBoundary>
-          <div className="border-b border-border/50">
+          <div className="border-b border-border/10">
             <StatsBar />
           </div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <div className="border-b border-border/50">
+          <div className="border-b border-border/10">
             <ServicesSection />
           </div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <div className="border-b border-border/50">
+          <div className="border-b border-border/10">
             <FeaturedProperties />
           </div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <div className="border-b border-border/50">
+          <div className="border-b border-border/10">
             <TrustSection />
           </div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <div className="border-b border-border/50">
+          <div className="border-b border-border/10">
             <LocationsSection />
           </div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <div className="border-b border-border/50">
+          <div className="border-b border-border/10">
             <TestimonialsSection />
           </div>
         </SectionErrorBoundary>
 
         <SectionErrorBoundary>
-          <div className="border-b border-border/50">
+          <div className="border-b border-border/10">
             <ContactFormSection />
           </div>
         </SectionErrorBoundary>

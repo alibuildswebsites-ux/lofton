@@ -8,73 +8,10 @@ import { SectionHeader } from './common/SectionHeader';
 gsap.registerPlugin(ScrollTrigger);
 
 export const LocationsSection = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const rowRef = useRef<HTMLUListElement>(null);
-
-  const trustProofByLocation: Record<string, string> = {
-    '1': 'Established guidance for urban and suburban buyers',
-    '2': 'Coastal market insight with investor-focused support',
-    '3': 'Reliable advice for fast-moving tech corridor homes',
-    '4': 'Hands-on support for distinctive Southern properties',
-    '5': 'Practical strategies for value-driven Gulf Coast moves',
-    '6': 'Confident execution across high-demand Sunshine markets'
-  };
-
-  // Animate cards on scroll
-  useGSAP(() => {
-    // Match media for reduced motion preference
-    let mm = gsap.matchMedia();
-
-    mm.add({
-      motion: "(prefers-reduced-motion: no-preference)",
-      reduce: "(prefers-reduced-motion: reduce)"
-    }, (context) => {
-      let { reduce } = context.conditions as any;
-
-      // If user prefers reduced motion, show cards instantly without animation
-      if (reduce) {
-        const badges = gsap.utils.toArray('.coverage-badge') as HTMLElement[];
-        badges.forEach((badge) => {
-          badge.style.opacity = '1';
-          badge.style.transform = 'translateY(0)';
-        });
-        return;
-      }
-
-      const badges = gsap.utils.toArray('.coverage-badge') as HTMLElement[];
-      
-      badges.forEach((badge: HTMLElement, index: number) => {
-        gsap.fromTo(
-          badge,
-          {
-            opacity: 0,
-            y: 30,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: "power2.out",
-            delay: index * 0.1,
-            scrollTrigger: {
-              trigger: badge,
-              start: "top 88%",
-              toggleActions: "play none none none",
-              once: true,
-              invalidateOnRefresh: true,
-            }
-          }
-        );
-      });
-    });
-
-    return () => mm.revert();
-  }, { scope: sectionRef });
-
   return (
-    <section
-      ref={sectionRef}
-      className="py-16 bg-accent"
+    <section 
+      className="py-16 bg-background" 
+      id="locations"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
