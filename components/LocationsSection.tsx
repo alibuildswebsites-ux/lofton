@@ -1,16 +1,24 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { LOCATIONS } from '../data';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SectionHeader } from './common/SectionHeader';
-import { LocationCard } from './common/LocationCard';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export const LocationsSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
+  const rowRef = useRef<HTMLUListElement>(null);
+
+  const trustProofByLocation: Record<string, string> = {
+    '1': 'Established guidance for urban and suburban buyers',
+    '2': 'Coastal market insight with investor-focused support',
+    '3': 'Reliable advice for fast-moving tech corridor homes',
+    '4': 'Hands-on support for distinctive Southern properties',
+    '5': 'Practical strategies for value-driven Gulf Coast moves',
+    '6': 'Confident execution across high-demand Sunshine markets'
+  };
 
   // Animate cards on scroll
   useGSAP(() => {
@@ -18,45 +26,41 @@ export const LocationsSection = () => {
     let mm = gsap.matchMedia();
 
     mm.add({
-      desktop: "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
-      tablet: "(min-width: 640px) and (max-width: 767px) and (prefers-reduced-motion: no-preference)",
-      mobile: "(max-width: 639px) and (prefers-reduced-motion: no-preference)",
+      motion: "(prefers-reduced-motion: no-preference)",
       reduce: "(prefers-reduced-motion: reduce)"
     }, (context) => {
-      let { desktop, tablet, mobile, reduce } = context.conditions as any;
+      let { reduce } = context.conditions as any;
 
       // If user prefers reduced motion, show cards instantly without animation
       if (reduce) {
-        const cards = gsap.utils.toArray('.location-card') as HTMLElement[];
-        cards.forEach(card => {
-          card.style.opacity = '1';
-          card.style.transform = 'translateY(0)';
+        const badges = gsap.utils.toArray('.coverage-badge') as HTMLElement[];
+        badges.forEach((badge) => {
+          badge.style.opacity = '1';
+          badge.style.transform = 'translateY(0)';
         });
         return;
       }
 
-      // For all other cases, animate cards on scroll
-      const cards = gsap.utils.toArray('.location-card') as HTMLElement[];
+      const badges = gsap.utils.toArray('.coverage-badge') as HTMLElement[];
       
-      cards.forEach((card: HTMLElement, index: number) => {
+      badges.forEach((badge: HTMLElement, index: number) => {
         gsap.fromTo(
-          card,
+          badge,
           {
             opacity: 0,
-            y: 60, // Start 60px lower
+            y: 30,
           },
           {
             opacity: 1,
             y: 0,
             duration: 0.6,
             ease: "power2.out",
-            delay: index * 0.12, // 0.12s stagger
+            delay: index * 0.1,
             scrollTrigger: {
-              trigger: card,
-              start: "top 85%", // Trigger when card is 85% in view
-              end: "top 50%",
+              trigger: badge,
+              start: "top 88%",
               toggleActions: "play none none none",
-              once: true, // Only play animation once
+              once: true,
               invalidateOnRefresh: true,
             }
           }
@@ -73,38 +77,31 @@ export const LocationsSection = () => {
       className="py-16 bg-gray-50"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
         <SectionHeader
           title="OUR COVERAGE"
           subtitle="Areas We Serve"
-          description="Expertise across premier real estate markets"
+          description="Trusted local guidance across key markets we serve"
         />
 
-        {/* Mobile Grid (1 column) */}
-        <div
-          ref={gridRef}
-          className="
-            mt-12
-            grid grid-cols-1 gap-6
-            md:grid-cols-2 lg:flex lg:overflow-x-auto lg:gap-6 lg:pb-4
-          "
-        >
+        <ul ref={rowRef} className="mt-10 flex gap-4 overflow-x-auto pb-2 no-scrollbar">
           {LOCATIONS.map((location) => (
-            <div
+            <li
               key={location.id}
-              className="location-card"
+              className="
+                coverage-badge min-w-[260px] sm:min-w-[300px] lg:min-w-[340px]
+                rounded-xl border border-gray-200 bg-white px-5 py-5
+                shadow-sm transition-all duration-300 ease-out
+                hover:-translate-y-1 hover:shadow-md
+                will-change-transform
+              "
+              style={{ willChange: 'transform, opacity' }}
             >
-              <LocationCard location={location} />
-            </div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-dark">Local Coverage</p>
+              <h3 className="mt-2 text-lg font-semibold text-charcoal">{location.name}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">{trustProofByLocation[location.id] || location.description}</p>
+            </li>
           ))}
-        </div>
-
-        {/* Scroll hint for desktop (optional) */}
-        <div className="mt-6 hidden lg:flex justify-center">
-          <p className="text-xs text-gray-500">
-            Scroll to see all areas →
-          </p>
-        </div>
+        </ul>
       </div>
     </section>
   );
