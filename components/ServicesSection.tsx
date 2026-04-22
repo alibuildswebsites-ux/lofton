@@ -74,15 +74,15 @@ export const ServicesSection = () => {
             return (
               <div
                 key={idx}
-                className="gsap-service-card group relative bg-white border border-gray-100 rounded-[24px] p-[40px] hover:border-brand/30 hover:shadow-[0_20px_40px_-15px_rgba(74,222,128,0.15)] transition-all duration-300 flex flex-col h-full overflow-hidden md:[&:last-child]:col-span-2 lg:[&:last-child]:col-span-1"
+                className="gsap-service-card group relative bg-white border border-gray-100 rounded-[24px] p-[40px] hover:border-brand/30 hover:shadow-[0_20px_40px_-15px_rgba(74,222,128,0.15)] transition-[border-color,box-shadow] duration-300 flex flex-col h-full overflow-hidden md:[&:last-child]:col-span-2 lg:[&:last-child]:col-span-1"
                 style={{ willChange: "transform, opacity" }}
               >
                 {/* Hover Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-brand-light/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-brand-light/35 opacity-0 group-hover:opacity-70 transition-opacity duration-200" />
                 
                 <div className="relative z-10 flex flex-col h-full">
                   {/* Icon */}
-                  <div className="w-[64px] h-[64px] rounded-2xl bg-[#F9FAFB] border border-gray-100 group-hover:border-brand group-hover:bg-gradient-to-br group-hover:from-brand group-hover:to-brand-accent flex items-center justify-center mb-[32px] text-charcoal-stroke group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-lg group-hover:scale-110 origin-left">
+                  <div className="w-[64px] h-[64px] rounded-2xl bg-[#F9FAFB] border border-gray-100 group-hover:border-brand group-hover:bg-gradient-to-br group-hover:from-brand group-hover:to-brand-accent flex items-center justify-center mb-[32px] text-charcoal-stroke group-hover:text-white transition-[background-color,border-color,color,box-shadow,transform] duration-250 shadow-sm group-hover:shadow-lg group-hover:scale-105">
                     <service.icon size={28} strokeWidth={2} />
                   </div>
 
