@@ -8,6 +8,7 @@ import App from './App';
 import './index.css';
 import { AuthProvider } from './components/auth/AuthProvider';
 import { GlobalErrorBoundary } from './components/common/GlobalErrorBoundary';
+import { ThemeProvider } from './components/ThemeProvider';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -20,11 +21,13 @@ root.render(
     <HelmetProvider>
       <GlobalErrorBoundary>
         <AuthProvider>
-          <BrowserRouter>
-            <App />
-            <Analytics />
-            <SpeedInsights debug={true} />
-          </BrowserRouter>
+          <ThemeProvider defaultTheme="light" storageKey="lofton-theme">
+            <BrowserRouter>
+              <App />
+              <Analytics />
+              <SpeedInsights debug={true} />
+            </BrowserRouter>
+          </ThemeProvider>
         </AuthProvider>
       </GlobalErrorBoundary>
     </HelmetProvider>

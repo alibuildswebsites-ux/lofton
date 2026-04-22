@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { logOut } from '../lib/firebase/auth';
+import { ThemeToggle } from './ThemeToggle';
 
 interface NavbarProps {
   variant?: 'public' | 'dashboard';
@@ -129,14 +130,14 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
       <nav
         className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 border-b ${
           isScrolled 
-            ? 'bg-white/95 backdrop-blur-md shadow-sm py-3 border-gray-200/50' 
-            : 'bg-white py-5 border-transparent'
+            ? 'bg-background/95 backdrop-blur-md shadow-sm py-3 border-border/50' 
+            : 'bg-background py-5 border-transparent'
         }`}
       >
         <div className="max-w-[1600px] mx-auto px-5 md:px-6 lg:px-8 flex justify-between items-center h-full">
           <Link 
             to="/" 
-            className="font-extrabold text-2xl text-charcoal-dark tracking-tight z-[101] relative flex-shrink-0 mr-8 flex items-center gap-2 group"
+            className="font-extrabold text-2xl text-foreground tracking-tight z-[101] relative flex-shrink-0 mr-8 flex items-center gap-2 group"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Lofton Realty
@@ -149,7 +150,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                 key={link.name} 
                 to={link.path}
                 className={`text-[15px] font-semibold px-4 py-2 rounded-full transition-all relative group ${
-                  isActive(link.path) ? 'text-charcoal' : 'text-gray-500 hover:text-charcoal'
+                  isActive(link.path) ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
                 {link.name}
@@ -172,8 +173,8 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                 aria-haspopup="true"
                 className={`flex items-center gap-1 text-[15px] font-semibold px-4 py-2 rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 ${
                   hoverResource || resourceLinks.some(r => isActive(r.path)) 
-                    ? 'text-charcoal' 
-                    : 'text-gray-500 hover:text-charcoal'
+                    ? 'text-foreground' 
+                    : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
                 Resources <ChevronDown size={14} className={`transition-transform duration-200 ${hoverResource ? 'rotate-180' : ''}`} />
@@ -186,15 +187,15 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden py-2"
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 bg-popover rounded-2xl shadow-xl border border-border overflow-hidden py-2"
                   >
                     <div className="absolute top-0 left-0 right-0 h-1 bg-brand" />
                     {resourceLinks.map((link) => (
                       <Link
                         key={link.name}
                         to={link.path}
-                        className={`flex items-center gap-3 px-5 py-3 text-sm font-medium hover:bg-gray-50 transition-colors ${
-                          isActive(link.path) ? 'text-brand' : 'text-gray-600'
+                        className={`flex items-center gap-3 px-5 py-3 text-sm font-medium hover:bg-accent transition-colors ${
+                          isActive(link.path) ? 'text-brand' : 'text-foreground/80'
                         }`}
                       >
                         {link.name}
@@ -210,7 +211,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                 key={link.name} 
                 to={link.path}
                 className={`text-[15px] font-semibold px-4 py-2 rounded-full transition-all relative ${
-                  isActive(link.path) ? 'text-charcoal' : 'text-gray-500 hover:text-charcoal'
+                  isActive(link.path) ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
                 {link.name}
@@ -226,21 +227,22 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
 
           {/* Desktop Right Side */}
           <div className="hidden lg:flex items-center gap-4">
+            <ThemeToggle />
             {user ? (
               <div className="relative">
                 <button
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   aria-label="User menu"
                   aria-expanded={isUserMenuOpen}
-                  className="flex items-center gap-3 pl-2 pr-1 py-1 rounded-full hover:bg-gray-50 transition-colors border border-gray-100 hover:border-gray-200 relative z-[110]"
+                  className="flex items-center gap-3 pl-2 pr-1 py-1 rounded-full hover:bg-accent transition-colors border border-border hover:border-border/80 relative z-[110]"
                 >
                   <div className="w-8 h-8 bg-gradient-to-br from-brand to-brand-dark text-white rounded-full flex items-center justify-center font-bold text-sm shadow-sm">
                     {user.displayName ? user.displayName[0].toUpperCase() : 'U'}
                   </div>
-                  <span className="font-bold text-sm text-gray-700 max-w-[100px] truncate">
+                  <span className="font-bold text-sm text-foreground max-w-[100px] truncate">
                     {user.displayName?.split(' ')[0] || 'User'}
                   </span>
-                  <ChevronDown size={14} className="text-gray-400 mr-2" />
+                  <ChevronDown size={14} className="text-muted-foreground mr-2" />
                 </button>
 
                 <AnimatePresence>
@@ -252,27 +254,27 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.15 }}
-                        className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-[115] overflow-hidden"
+                        className="absolute right-0 mt-2 w-64 bg-popover rounded-2xl shadow-xl border border-border py-2 z-[115] overflow-hidden"
                       >
-                        <div className="px-5 py-4 border-b border-gray-50 bg-gray-50/50">
-                          <p className="font-bold text-charcoal truncate">{user.displayName || 'User'}</p>
-                          <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                        <div className="px-5 py-4 border-b border-border bg-accent/50">
+                          <p className="font-bold text-foreground truncate">{user.displayName || 'User'}</p>
+                          <p className="text-xs text-muted-foreground truncate">{user.email}</p>
                         </div>
                         <div className="py-2">
-                          <Link to="/dashboard" onClick={() => setIsUserMenuOpen(false)} className="flex items-center gap-3 px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors">
+                          <Link to="/dashboard" onClick={() => setIsUserMenuOpen(false)} className="flex items-center gap-3 px-5 py-2.5 text-sm font-medium text-foreground hover:bg-accent hover:text-brand transition-colors">
                             <LayoutDashboard size={16} /> Dashboard
                           </Link>
                           {isAdmin && (
-                            <Link to="/dashboard/admin" onClick={() => setIsUserMenuOpen(false)} className="flex items-center gap-3 px-5 py-2.5 text-sm font-medium text-purple-700 hover:bg-purple-50 transition-colors">
+                            <Link to="/dashboard/admin" onClick={() => setIsUserMenuOpen(false)} className="flex items-center gap-3 px-5 py-2.5 text-sm font-medium text-purple-700 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors">
                               <ShieldCheck size={16} /> Admin Panel
                             </Link>
                           )}
-                          <Link to="/dashboard/profile" onClick={() => setIsUserMenuOpen(false)} className="flex items-center gap-3 px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors">
+                          <Link to="/dashboard/profile" onClick={() => setIsUserMenuOpen(false)} className="flex items-center gap-3 px-5 py-2.5 text-sm font-medium text-foreground hover:bg-accent hover:text-brand transition-colors">
                             <Settings size={16} /> Settings
                           </Link>
                         </div>
-                        <div className="border-t border-gray-50 pt-2 mt-1 px-2">
-                          <button onClick={handleLogout} className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 rounded-xl transition-colors text-left">
+                        <div className="border-t border-border pt-2 mt-1 px-2">
+                          <button onClick={handleLogout} className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors text-left">
                             <LogOut size={16} /> Sign Out
                           </button>
                         </div>
@@ -283,19 +285,22 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <Link to="/login" className="text-[15px] font-bold text-gray-600 hover:text-brand transition-colors px-4 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 rounded-full">Log In</Link>
-                <Link to="/signup" className="bg-charcoal text-white px-6 py-2.5 rounded-full font-bold text-[15px] hover:bg-black transition-all shadow-md hover:shadow-lg active:scale-95 border border-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2">Sign Up</Link>
+                <Link to="/login" className="text-[15px] font-bold text-muted-foreground hover:text-brand transition-colors px-4 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 rounded-full">Log In</Link>
+                <Link to="/signup" className="bg-foreground text-background px-6 py-2.5 rounded-full font-bold text-[15px] hover:opacity-90 transition-all shadow-md hover:shadow-lg active:scale-95 border border-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2">Sign Up</Link>
               </div>
             )}
           </div>
 
-          <button 
-            className="lg:hidden p-2 z-[103] relative rounded-full active:bg-gray-100 text-charcoal hover:bg-gray-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="flex lg:hidden items-center gap-2">
+            <ThemeToggle />
+            <button 
+              className="p-2 z-[103] relative rounded-full active:bg-accent text-foreground hover:bg-accent/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -317,7 +322,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
               animate="open"
               exit="closed"
               variants={mobileMenuVariants}
-              className="fixed top-0 right-0 h-full w-[75%] max-w-[300px] bg-white z-[201] shadow-2xl lg:hidden flex flex-col overflow-y-auto border-l border-gray-100"
+              className="fixed top-0 right-0 h-full w-[75%] max-w-[300px] bg-background z-[201] shadow-2xl lg:hidden flex flex-col overflow-y-auto border-l border-border"
             >
               <div className="pt-[7.5vh] px-6 pb-6 flex flex-col gap-1 flex-grow relative z-10">
                 
@@ -332,7 +337,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                         to={link.path}
                         onClick={() => setIsMobileMenuOpen(false)}
                         className={`flex items-center justify-center px-4 py-4 text-lg font-bold transition-all relative w-full text-center ${
-                        isActive(link.path) ? 'text-charcoal' : 'text-gray-500 hover:text-charcoal'
+                        isActive(link.path) ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
                         }`}
                     >
                         {link.name}
@@ -355,7 +360,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                       onClick={() => setIsResourcesOpen(!isResourcesOpen)}
                       aria-expanded={isResourcesOpen}
                       className={`w-full flex items-center justify-center gap-2 px-4 py-4 text-lg font-bold transition-colors active:scale-[0.98] ${
-                        isResourcesOpen ? 'text-charcoal' : 'text-gray-500 hover:text-charcoal'
+                        isResourcesOpen ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
                       }`}
                     >
                     Resources
@@ -377,7 +382,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                             to={link.path}
                             onClick={() => setIsMobileMenuOpen(false)}
                             className={`flex items-center justify-center px-8 py-3 text-base font-semibold transition-colors relative w-full text-center ${
-                              isActive(link.path) ? 'text-brand' : 'text-gray-600'
+                              isActive(link.path) ? 'text-brand' : 'text-foreground/80'
                             }`}
                           >
                             {link.name}
@@ -394,7 +399,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                   </AnimatePresence>
                 </motion.div>
 
-                <motion.div variants={menuItemVariants} className="mt-auto pt-8 border-t border-gray-100">
+                <motion.div variants={menuItemVariants} className="mt-auto pt-8 border-t border-border">
                   {user ? (
                     <div className="space-y-3">
                       <div className="flex flex-col items-center gap-3 px-4 mb-6">
@@ -402,22 +407,22 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                           {user.displayName ? user.displayName[0].toUpperCase() : 'U'}
                         </div>
                         <div className="text-center overflow-hidden">
-                          <p className="font-bold text-charcoal text-lg truncate">{user.displayName || 'User'}</p>
-                          <p className="text-sm text-gray-500 truncate max-w-[220px]">{user.email}</p>
+                          <p className="font-bold text-foreground text-lg truncate">{user.displayName || 'User'}</p>
+                          <p className="text-sm text-muted-foreground truncate max-w-[220px]">{user.email}</p>
                         </div>
                       </div>
                       
-                      <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-center px-4 py-3 rounded-xl bg-gray-50 text-charcoal font-bold hover:bg-gray-100 transition-colors">Dashboard</Link>
+                      <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-center px-4 py-3 rounded-xl bg-accent text-foreground font-bold hover:bg-accent/80 transition-colors">Dashboard</Link>
                       {isAdmin && (
-                        <Link to="/dashboard/admin" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-center px-4 py-3 rounded-xl bg-purple-50 text-purple-700 font-bold hover:bg-purple-100 transition-colors">Admin Panel</Link>
+                        <Link to="/dashboard/admin" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-center px-4 py-3 rounded-xl bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-400 font-bold hover:bg-purple-100 dark:hover:bg-purple-900/40 transition-colors">Admin Panel</Link>
                       )}
-                      <Link to="/dashboard/profile" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-center px-4 py-3 rounded-xl text-gray-600 font-bold hover:bg-gray-50 transition-colors">Settings</Link>
-                      <button onClick={handleLogout} className="w-full flex items-center justify-center px-4 py-3 rounded-xl text-red-600 font-bold hover:bg-red-50 transition-colors mt-2">Log Out</button>
+                      <Link to="/dashboard/profile" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-center px-4 py-3 rounded-xl text-foreground/80 font-bold hover:bg-accent transition-colors">Settings</Link>
+                      <button onClick={handleLogout} className="w-full flex items-center justify-center px-4 py-3 rounded-xl text-red-600 dark:text-red-400 font-bold hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors mt-2">Log Out</button>
                     </div>
                   ) : (
                     <div className="flex flex-col gap-3">
-                      <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="w-full text-center py-3.5 rounded-xl font-bold text-gray-600 border border-gray-200 hover:bg-gray-50 transition-colors">Log In</Link>
-                      <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)} className="w-full text-center py-3.5 rounded-xl font-bold text-white bg-charcoal hover:bg-black transition-all shadow-lg">Sign Up</Link>
+                      <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="w-full text-center py-3.5 rounded-xl font-bold text-muted-foreground border border-border hover:bg-accent transition-colors">Log In</Link>
+                      <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)} className="w-full text-center py-3.5 rounded-xl font-bold text-background bg-foreground hover:opacity-90 transition-all shadow-lg">Sign Up</Link>
                     </div>
                   )}
                 </motion.div>

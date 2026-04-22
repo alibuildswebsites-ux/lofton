@@ -30,7 +30,7 @@ export const Hero = () => {
 
   return (
     <section 
-      className="relative flex items-center overflow-hidden bg-slate-50/50 h-screen min-h-[600px] w-full" 
+      className="relative flex items-center overflow-hidden bg-background h-screen min-h-[600px] w-full" 
       id="home"
     >
       <InfiniteGrid />
@@ -45,7 +45,7 @@ export const Hero = () => {
           {/* Social Proof Badge */}
           <motion.div 
             variants={itemVariants}
-            className="inline-flex items-center gap-3 bg-gray-50/80 backdrop-blur-sm border border-gray-200 rounded-full px-4 py-2 w-fit mb-4 md:mb-8 hover:shadow-md transition-shadow cursor-default"
+            className="inline-flex items-center gap-3 bg-accent/80 backdrop-blur-sm border border-border rounded-full px-4 py-2 w-fit mb-4 md:mb-8 hover:shadow-md transition-shadow cursor-default"
           >
             <div className="flex -space-x-3">
               {avatars.map((src, i) => (
@@ -53,17 +53,17 @@ export const Hero = () => {
                   key={i} 
                   src={src} 
                   alt={`Client ${i + 1}`}
-                  className="w-8 h-8 rounded-full border-2 border-white object-cover"
+                  className="w-8 h-8 rounded-full border-2 border-background object-cover"
                 />
               ))}
             </div>
-            <span className="text-sm font-bold text-gray-700">Trusted by 500+ families</span>
+            <span className="text-sm font-bold text-foreground">Trusted by 500+ families</span>
           </motion.div>
 
           {/* Main Headline */}
           <motion.h1 
             variants={itemVariants}
-            className="font-extrabold text-charcoal leading-[1.1] mb-0 tracking-tight"
+            className="font-extrabold text-foreground leading-[1.1] mb-0 tracking-tight"
             style={{ fontSize: 'clamp(2.5rem, 6vw, 5.5rem)' }}
           >
             Your Dream Home <br /> Awaits
@@ -72,16 +72,16 @@ export const Hero = () => {
           {/* Subheadline */}
           <motion.p 
             variants={itemVariants}
-            className="text-[18px] md:text-[22px] lg:text-[24px] text-gray-500 font-medium mt-3 md:mt-6 leading-snug"
+            className="text-[18px] md:text-[22px] lg:text-[24px] text-muted-foreground font-medium mt-3 md:mt-6 leading-snug"
           >
             Houston's trusted real estate partner
-            <span className="block h-1 w-20 bg-brand mx-auto mt-2 rounded-full" />
+            <span className="block h-1 w-20 bg-primary mx-auto mt-2 rounded-full" />
           </motion.p>
           
           {/* Description */}
           <motion.p 
             variants={itemVariants}
-            className="text-[14px] md:text-[16px] lg:text-[18px] text-gray-400 max-w-[600px] mt-5 md:mt-8 leading-relaxed font-normal"
+            className="text-[14px] md:text-[16px] lg:text-[18px] text-muted-foreground/80 max-w-[600px] mt-5 md:mt-8 leading-relaxed font-normal"
           >
             Serving Houston, Galveston, Austin, Louisiana, Mississippi, and Florida with expert guidance, 24/7 availability, and personalized service.
           </motion.p>
@@ -94,7 +94,7 @@ export const Hero = () => {
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Link 
                 to="/properties"
-                className="flex items-center justify-center gap-2 bg-charcoal-dark text-white px-[32px] py-[14px] rounded-[8px] font-semibold text-[16px] hover:bg-black transition-all duration-300 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+                className="flex items-center justify-center gap-2 bg-primary text-primary-foreground px-[32px] py-[14px] rounded-[8px] font-semibold text-[16px] hover:opacity-90 transition-all duration-300 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
                 <Home size={20} />
                 View Listings
@@ -104,7 +104,7 @@ export const Hero = () => {
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Link 
                 to="/contact"
-                className="flex items-center justify-center gap-2 bg-white/80 backdrop-blur-sm text-charcoal-dark border-2 border-gray-200 px-[32px] py-[14px] rounded-[8px] font-semibold text-[16px] hover:border-brand hover:text-brand transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+                className="flex items-center justify-center gap-2 bg-background text-foreground border-2 border-border px-[32px] py-[14px] rounded-[8px] font-semibold text-[16px] hover:bg-accent transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
                 <Mail size={20} />
                 Contact Us
