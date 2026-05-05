@@ -125,19 +125,30 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
     }, 200);
   };
 
+  const isHomePage = location.pathname === '/';
+  const navBgClass = isScrolled 
+    ? 'bg-background shadow-md py-3 border-border' 
+    : isHomePage 
+      ? 'bg-transparent py-5 border-transparent' 
+      : 'bg-background py-5 border-border/40';
+
+  const navTextClass = (isHomePage && !isScrolled) 
+    ? 'text-white' 
+    : 'text-foreground';
+
+  const navLinkClass = (isHomePage && !isScrolled)
+    ? 'text-white/80 hover:text-white'
+    : 'text-muted-foreground hover:text-foreground';
+
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 border-b ${
-          isScrolled 
-            ? 'bg-background/95 backdrop-blur-md shadow-sm py-3 border-border/60' 
-            : 'bg-background py-5 border-border/40'
-        }`}
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${navBgClass}`}
       >
         <div className="max-w-[1600px] mx-auto px-5 md:px-6 lg:px-8 flex justify-between items-center h-full">
           <Link 
             to="/" 
-            className="font-extrabold text-2xl text-foreground tracking-tight z-[101] relative flex-shrink-0 mr-8 flex items-center gap-2 group"
+            className={`font-extrabold text-2xl tracking-tight z-[101] relative flex-shrink-0 mr-8 flex items-center gap-2 group transition-colors duration-300 ${navTextClass}`}
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Lofton Realty
@@ -150,7 +161,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                 key={link.name} 
                 to={link.path}
                 className={`text-[15px] font-semibold px-4 py-2 rounded-full transition-all relative group ${
-                  isActive(link.path) ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                  isActive(link.path) ? (isHomePage && !isScrolled ? 'text-white' : 'text-foreground') : navLinkClass
                 }`}
               >
                 {link.name}
@@ -173,8 +184,8 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                 aria-haspopup="true"
                 className={`flex items-center gap-1 text-[15px] font-semibold px-4 py-2 rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 ${
                   hoverResource || resourceLinks.some(r => isActive(r.path)) 
-                    ? 'text-foreground' 
-                    : 'text-muted-foreground hover:text-foreground'
+                    ? (isHomePage && !isScrolled ? 'text-white' : 'text-foreground') 
+                    : navLinkClass
                 }`}
               >
                 Resources <ChevronDown size={14} className={`transition-transform duration-200 ${hoverResource ? 'rotate-180' : ''}`} />
@@ -211,7 +222,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                 key={link.name} 
                 to={link.path}
                 className={`text-[15px] font-semibold px-4 py-2 rounded-full transition-all relative ${
-                  isActive(link.path) ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                  isActive(link.path) ? (isHomePage && !isScrolled ? 'text-white' : 'text-foreground') : navLinkClass
                 }`}
               >
                 {link.name}
@@ -234,15 +245,19 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   aria-label="User menu"
                   aria-expanded={isUserMenuOpen}
-                  className="flex items-center gap-3 pl-2 pr-1 py-1 rounded-full hover:bg-accent transition-colors border border-border hover:border-border/80 relative z-[110]"
+                  className={`flex items-center gap-3 pl-2 pr-1 py-1 rounded-full transition-colors border relative z-[110] ${
+                    isHomePage && !isScrolled 
+                      ? 'bg-white/10 border-white/20 hover:bg-white/20' 
+                      : 'hover:bg-accent border-border hover:border-border/80'
+                  }`}
                 >
                   <div className="w-8 h-8 bg-gradient-to-br from-brand to-brand-dark text-white rounded-full flex items-center justify-center font-bold text-sm shadow-sm">
                     {user.displayName ? user.displayName[0].toUpperCase() : 'U'}
                   </div>
-                  <span className="font-bold text-sm text-foreground max-w-[100px] truncate">
+                  <span className={`font-bold text-sm max-w-[100px] truncate ${isHomePage && !isScrolled ? 'text-white' : 'text-foreground'}`}>
                     {user.displayName?.split(' ')[0] || 'User'}
                   </span>
-                  <ChevronDown size={14} className="text-muted-foreground mr-2" />
+                  <ChevronDown size={14} className={`mr-2 ${isHomePage && !isScrolled ? 'text-white/60' : 'text-muted-foreground'}`} />
                 </button>
 
                 <AnimatePresence>
@@ -285,8 +300,12 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <Link to="/login" className="text-[15px] font-bold text-muted-foreground hover:text-brand transition-colors px-4 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 rounded-full">Log In</Link>
-                <Link to="/signup" className="bg-foreground text-background px-6 py-2.5 rounded-full font-bold text-[15px] hover:opacity-90 transition-all shadow-md hover:shadow-lg active:scale-95 border border-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2">Sign Up</Link>
+                <Link to="/login" className={`text-[15px] font-bold transition-colors px-4 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 rounded-full ${navLinkClass}`}>Log In</Link>
+                <Link to="/signup" className={`px-6 py-2.5 rounded-full font-bold text-[15px] hover:opacity-90 transition-all shadow-md hover:shadow-lg active:scale-95 border border-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 ${
+                  isHomePage && !isScrolled 
+                    ? 'bg-white text-black hover:bg-zinc-200' 
+                    : 'bg-foreground text-background'
+                }`}>Sign Up</Link>
               </div>
             )}
           </div>
@@ -294,7 +313,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
           <div className="flex lg:hidden items-center gap-2">
             <ThemeToggle />
             <button 
-              className="p-2 z-[103] relative rounded-full active:bg-accent text-foreground hover:bg-accent/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+              className={`p-2 z-[103] relative rounded-full active:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 ${navTextClass} ${isHomePage && !isScrolled ? 'hover:bg-white/10' : 'hover:bg-accent/80'}`}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
             >
