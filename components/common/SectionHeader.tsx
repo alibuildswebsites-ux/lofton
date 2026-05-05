@@ -20,10 +20,10 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
 }) => {
   return (
     <div className={`text-${align} ${className} ${align === 'center' ? 'max-w-4xl mx-auto' : ''}`}>
-      <span className="text-[13px] font-bold tracking-[2px] text-brand uppercase mb-3 block">
+      <span className="text-[13px] font-bold tracking-[3px] text-brand uppercase mb-3 block heading-serif">
         {subtitle}
       </span>
-      <h2 className={`text-3xl md:text-4xl lg:text-5xl font-extrabold ${light ? 'text-white' : 'text-foreground'} mb-6 tracking-tight leading-tight`}>
+      <h2 className={`text-3xl md:text-4xl lg:text-5xl heading-serif ${light ? 'text-white' : 'text-foreground'} mb-6 leading-tight`}>
         {title}
       </h2>
       {description && (

@@ -74,19 +74,19 @@ export const ServicesSection = () => {
             return (
               <div
                 key={idx}
-                className="gsap-service-card group relative bg-background border border-border rounded-[24px] p-[40px] hover:border-brand/30 hover:shadow-[0_20px_40px_-15px_rgba(74,222,128,0.15)] transition-[border-color,box-shadow] duration-300 flex flex-col h-full overflow-hidden md:[&:last-child]:col-span-2 lg:[&:last-child]:col-span-1"
+                className="gsap-service-card group relative glass-card rounded-[24px] p-[40px] hover-lift flex flex-col h-full overflow-hidden md:[&:last-child]:col-span-2 lg:[&:last-child]:col-span-1 transition-all duration-300"
                 style={{ willChange: "transform, opacity" }}
               >
                 {/* Hover Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-brand/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-brand/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
                 <div className="relative z-10 flex flex-col h-full">
                   {/* Icon */}
-                  <div className="w-[64px] h-[64px] rounded-2xl bg-muted border border-border group-hover:border-brand group-hover:bg-gradient-to-br group-hover:from-brand group-hover:to-brand-accent flex items-center justify-center mb-[32px] text-foreground group-hover:text-primary-foreground transition-[background-color,border-color,color,box-shadow,transform] duration-250 shadow-sm group-hover:shadow-lg group-hover:scale-105">
-                    <service.icon size={28} strokeWidth={2} />
+                  <div className="w-[64px] h-[64px] rounded-2xl bg-muted border border-border group-hover:border-brand/50 group-hover:bg-brand/10 flex items-center justify-center mb-[32px] text-foreground group-hover:text-brand transition-all duration-300 shadow-sm group-hover:shadow-brand/20 group-hover:scale-110">
+                    <service.icon size={28} strokeWidth={1.5} />
                   </div>
 
-                  <h3 className="text-[24px] font-bold text-foreground mb-[16px] group-hover:text-brand-dark transition-colors duration-300">
+                  <h3 className="text-[22px] heading-serif text-foreground mb-[16px] group-hover:text-brand transition-colors duration-300">
                     {service.title}
                   </h3>
                   

@@ -11,9 +11,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-sans)', 'Outfit', 'sans-serif'],
+        sans: ['Outfit', 'sans-serif'],
+        serif: ['Cinzel', 'serif'],
         mono: ['var(--font-mono)', 'monospace'],
-        serif: ['var(--font-serif)', 'serif'],
       },
       colors: {
         border: "var(--border)",
@@ -50,11 +50,11 @@ export default {
           foreground: "var(--card-foreground)",
         },
         brand: {
-          DEFAULT: '#4ADE80',
-          dark: '#16A34A',
+          DEFAULT: '#10B981', // More sophisticated emerald
+          dark: '#064E3B', // Deep forest green
           light: '#ECFDF5',
-          accent: '#22C55E',
-          gradient: '#34D399',
+          accent: '#059669',
+          gradient: '#10B981',
         },
         charcoal: {
           DEFAULT: '#1F2937',

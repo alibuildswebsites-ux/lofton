@@ -103,8 +103,8 @@ export const Hero = () => {
           {/* Main Headline */}
           <motion.h1 
             variants={itemVariants}
-            className="font-extrabold text-white leading-[1.1] mb-0 tracking-tight"
-            style={{ fontSize: 'clamp(2.5rem, 6vw, 5.5rem)' }}
+            className="heading-serif text-white leading-[1.1] mb-0 tracking-widest"
+            style={{ fontSize: 'clamp(2rem, 6vw, 4.5rem)' }}
           >
             Your Dream Home <br /> Awaits
           </motion.h1>

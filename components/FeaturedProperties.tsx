@@ -63,8 +63,8 @@ export const FeaturedProperties = () => {
       <div className="max-w-[1280px] mx-auto px-5 md:px-10 lg:px-[40px]">
         <div className="flex justify-between items-end mb-[40px] md:mb-[60px]">
           <div>
-            <span className="text-[13px] font-bold tracking-[2px] text-brand uppercase mb-3 block">Exclusive Listings</span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-foreground tracking-tight">Featured Properties</h2>
+            <span className="text-[13px] font-bold tracking-[3px] text-brand uppercase mb-3 block heading-serif">Exclusive Listings</span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl heading-serif text-foreground">Featured Properties</h2>
           </div>
           <Link 
             to="/property-listings"

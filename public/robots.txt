@@ -1,6 +1,28 @@
+# Lofton Realty Robots.txt
+# Optimized for Traditional & AI Search Engines
+
+# Allow all major AI crawlers for citations
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Traditional Search
 User-agent: *
 Allow: /
-Disallow: /dashboard/
 Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
 
+# Sitemaps
 Sitemap: https://lofton-psi.vercel.app/sitemap.xml
