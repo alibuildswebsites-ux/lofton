@@ -1,12 +1,17 @@
 import React, { useEffect } from 'react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
+import { updateSEO } from '../utils';
 
 export const PrivacyPolicy = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Privacy Policy | Lofton Realty";
+    updateSEO({
+      title: "Privacy Policy | Lofton Realty",
+      description: "Read Lofton Realty's privacy policy to understand how we collect, use, and protect your personal information.",
+      url: "https://lofton-psi.vercel.app/privacy-policy"
+    });
   }, []);
 
   return (
@@ -45,7 +50,7 @@ export const PrivacyPolicy = () => {
                   <li>Responding to your inquiries regarding buying, selling, or renting properties.</li>
                   <li>Scheduling property viewings and consultations.</li>
                   <li>Sending you relevant listing updates, market reports, and newsletters (you may opt out at any time).</li>
-                  <li> improving our website functionality and user experience.</li>
+                  <li>Improving our website functionality and user experience.</li>
                   <li>Complying with legal obligations and real estate regulations.</li>
                 </ul>
               </section>
@@ -90,7 +95,7 @@ export const PrivacyPolicy = () => {
                 <p className="mb-2">If you have any questions regarding this Privacy Policy, please contact us:</p>
                 <p className="font-bold text-foreground">Lofton Realty</p>
                 <p>Email: <a href="mailto:Info@LoftonRealty.com" className="text-brand hover:underline">Info@LoftonRealty.com</a></p>
-                <p>Phone: (713) 203-7661</p>
+                <p>Phone: <a href="tel:7132037661" className="text-brand hover:underline" aria-label="Call Lofton Realty at (713) 203-7661">(713) 203-7661</a></p>
                 <p>Houston, TX</p>
               </section>
 

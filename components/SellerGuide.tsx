@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { 
   TrendingUp, Camera, Handshake, FileCheck, Home, DollarSign, Megaphone, 
@@ -218,12 +218,16 @@ export const SellerGuide = () => {
     window.scrollTo(0, 0);
 
     const loadTestimonials = async () => {
-      const data = await getTestimonials();
-      const filtered = data.filter(t => 
-        t.role.toLowerCase().includes('seller') || 
-        t.role.toLowerCase().includes('investor')
-      ).slice(0, 3);
-      setSellerTestimonials(filtered);
+      try {
+        const data = await getTestimonials();
+        const filtered = data.filter(t => 
+          t.role.toLowerCase().includes('seller') || 
+          t.role.toLowerCase().includes('investor')
+        ).slice(0, 3);
+        setSellerTestimonials(filtered);
+      } catch {
+        // non-critical — testimonials section simply stays empty
+      }
     };
     loadTestimonials();
   }, []);
@@ -339,12 +343,17 @@ export const SellerGuide = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <div className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-background overflow-hidden">
+      <div className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        {/* Background image */}
         <div 
-           className="absolute inset-0 opacity-30 bg-cover bg-center" 
+           className="absolute inset-0 bg-cover bg-center opacity-50" 
            style={{ backgroundImage: `url(${getOptimizedImageUrl(heroBg, 1200)})` }}
+           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-charcoal-dark via-charcoal-dark/90 to-transparent" />
+        {/* Primary dark overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-charcoal-dark/95 via-charcoal-dark/80 to-charcoal-dark/60" aria-hidden="true" />
+        {/* Bottom fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" aria-hidden="true" />
         
         <div className="relative max-w-7xl mx-auto px-5 md:px-10 z-10 grid lg:grid-cols-2 gap-12 items-center">
           <motion.div 
@@ -362,13 +371,13 @@ export const SellerGuide = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <button 
                 onClick={() => document.getElementById('valuation')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-primary text-primary-foreground hover:bg-brand-dark px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-brand/25 transition-all"
+                className="bg-primary text-primary-foreground hover:bg-brand-dark px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-brand/25 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand focus-visible:ring-offset-charcoal-dark"
               >
                 Get Free Valuation
               </button>
               <button 
                 onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-transparent border border-white text-white hover:bg-background/10 px-8 py-4 rounded-full font-bold text-lg transition-all"
+                className="bg-transparent border border-white text-white hover:bg-background/10 px-8 py-4 rounded-full font-bold text-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-white focus-visible:ring-offset-charcoal-dark"
               >
                 Contact Us
               </button>
@@ -409,35 +418,35 @@ export const SellerGuide = () => {
       </section>
 
       {/* Valuation Tool & Stats */}
-      <section id="valuation" className="py-20 bg-background text-white relative overflow-hidden">
+      <section id="valuation" className="py-20 bg-foreground relative overflow-hidden">
         {/* Background blobs */}
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand rounded-full blur-[120px] opacity-10 translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand rounded-full blur-[120px] opacity-10 translate-x-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
         
         <div className="max-w-7xl mx-auto px-5 md:px-10 grid lg:grid-cols-2 gap-16 items-center relative z-10">
           <div>
             <span className="text-brand font-bold tracking-widest uppercase text-sm mb-2 block">Market Intelligence</span>
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-6">What's Your Home Worth?</h2>
-            <p className="text-muted-foreground/60 text-lg mb-10 max-w-lg">
+            <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6">What's Your Home Worth?</h2>
+            <p className="text-white/60 text-lg mb-10 max-w-lg">
               Get a preliminary estimate instantly. For a precise valuation, our agents conduct a thorough walkthrough and analysis.
             </p>
             
             {/* Success Metrics */}
-            <div className="grid grid-cols-2 gap-8 border-t border-gray-700 pt-10">
+            <div className="grid grid-cols-2 gap-8 border-t border-white/20 pt-10">
               <div>
                 <div className="text-4xl font-extrabold text-brand mb-1">98.5%</div>
-                <div className="text-sm text-muted-foreground/60 font-medium uppercase tracking-wide">Sale-to-List Price</div>
+                <div className="text-sm text-white/60 font-medium uppercase tracking-wide">Sale-to-List Price</div>
               </div>
               <div>
                 <div className="text-4xl font-extrabold text-brand mb-1">14</div>
-                <div className="text-sm text-muted-foreground/60 font-medium uppercase tracking-wide">Avg. Days on Market</div>
+                <div className="text-sm text-white/60 font-medium uppercase tracking-wide">Avg. Days on Market</div>
               </div>
               <div>
                 <div className="text-4xl font-extrabold text-white mb-1">500+</div>
-                <div className="text-sm text-muted-foreground/60 font-medium uppercase tracking-wide">Homes Sold</div>
+                <div className="text-sm text-white/60 font-medium uppercase tracking-wide">Homes Sold</div>
               </div>
               <div>
                 <div className="text-4xl font-extrabold text-white mb-1">5 ★</div>
-                <div className="text-sm text-muted-foreground/60 font-medium uppercase tracking-wide">Client Rating</div>
+                <div className="text-sm text-white/60 font-medium uppercase tracking-wide">Client Rating</div>
               </div>
             </div>
           </div>
@@ -469,8 +478,11 @@ export const SellerGuide = () => {
                       
                       <div className={`flex flex-wrap gap-3 ${idx % 2 === 0 ? 'md:justify-end' : ''}`}>
                         {step.downloadable && (
-                          <button className="flex items-center gap-2 text-sm font-bold text-brand bg-brand-light/50 px-3 py-1.5 rounded-lg hover:bg-brand-light transition-colors">
-                            <Download size={16} /> {step.downloadable}
+                          <button 
+                            className="flex items-center gap-2 text-sm font-bold text-brand bg-brand-light/50 px-3 py-1.5 rounded-lg hover:bg-brand-light transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1"
+                            aria-label={`Download ${step.downloadable}`}
+                          >
+                            <Download size={16} aria-hidden="true" /> {step.downloadable}
                           </button>
                         )}
                         {step.cta && (
@@ -512,21 +524,21 @@ export const SellerGuide = () => {
               
               <div className="space-y-6">
                  <div className="flex gap-4">
-                    <CheckCircle2 className="text-brand flex-shrink-0" />
+                    <CheckCircle2 className="text-brand flex-shrink-0" aria-hidden="true" />
                     <div>
                       <h4 className="font-bold text-foreground">Professional Staging Consultation</h4>
                       <p className="text-sm text-muted-foreground">We help you declutter and arrange to maximize space.</p>
                     </div>
                  </div>
                  <div className="flex gap-4">
-                    <CheckCircle2 className="text-brand flex-shrink-0" />
+                    <CheckCircle2 className="text-brand flex-shrink-0" aria-hidden="true" />
                     <div>
                       <h4 className="font-bold text-foreground">HDR Photography & Drone</h4>
                       <p className="text-sm text-muted-foreground">Capturing every angle and the surrounding neighborhood.</p>
                     </div>
                  </div>
                  <div className="flex gap-4">
-                    <CheckCircle2 className="text-brand flex-shrink-0" />
+                    <CheckCircle2 className="text-brand flex-shrink-0" aria-hidden="true" />
                     <div>
                       <h4 className="font-bold text-foreground">Social Media Amplification</h4>
                       <p className="text-sm text-muted-foreground">Targeted ads on Instagram, Facebook, and YouTube.</p>
@@ -607,15 +619,15 @@ export const SellerGuide = () => {
       </section>
 
       {/* Contact Form CTA */}
-      <section id="contact-form" className="py-24 bg-background">
+      <section id="contact-form" className="py-24 bg-foreground">
         <div className="max-w-4xl mx-auto px-5 md:px-10">
-          <div className="bg-background rounded-[32px] p-8 md:p-16 overflow-hidden relative shadow-2xl">
+          <div className="rounded-[32px] p-8 md:p-16 overflow-hidden relative">
             {/* Decor */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-brand rounded-full blur-[80px] opacity-20 translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-brand rounded-full blur-[80px] opacity-20 translate-x-1/2 -translate-y-1/2" aria-hidden="true" />
 
             <div className="relative z-10 text-center mb-10">
               <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Ready to Sell Your Home?</h2>
-              <p className="text-muted-foreground/60 text-lg">Schedule a no-obligation consultation with our team.</p>
+              <p className="text-white/70 text-lg">Schedule a no-obligation consultation with our team.</p>
             </div>
             
             <div className="relative z-10 max-w-2xl mx-auto">
@@ -623,8 +635,8 @@ export const SellerGuide = () => {
             </div>
 
             <div className="relative z-10 pt-6 text-center">
-                <p className="text-muted-foreground/60 text-sm mb-2">Or call us directly</p>
-                <a href="tel:7132037661" className="text-white font-bold text-xl hover:text-brand transition-colors">
+                <p className="text-white/60 text-sm mb-2">Or call us directly</p>
+                <a href="tel:7132037661" className="text-white font-bold text-xl hover:text-brand transition-colors" aria-label="Call Lofton Realty at (713) 203-7661">
                   (713) 203-7661
                 </a>
             </div>

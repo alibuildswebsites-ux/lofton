@@ -76,12 +76,17 @@ export const ContactPage = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-background overflow-hidden">
+      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        {/* Background image */}
         <div 
-          className="absolute inset-0 opacity-20 bg-cover bg-center" 
+          className="absolute inset-0 bg-cover bg-center opacity-50" 
           style={{ backgroundImage: `url(${getOptimizedImageUrl('https://images.unsplash.com/photo-1497366216548-37526070297c', 1200)})` }}
+          aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-charcoal-dark/90 to-charcoal-dark/60" />
+        {/* Primary dark overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-charcoal-dark/95 via-charcoal-dark/80 to-charcoal-dark/60" aria-hidden="true" />
+        {/* Bottom fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" aria-hidden="true" />
         
         <div className="relative max-w-7xl mx-auto px-5 md:px-10 text-center z-10">
           <motion.div 

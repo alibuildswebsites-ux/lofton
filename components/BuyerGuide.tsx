@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useMemo, useRef, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   DollarSign, Home, Search, FileText, ClipboardCheck, Key, Award, 
@@ -149,12 +149,16 @@ export const BuyerGuide = () => {
     window.scrollTo(0, 0);
 
     const loadTestimonials = async () => {
-      const data = await getTestimonials();
-      const filtered = data.filter(t => 
-        t.role.toLowerCase().includes('buyer') || 
-        t.role.toLowerCase().includes('relocation')
-      ).slice(0, 3);
-      setBuyerTestimonials(filtered);
+      try {
+        const data = await getTestimonials();
+        const filtered = data.filter(t => 
+          t.role.toLowerCase().includes('buyer') || 
+          t.role.toLowerCase().includes('relocation')
+        ).slice(0, 3);
+        setBuyerTestimonials(filtered);
+      } catch {
+        // non-critical — testimonials section simply stays empty
+      }
     };
     loadTestimonials();
   }, []);
@@ -172,7 +176,7 @@ export const BuyerGuide = () => {
         'Identify any credit issues early in the process.',
         'Lock in an interest rate to protect against increases.'
       ],
-      cta: { text: 'Connect with Lenders', action: () => alert('Lender list coming soon!') }
+      cta: { text: 'Connect with Lenders', action: () => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' }) }
     },
     {
       id: 'step-2',
@@ -322,12 +326,17 @@ export const BuyerGuide = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <div className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-background overflow-hidden">
+      <div className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
+        {/* Background image */}
         <div 
-          className="absolute inset-0 opacity-20 bg-cover bg-center" 
+          className="absolute inset-0 bg-cover bg-center opacity-50" 
           style={{ backgroundImage: `url(${getOptimizedImageUrl(heroBg, 1200)})` }}
+          aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-charcoal-dark/90 to-charcoal-dark/70" />
+        {/* Primary dark overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-charcoal-dark/95 via-charcoal-dark/80 to-charcoal-dark/60" aria-hidden="true" />
+        {/* Bottom fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" aria-hidden="true" />
         
         <div className="relative max-w-7xl mx-auto px-5 md:px-10 text-center text-white z-10">
           <motion.div 
@@ -372,7 +381,7 @@ export const BuyerGuide = () => {
         
         {/* Sticky Sidebar Navigation (Desktop) */}
         <aside className="hidden lg:block h-fit sticky top-28">
-          <nav className="space-y-1 border-l-2 border-border pl-4">
+          <nav aria-label="Guide steps" className="space-y-1 border-l-2 border-border pl-4">
             {steps.map((step) => (
               <a
                 key={step.id}
@@ -501,16 +510,16 @@ export const BuyerGuide = () => {
         </div>
       </section>
 
-      {/* Contact Form CTA (Dark Card Theme) */}
-      <section className="py-24 bg-background">
+      {/* Contact Form CTA */}
+      <section className="py-24 bg-foreground">
         <div className="max-w-4xl mx-auto px-5 md:px-10">
-          <div className="bg-background rounded-[32px] p-8 md:p-16 overflow-hidden relative shadow-2xl">
+          <div className="rounded-[32px] p-8 md:p-16 overflow-hidden relative">
             {/* Decor */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-brand rounded-full blur-[80px] opacity-20 translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-brand rounded-full blur-[80px] opacity-20 translate-x-1/2 -translate-y-1/2" aria-hidden="true" />
 
             <div className="relative z-10 text-center mb-10">
               <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Ready to Start Your Journey?</h2>
-              <p className="text-muted-foreground/60 text-lg">Schedule a free consultation with our buying experts.</p>
+              <p className="text-white/70 text-lg">Schedule a free consultation with our buying experts.</p>
             </div>
             
             <div className="relative z-10 max-w-2xl mx-auto">
@@ -518,8 +527,8 @@ export const BuyerGuide = () => {
             </div>
 
             <div className="relative z-10 pt-6 text-center">
-                <p className="text-muted-foreground/60 text-sm mb-2">Or call us directly</p>
-                <a href="tel:7132037661" className="text-white font-bold text-xl hover:text-brand transition-colors">
+                <p className="text-white/60 text-sm mb-2">Or call us directly</p>
+                <a href="tel:7132037661" className="text-white font-bold text-xl hover:text-brand transition-colors" aria-label="Call Lofton Realty at (713) 203-7661">
                   (713) 203-7661
                 </a>
             </div>
@@ -540,7 +549,8 @@ const FAQItem: React.FC<{ faq: FAQ }> = ({ faq }) => {
     <div className="border-b border-border last:border-0">
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full py-4 flex justify-between items-center text-left focus:outline-none group"
+        aria-expanded={isOpen}
+        className="w-full py-4 flex justify-between items-center text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 rounded group"
       >
         <span className={`font-bold transition-colors ${isOpen ? 'text-brand' : 'text-foreground group-hover:text-foreground'}`}>
           {faq.question}

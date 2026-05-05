@@ -1,12 +1,17 @@
 import React, { useEffect } from 'react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
+import { updateSEO } from '../utils';
 
 export const TermsOfService = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Terms of Service | Lofton Realty";
+    updateSEO({
+      title: "Terms of Service | Lofton Realty",
+      description: "Review Lofton Realty's terms of service governing your use of our website and real estate services.",
+      url: "https://lofton-psi.vercel.app/terms-of-service"
+    });
   }, []);
 
   return (
