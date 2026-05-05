@@ -1,5 +1,5 @@
 import React, { useState, MouseEvent, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Heart, MapPin, Bed, Bath, Maximize, ChevronLeft, ChevronRight, ImageOff } from 'lucide-react';
 import { Property } from '../types';
 import { getOptimizedImageUrl } from '../utils';
@@ -107,6 +107,8 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, viewMode =
   return (
     <div
       onClick={handleCardClick}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleCardClick(); }}
+      tabIndex={0}
       className={`group bg-background rounded-[20px] overflow-hidden border border-border shadow-sm hover:shadow-xl transition-[box-shadow,border-color] duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 flex ${isList ? 'flex-col md:flex-row' : 'flex-col'}`}
       role="article"
       aria-label={`View details for ${property.address}`}
@@ -127,7 +129,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, viewMode =
                    src={getOptimizedImageUrl(img, 800)}
                    alt={`Property at ${property.address} - View ${idx + 1}`}
                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 will-change-transform"
-                   loading="eager"
+                    loading="lazy"
                    onError={() => setImageError(true)}
                  />
                )}
@@ -171,7 +173,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, viewMode =
              </button>
              
              {/* Dots */}
-             <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
+             <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-20" aria-hidden="true">
                {property.images.map((_, idx) => (
                  <div 
                    key={idx} 
@@ -188,10 +190,10 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, viewMode =
          {/* Favorite Button */}
          <button 
             onClick={toggleFavorite}
+            aria-label={isFavorite ? "Remove from favorites" : "Save to favorites"}
             className={`absolute top-4 right-4 z-20 bg-background/90 backdrop-blur p-2 rounded-full shadow-md hover:bg-background transition-all duration-200 
               ${isFavorite ? 'text-red-500 opacity-100' : 'text-muted-foreground hover:text-red-500'} 
               ${!isFavorite ? 'opacity-100 lg:opacity-0 lg:group-hover:opacity-100' : ''}`}
-            title={isFavorite ? "Remove from favorites" : "Save to favorites"}
          >
             <Heart size={18} className={isFavorite ? 'fill-current' : ''} />
          </button>
@@ -202,6 +204,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, viewMode =
         <div>
           <div className="flex justify-between items-start mb-2">
              <h3 className="text-2xl font-bold text-foreground">
+               <span className="sr-only">Price: </span>
                ${property.price.toLocaleString()}
              </h3>
           </div>
@@ -226,11 +229,14 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, viewMode =
           </div>
         </div>
         
-        <button 
+        <Link
+          to={`/property-listings/${property.id}`}
+          onClick={(e) => e.stopPropagation()}
+          aria-label={`View details for ${property.address}`}
           className="w-full mt-auto border border-border rounded-lg py-3 text-sm font-bold text-foreground hover:bg-foreground hover:text-white hover:border-charcoal transition-colors text-center inline-block touch-manipulation"
         >
           View Details
-        </button>
+        </Link>
       </div>
     </div>
   );

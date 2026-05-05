@@ -144,9 +144,16 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
       <nav
         className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${navBgClass}`}
       >
+        <a 
+          href="#main-content" 
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[999] focus:bg-brand focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-bold"
+        >
+          Skip to main content
+        </a>
         <div className="max-w-[1600px] mx-auto px-5 md:px-6 lg:px-8 flex justify-between items-center h-full">
           <Link 
             to="/" 
+            aria-label="Lofton Realty - Return to home page"
             className={`font-extrabold text-2xl tracking-tight z-[101] relative flex-shrink-0 mr-8 flex items-center gap-2 group transition-colors duration-300 ${navTextClass}`}
             onClick={() => setIsMobileMenuOpen(false)}
           >
@@ -198,12 +205,15 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
                     transition={{ duration: 0.15 }}
                     className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 bg-popover rounded-2xl shadow-xl border border-border overflow-hidden py-2"
+                    role="menu"
+                    aria-label="Resources menu"
                   >
                     <div className="absolute top-0 left-0 right-0 h-1 bg-brand" />
                     {resourceLinks.map((link) => (
                       <Link
                         key={link.name}
                         to={link.path}
+                        role="menuitem"
                         className={`flex items-center gap-3 px-5 py-3 text-sm font-medium hover:bg-accent transition-colors ${
                           isActive(link.path) ? 'text-brand' : 'text-foreground/80'
                         }`}
@@ -331,6 +341,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
               transition={{ duration: 0.3 }}
               onClick={() => setIsMobileMenuOpen(false)}
               className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[200] lg:hidden cursor-pointer"
+              aria-hidden="true"
             />
             
             <motion.div
@@ -339,6 +350,9 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
               exit="closed"
               variants={mobileMenuVariants}
               className="fixed top-0 right-0 h-full w-[75%] max-w-[300px] bg-background z-[201] shadow-2xl lg:hidden flex flex-col overflow-y-auto border-l border-border"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Navigation menu"
             >
               <div className="pt-[7.5vh] px-6 pb-6 flex flex-col gap-1 flex-grow relative z-10">
                 

@@ -14,7 +14,7 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="bg-background text-foreground pt-16 pb-8 border-t border-border/50">
+    <footer aria-label="Site footer" className="bg-background text-foreground pt-16 pb-8 border-t border-border/50">
       <div className="max-w-[1400px] mx-auto px-5 md:px-10 lg:px-[40px] flex flex-col items-center text-center">
         
         {/* Brand Section */}
@@ -28,17 +28,18 @@ export const Footer = () => {
             </p>
             
             <div className="flex gap-4">
-               {socialLinks.map(({ icon: Icon, url }, i) => (
-                 <a 
-                   key={i} 
-                   href={url} 
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   className="w-10 h-10 rounded-full bg-background/5 flex items-center justify-center text-muted-foreground/60 hover:bg-brand hover:text-foreground transition-all focus:outline-none focus:ring-2 focus:ring-brand"
-                 >
-                   <Icon size={18} />
-                 </a>
-               ))}
+             {socialLinks.map(({ icon: Icon, url }, i) => (
+               <a 
+                 key={i} 
+                 href={url} 
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label={`Visit Lofton Realty on ${['Facebook', 'Instagram', 'LinkedIn'][i]}`}
+                 className="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-muted-foreground hover:bg-brand hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-brand"
+               >
+                 <Icon size={18} aria-hidden="true" />
+               </a>
+             ))}
              </div>
         </div>
 
@@ -66,11 +67,11 @@ export const Footer = () => {
 
             {/* Contact Details */}
             <div className="space-y-3 flex flex-col items-center">
-              <a href={`tel:${COMPANY_INFO.PHONE_RAW}`} className="flex items-center gap-3 text-muted-foreground/60 hover:text-brand transition-colors">
+              <a href={`tel:${COMPANY_INFO.PHONE_RAW}`} aria-label={`Call Lofton Realty at ${COMPANY_INFO.PHONE}`} className="flex items-center gap-3 text-muted-foreground/60 hover:text-brand transition-colors">
                 <Phone size={16} className="text-brand" />
                 <span className="text-sm">{COMPANY_INFO.PHONE}</span>
               </a>
-              <a href={`mailto:${COMPANY_INFO.EMAIL}`} className="flex items-center gap-3 text-muted-foreground/60 hover:text-brand transition-colors">
+              <a href={`mailto:${COMPANY_INFO.EMAIL}`} aria-label={`Email Lofton Realty at ${COMPANY_INFO.EMAIL}`} className="flex items-center gap-3 text-muted-foreground/60 hover:text-brand transition-colors">
                 <Mail size={16} className="text-brand" />
                 <span className="text-sm">{COMPANY_INFO.EMAIL}</span>
               </a>
@@ -84,10 +85,12 @@ export const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-border/50 pt-8 w-full flex flex-col items-center gap-4 text-muted-foreground text-xs">
            <p>© {new Date().getFullYear()} {COMPANY_INFO.NAME}. All rights reserved.</p>
-           <div className="flex gap-6">
-             <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
-             <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
-           </div>
+           <nav aria-label="Footer navigation">
+             <div className="flex gap-6">
+               <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
+               <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
+             </div>
+           </nav>
         </div>
 
       </div>

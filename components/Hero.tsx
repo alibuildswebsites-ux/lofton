@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Home, Mail } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -9,6 +9,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const Hero = () => {
   const videoRef = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+
   const avatars = [
     'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&h=100&q=80',
     'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&h=100&q=80',
@@ -19,7 +21,7 @@ export const Hero = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.3 }
+      transition: { staggerChildren: shouldReduceMotion ? 0 : 0.15, delayChildren: shouldReduceMotion ? 0 : 0.3 }
     }
   };
 
@@ -28,29 +30,34 @@ export const Hero = () => {
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] as const }
+      transition: { duration: shouldReduceMotion ? 0 : 1.2, ease: [0.16, 1, 0.3, 1] as const }
     }
   };
 
   useEffect(() => {
-    if (videoRef.current) {
-      gsap.to(videoRef.current, {
-        scale: 1.2,
-        ease: "none",
-        scrollTrigger: {
-          trigger: "#home",
-          start: "top top",
-          end: "bottom top",
-          scrub: true
-        }
-      });
-    }
+    const mm = gsap.matchMedia();
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      if (videoRef.current) {
+        gsap.to(videoRef.current, {
+          scale: 1.2,
+          ease: "none",
+          scrollTrigger: {
+            trigger: "#home",
+            start: "top top",
+            end: "bottom top",
+            scrub: true
+          }
+        });
+      }
+    });
+    return () => mm.revert();
   }, []);
 
   return (
     <section 
       className="relative flex items-center overflow-hidden bg-black h-screen min-h-[600px] w-full" 
       id="home"
+      role="banner"
     >
       {/* Background Video */}
       <div 
@@ -62,6 +69,7 @@ export const Hero = () => {
           muted
           loop
           playsInline
+          aria-hidden="true"
           className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover"
           poster="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80"
         >
@@ -85,6 +93,7 @@ export const Hero = () => {
           {/* Social Proof Badge */}
           <motion.div 
             variants={itemVariants}
+            aria-label="Trusted by 500+ families"
             className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-2 w-fit mb-4 md:mb-8 hover:shadow-md transition-shadow cursor-default"
           >
             <div className="flex -space-x-3">
@@ -92,7 +101,7 @@ export const Hero = () => {
                 <img 
                   key={i} 
                   src={src} 
-                  alt={`Client ${i + 1}`}
+                  alt="Happy Lofton Realty client"
                   className="w-8 h-8 rounded-full border-2 border-white/20 object-cover"
                 />
               ))}
@@ -131,7 +140,7 @@ export const Hero = () => {
             variants={itemVariants}
             className="mt-8 md:mt-12 flex flex-col sm:flex-row gap-[16px] w-full sm:w-auto justify-center"
           >
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
               <Link 
                 to="/property-listings"
                 className="flex items-center justify-center gap-2 bg-primary text-primary-foreground px-[32px] py-[14px] rounded-[8px] font-semibold text-[16px] hover:opacity-90 transition-all duration-300 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
@@ -141,7 +150,7 @@ export const Hero = () => {
               </Link>
             </motion.div>
             
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
               <Link 
                 to="/contact-us"
                 className="flex items-center justify-center gap-2 bg-white/10 text-white backdrop-blur-sm border-2 border-white/20 px-[32px] py-[14px] rounded-[8px] font-semibold text-[16px] hover:bg-white/20 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"

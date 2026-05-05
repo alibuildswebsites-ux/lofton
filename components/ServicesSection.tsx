@@ -82,7 +82,10 @@ export const ServicesSection = () => {
                 
                 <div className="relative z-10 flex flex-col h-full">
                   {/* Icon */}
-                  <div className="w-[64px] h-[64px] rounded-2xl bg-muted border border-border group-hover:border-brand/50 group-hover:bg-brand/10 flex items-center justify-center mb-[32px] text-foreground group-hover:text-brand transition-all duration-300 shadow-sm group-hover:shadow-brand/20 group-hover:scale-110">
+                  <div
+                    aria-hidden="true"
+                    className="w-[64px] h-[64px] rounded-2xl bg-muted border border-border group-hover:border-brand/50 group-hover:bg-brand/10 flex items-center justify-center mb-[32px] text-foreground group-hover:text-brand transition-all duration-300 shadow-sm group-hover:shadow-brand/20 group-hover:scale-110"
+                  >
                     <service.icon size={28} strokeWidth={1.5} />
                   </div>
 
@@ -96,6 +99,7 @@ export const ServicesSection = () => {
 
                   <Link 
                     to={linkPath}
+                    aria-label={`Explore ${service.title} service`}
                     className="flex items-center text-[15px] font-bold text-foreground group-hover:text-brand transition-colors duration-300 mt-auto cursor-pointer rounded-md w-fit py-1 pr-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
                   >
                     <span className="relative">

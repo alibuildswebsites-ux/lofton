@@ -18,7 +18,8 @@ export const AgentCard: React.FC<AgentCardProps> = ({ agent }) => {
         <div className="w-32 h-32 rounded-full mb-6 relative">
           <img 
             src={getOptimizedImageUrl(agent.photo || 'https://images.unsplash.com/photo-1560250097-0b93528c311a', 400)} 
-            alt={agent.name}
+            alt={`${agent.name}, Real Estate Agent`}
+            loading="lazy"
             className="w-full h-full object-cover rounded-full border-4 border-gray-50 shadow-md"
           />
           <div className="absolute bottom-0 right-0 bg-primary text-primary-foreground p-2 rounded-full shadow-lg border-2 border-white">

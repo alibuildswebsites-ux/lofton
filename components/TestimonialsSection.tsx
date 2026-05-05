@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Quote, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
+import { Quote, ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { getTestimonials } from '../lib/firebase/firestore';
 import { Testimonial } from '../types';
 import { LoadingSpinner } from './common/LoadingSpinner';
@@ -12,6 +12,7 @@ export const TestimonialsSection = () => {
   const [loading, setLoading] = useState(true);
   const [itemsPerPage, setItemsPerPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(0);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     const fetchTestimonials = async () => {
@@ -87,11 +88,21 @@ export const TestimonialsSection = () => {
         />
 
         {/* Carousel Content */}
-        <div className="relative overflow-hidden -mx-4 px-4 py-4">
+        <div
+          className="relative overflow-hidden -mx-4 px-4 py-4"
+          onKeyDown={(e) => {
+            if (e.key === 'ArrowLeft') handlePrev();
+            if (e.key === 'ArrowRight') handleNext();
+          }}
+          tabIndex={-1}
+          role="region"
+          aria-label="Client testimonials"
+          aria-roledescription="carousel"
+        >
           <motion.div
             className="flex"
             animate={{ x: `-${currentPage * 100}%` }}
-            transition={{ type: "spring", stiffness: 300, damping: 40, mass: 1 }} // Snappy, no overshoot
+            transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 40, mass: 1 }}
             style={{ width: '100%' }}
           >
             {chunks.map((chunk, pageIndex) => (
@@ -114,15 +125,27 @@ export const TestimonialsSection = () => {
                         </div>
                       </div>
 
+                      {/* Star Rating */}
+                      <div className="flex gap-0.5 mb-4" aria-label="5 out of 5 stars">
+                        {[1, 2, 3, 4, 5].map(s => (
+                          <Star key={s} size={14} className="fill-brand text-brand" aria-hidden="true" />
+                        ))}
+                      </div>
+
                       {/* Content */}
                       <p className="text-muted-foreground text-lg leading-relaxed italic mb-8 flex-grow">
                         "{testimonial.quote}"
                       </p>
 
                       {/* Footer */}
-                      <div className="border-t border-gray-50 pt-6">
+                      <div className="border-t border-gray-50 pt-6 flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-brand-light flex items-center justify-center text-brand-dark font-bold text-sm flex-shrink-0">
+                          {testimonial.author.charAt(0)}
+                        </div>
+                        <div>
                           <h4 className="font-bold text-foreground text-base">{testimonial.author}</h4>
-                          <p className="text-xs font-semibold text-muted-foreground/60 uppercase tracking-wide mt-1">{testimonial.role}</p>
+                          <p className="text-xs font-semibold text-muted-foreground/60 uppercase tracking-wide mt-0.5">{testimonial.role}</p>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -130,6 +153,22 @@ export const TestimonialsSection = () => {
             ))}
           </motion.div>
         </div>
+
+        {/* Page Indicator Dots */}
+        {totalPages > 1 && (
+          <div className="flex justify-center gap-2 mt-6">
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentPage(i)}
+                aria-label={`Go to testimonials page ${i + 1}`}
+                className={`h-2 rounded-full transition-all ${
+                  currentPage === i ? 'bg-brand w-6' : 'bg-muted-foreground/30 hover:bg-muted-foreground/60 w-2'
+                }`}
+              />
+            ))}
+          </div>
+        )}
 
         {/* Navigation Buttons - Bottom Right */}
         <div className="flex justify-end gap-3 mt-8">

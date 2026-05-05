@@ -17,6 +17,7 @@ gsap.registerPlugin(ScrollTrigger);
 export const BlogList = () => {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState('All');
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -31,6 +32,20 @@ export const BlogList = () => {
     'Real Estate News'
   ];
 
+  const fetchBlogsFn = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await getBlogs(true);
+      setBlogs(data);
+      setTimeout(() => ScrollTrigger.refresh(), 100);
+    } catch (err) {
+      setError('Failed to load blog posts. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     updateSEO({
       title: "Real Estate Blog & Market Insights | Lofton Realty",
@@ -38,18 +53,7 @@ export const BlogList = () => {
       url: "https://lofton-psi.vercel.app/blog"
     });
 
-    const fetchBlogs = async () => {
-      setLoading(true);
-      const data = await getBlogs(true); // fetch published only
-      setBlogs(data);
-      setLoading(false);
-      // Refresh ScrollTrigger after data loads
-      setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, 100);
-    };
-
-    fetchBlogs();
+    fetchBlogsFn();
   }, []);
 
   useGSAP(() => {
@@ -117,14 +121,17 @@ export const BlogList = () => {
         </div>
       </div>
 
-      <main ref={sectionRef} className="max-w-[1280px] mx-auto px-5 md:px-10 py-12">
+      <main ref={sectionRef} id="main-content" className="max-w-[1280px] mx-auto px-5 md:px-10 py-12">
         
         {/* Category Filter */}
-        <div className="flex overflow-x-auto pb-4 mb-8 gap-2 no-scrollbar">
+        <div className="flex overflow-x-auto pb-4 mb-8 gap-2 no-scrollbar" role="tablist" aria-label="Filter by category">
           {categories.map(cat => (
             <button
               key={cat}
+              role="tab"
               onClick={() => setActiveCategory(cat)}
+              aria-selected={activeCategory === cat}
+              aria-controls="blog-grid"
               className={`px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap transition-all ${
                 activeCategory === cat 
                   ? 'bg-primary text-primary-foreground shadow-lg shadow-brand/20' 
@@ -136,6 +143,14 @@ export const BlogList = () => {
           ))}
         </div>
 
+        {/* Error State */}
+        {error && (
+          <div className="text-center py-16 bg-red-50 border border-red-200 rounded-2xl" role="alert">
+            <p className="text-red-700 font-medium">{error}</p>
+            <button onClick={fetchBlogsFn} className="mt-3 text-brand font-bold hover:underline">Try Again</button>
+          </div>
+        )}
+
         {/* Blog Grid */}
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -144,14 +159,14 @@ export const BlogList = () => {
             ))}
           </div>
         ) : filteredBlogs.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
+          <div id="blog-grid" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
             {filteredBlogs.map(post => (
               <div key={post.id} className="gsap-blog-card h-full" style={{ willChange: "transform, opacity" }}>
                 <BlogCard post={post} />
               </div>
             ))}
           </div>
-        ) : (
+        ) : !error ? (
           <div className="text-center py-32 bg-background rounded-2xl border border-border">
             <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
               <Search className="text-muted-foreground/60" size={24} />
@@ -160,12 +175,13 @@ export const BlogList = () => {
             <p className="text-muted-foreground">There are no posts in the {activeCategory} category yet.</p>
             <button 
               onClick={() => setActiveCategory('All')}
+              aria-label="View all blog posts"
               className="mt-6 text-brand font-bold hover:underline"
             >
               View all posts
             </button>
           </div>
-        )}
+        ) : null}
 
       </main>
 

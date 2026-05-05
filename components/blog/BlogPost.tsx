@@ -20,43 +20,48 @@ export const BlogPost = () => {
   useEffect(() => {
     const loadPost = async () => {
       setLoading(true);
-      if (slug) {
-        const data = await getBlogBySlug(slug);
-        if (data) {
-          setPost(data);
-          
-          // SEO
-          updateSEO({
-            title: `${data.metaTitle || data.title} | Lofton Realty Blog`,
-            description: data.metaDescription || data.content.replace(/<[^>]+>/g, '').substring(0, 150),
-            image: data.featuredImage,
-            url: `https://lofton-psi.vercel.app/blog/${data.slug}`,
-            type: 'article'
-          });
+      try {
+        if (slug) {
+          const data = await getBlogBySlug(slug);
+          if (data) {
+            setPost(data);
+            
+            // SEO
+            updateSEO({
+              title: `${data.metaTitle || data.title} | Lofton Realty Blog`,
+              description: data.metaDescription || data.content.replace(/<[^>]+>/g, '').substring(0, 150),
+              image: data.featuredImage,
+              url: `https://lofton-psi.vercel.app/blog/${data.slug}`,
+              type: 'article'
+            });
 
-          // Schema
-          injectJSONLD({
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            "headline": data.title,
-            "image": data.featuredImage,
-            "datePublished": data.createdAt,
-            "dateModified": data.updatedAt,
-            "author": {
-              "@type": "Person",
-              "name": data.author
-            }
-          });
+            // Schema
+            injectJSONLD({
+              "@context": "https://schema.org",
+              "@type": "BlogPosting",
+              "headline": data.title,
+              "image": data.featuredImage,
+              "datePublished": data.createdAt,
+              "dateModified": data.updatedAt,
+              "author": {
+                "@type": "Person",
+                "name": data.author
+              }
+            });
 
-          // Load related
-          const allBlogs = await getBlogs(true);
-          const related = allBlogs
-            .filter(b => b.category === data.category && b.id !== data.id)
-            .slice(0, 3);
-          setRelatedPosts(related);
+            // Load related
+            const allBlogs = await getBlogs(true);
+            const related = allBlogs
+              .filter(b => b.category === data.category && b.id !== data.id)
+              .slice(0, 3);
+            setRelatedPosts(related);
+          }
         }
+      } catch (err) {
+        console.error('Failed to load blog post:', err);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     loadPost();
@@ -94,11 +99,18 @@ export const BlogPost = () => {
     <div className="font-sans bg-background min-h-screen">
       <Navbar />
 
-      <article className="pt-28 md:pt-36 pb-20">
+      <article 
+        className="pt-28 md:pt-36 pb-20"
+        itemScope
+        itemType="https://schema.org/BlogPosting"
+      >
         
         {/* Header */}
         <div className="max-w-4xl mx-auto px-5 md:px-10 mb-10">
-          <Link to="/blog" className="inline-flex items-center gap-2 text-muted-foreground hover:text-brand font-bold mb-8 transition-colors text-sm">
+          <Link 
+            to="/blog" 
+            className="inline-flex items-center gap-2 text-muted-foreground hover:text-brand font-bold mb-8 transition-colors text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 rounded-md"
+          >
             <ArrowLeft size={16} /> Back to Blog
           </Link>
           
@@ -106,7 +118,9 @@ export const BlogPost = () => {
             <span className="bg-brand-light text-brand-dark px-3 py-1 rounded-full uppercase tracking-wide text-xs font-bold">
               {post.category}
             </span>
-            <span className="flex items-center gap-1"><Calendar size={14} /> {date}</span>
+            <time dateTime={new Date(post.createdAt).toISOString()} className="flex items-center gap-1">
+              <Calendar size={14} /> {date}
+            </time>
             <span className="flex items-center gap-1"><Clock size={14} /> {readTime} min read</span>
           </div>
 
@@ -149,13 +163,15 @@ export const BlogPost = () => {
               <h4 className="text-sm font-bold text-muted-foreground/60 uppercase tracking-wide mb-4 flex items-center gap-2">
                 <Tag size={16} /> Related Tags
               </h4>
-              <div className="flex flex-wrap gap-2">
+              <ul className="flex flex-wrap gap-2" aria-label="Article tags">
                 {post.tags.map((tag, idx) => (
-                  <span key={idx} className="bg-accent hover:bg-muted text-muted-foreground px-4 py-2 rounded-full text-sm font-bold transition-colors cursor-default">
-                    #{tag}
-                  </span>
+                  <li key={idx}>
+                    <span className="bg-accent hover:bg-muted text-muted-foreground px-4 py-2 rounded-full text-sm font-bold transition-colors cursor-default">
+                      #{tag}
+                    </span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           )}
         </div>
@@ -164,7 +180,7 @@ export const BlogPost = () => {
 
       {/* Related Posts */}
       {relatedPosts.length > 0 && (
-        <section className="bg-accent py-20 border-t border-border">
+        <section className="bg-accent py-20 border-t border-border" aria-label="Related articles">
           <div className="max-w-7xl mx-auto px-5 md:px-10">
             <h3 className="text-2xl font-bold text-foreground mb-8">Related Articles</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

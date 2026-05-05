@@ -4,7 +4,7 @@ import {
   Users, MessageSquare, TrendingUp, Heart, Award, ShieldCheck, 
   Clock, Phone, Mail, Linkedin, MapPin, Building, GraduationCap, CheckCircle2, ArrowRight, Home
 } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { LocationsSection } from './LocationsSection';
@@ -17,7 +17,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export const AboutPage = () => {
-  const navigate = useNavigate();
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -166,7 +165,7 @@ export const AboutPage = () => {
               <div className="absolute -inset-4 bg-brand/10 rounded-3xl transform rotate-3" />
               <img 
                 src={getOptimizedImageUrl('https://images.unsplash.com/photo-1542744173-8e7e53415bb0', 800)} 
-                alt="Team collaboration" 
+                alt="Team collaboration at Lofton Realty" 
                 className="relative rounded-2xl shadow-xl w-full h-auto object-cover aspect-[4/3]"
                 loading="lazy"
               />
@@ -182,7 +181,7 @@ export const AboutPage = () => {
       </section>
 
       {/* Founder Profile */}
-      <section className="py-24 bg-background text-white">
+      <section className="py-24 bg-foreground text-background border-t border-border/50">
         <div className="max-w-6xl mx-auto px-5 md:px-10">
           <div className="bg-background/5 border border-white/10 rounded-[32px] p-8 md:p-12 lg:p-16 flex flex-col md:flex-row gap-12 items-center">
             {/* Image */}
@@ -255,7 +254,7 @@ export const AboutPage = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8" style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
             {values.map((val, idx) => (
               <div key={idx} className="gsap-value-card bg-background p-8 rounded-2xl shadow-sm border border-border hover:shadow-lg transition-[box-shadow] duration-300 group" style={{ willChange: "transform, opacity" }}>
-                <div className="w-14 h-14 bg-brand-light rounded-xl flex items-center justify-center text-brand mb-6 transition-colors duration-300">
+                <div className="w-14 h-14 bg-brand-light rounded-xl flex items-center justify-center text-brand mb-6 transition-colors duration-300" aria-hidden="true">
                   <val.icon size={28} />
                 </div>
                 <h3 className="text-xl font-bold text-foreground mb-3">{val.title}</h3>
@@ -301,12 +300,12 @@ export const AboutPage = () => {
                 <p className="text-muted-foreground text-lg mb-8">
                   In a crowded market, experience and integrity matter. Here is how we deliver superior results for our clients every single day.
                 </p>
-                <button 
-                  onClick={() => navigate('/contact-us')}
-                  className="bg-foreground text-background px-8 py-4 rounded-full font-bold shadow-lg hover:bg-black transition-colors"
+                <Link 
+                  to="/contact-us"
+                  className="bg-foreground text-background px-8 py-4 rounded-full font-bold shadow-lg hover:bg-black transition-colors inline-block text-center"
                 >
                   Experience the Difference
-                </button>
+                </Link>
               </div>
             </div>
             
@@ -404,13 +403,13 @@ export const AboutPage = () => {
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link 
               to="/property-listings"
-              className="bg-foreground text-background px-8 py-4 rounded-full font-bold text-lg hover:bg-black transition-colors shadow-lg text-center"
+              className="bg-foreground text-background px-8 py-4 rounded-full font-bold text-lg hover:bg-black transition-colors shadow-lg text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
             >
               Start Your Home Search
             </Link>
             <Link 
               to="/contact-us"
-              className="bg-background text-foreground px-8 py-4 rounded-full font-bold text-lg hover:bg-accent transition-colors shadow-lg border border-border flex items-center justify-center gap-2"
+              className="bg-background text-foreground px-8 py-4 rounded-full font-bold text-lg hover:bg-accent transition-colors shadow-lg border border-border flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
             >
               Get a Free Consultation <ArrowRight size={20} />
             </Link>

@@ -11,6 +11,12 @@ const CountUpStats = ({ value, suffix }: { value: number, suffix: string }) => {
 
   useEffect(() => {
     if (isInView) {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) {
+        motionValue.set(value);
+        return;
+      }
+
        let start = 0;
        const end = value;
        const duration = 2000;
@@ -36,7 +42,7 @@ const CountUpStats = ({ value, suffix }: { value: number, suffix: string }) => {
 
 export const StatsBar = () => {
   return (
-    <section className="bg-background border-b border-border py-[40px] md:py-[60px]">
+    <section className="bg-background border-b border-border py-[40px] md:py-[60px]" aria-label="Company statistics">
       <div className="max-w-[1280px] mx-auto px-5 md:px-10 lg:px-[40px]">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {STATS.map((stat, idx) => (
@@ -60,9 +66,9 @@ export const StatsBar = () => {
         
         {/* Bottom Rating */}
         <div className="mt-12 flex flex-col items-center justify-center gap-2">
-          <div className="flex gap-1">
+          <div className="flex gap-1" aria-label="5 out of 5 stars">
             {[1, 2, 3, 4, 5].map((s) => (
-              <Star key={s} size={24} className="fill-brand text-brand" />
+              <Star key={s} size={24} className="fill-brand text-brand" aria-hidden="true" />
             ))}
           </div>
           <p className="text-[14px] text-muted-foreground/60 font-medium">4.9 Average client rating</p>

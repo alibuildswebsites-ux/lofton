@@ -17,20 +17,25 @@ export const AgentProfile = () => {
   useEffect(() => {
     const fetchAgent = async () => {
       setLoading(true);
-      if (id) {
-        const data = await getAgentById(id);
-        setAgent(data);
-        if (data) {
-          updateSEO({
-            title: `${data.name} | Real Estate Agent at Lofton Realty`,
-            description: `Contact ${data.name}, a licensed real estate agent with ${data.yearsOfExperience} years of experience. ${data.bio.substring(0, 100)}...`,
-            image: data.photo,
-            url: `https://lofton-psi.vercel.app/agents/${data.id}`,
-            type: 'profile'
-          });
+      try {
+        if (id) {
+          const data = await getAgentById(id);
+          setAgent(data);
+          if (data) {
+            updateSEO({
+              title: `${data.name} | Real Estate Agent at Lofton Realty`,
+              description: `Contact ${data.name}, a licensed real estate agent with ${data.yearsOfExperience} years of experience. ${data.bio.substring(0, 100)}...`,
+              image: data.photo,
+              url: `https://lofton-psi.vercel.app/agents/${data.id}`,
+              type: 'profile'
+            });
+          }
         }
+      } catch (err) {
+        console.error('Failed to load agent:', err);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     fetchAgent();
@@ -65,7 +70,10 @@ export const AgentProfile = () => {
       <main className="pt-32 pb-20">
         <div className="max-w-5xl mx-auto px-5 md:px-10">
           
-          <Link to="/agents" className="inline-flex items-center gap-2 text-muted-foreground hover:text-brand font-bold mb-8 transition-colors text-sm">
+          <Link 
+            to="/agents" 
+            className="inline-flex items-center gap-2 text-muted-foreground hover:text-brand font-bold mb-8 transition-colors text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 rounded-md"
+          >
             <ArrowLeft size={16} /> Back to Team
           </Link>
 
@@ -76,7 +84,7 @@ export const AgentProfile = () => {
               <div className="bg-muted relative h-96 md:h-auto">
                 <img 
                   src={getOptimizedImageUrl(agent.photo || 'https://images.unsplash.com/photo-1560250097-0b93528c311a', 800)} 
-                  alt={agent.name}
+                  alt={`Profile photo of ${agent.name}`}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -121,17 +129,35 @@ export const AgentProfile = () => {
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pt-8 border-t border-border">
                   <div className="flex gap-4">
                     {agent.socialLinks?.facebook && (
-                      <a href={agent.socialLinks.facebook} target="_blank" rel="noreferrer" className="text-muted-foreground/60 hover:text-[#1877F2] transition-colors">
+                      <a 
+                        href={agent.socialLinks.facebook} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        aria-label={`${agent.name} on Facebook`}
+                        className="text-muted-foreground/60 hover:text-[#1877F2] transition-colors"
+                      >
                         <Facebook size={24} />
                       </a>
                     )}
                     {agent.socialLinks?.instagram && (
-                      <a href={agent.socialLinks.instagram} target="_blank" rel="noreferrer" className="text-muted-foreground/60 hover:text-[#E4405F] transition-colors">
+                      <a 
+                        href={agent.socialLinks.instagram} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        aria-label={`${agent.name} on Instagram`}
+                        className="text-muted-foreground/60 hover:text-[#E4405F] transition-colors"
+                      >
                         <Instagram size={24} />
                       </a>
                     )}
                     {agent.socialLinks?.linkedin && (
-                      <a href={agent.socialLinks.linkedin} target="_blank" rel="noreferrer" className="text-muted-foreground/60 hover:text-[#0A66C2] transition-colors">
+                      <a 
+                        href={agent.socialLinks.linkedin} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        aria-label={`${agent.name} on LinkedIn`}
+                        className="text-muted-foreground/60 hover:text-[#0A66C2] transition-colors"
+                      >
                         <Linkedin size={24} />
                       </a>
                     )}
@@ -139,6 +165,7 @@ export const AgentProfile = () => {
 
                   <Link 
                     to="/contact-us"
+                    aria-label={`Contact Lofton Realty about ${agent.name}`}
                     className="bg-foreground text-background px-8 py-3 rounded-xl font-bold hover:bg-black transition-colors shadow-lg shadow-charcoal/20 w-full sm:w-auto text-center"
                   >
                     Contact Us

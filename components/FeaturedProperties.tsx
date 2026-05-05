@@ -15,7 +15,28 @@ gsap.registerPlugin(ScrollTrigger);
 export const FeaturedProperties = () => {
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchProperties = async () => {
+      try {
+        const data = await getProperties({ status: 'For Sale' });
+        if (isMounted) {
+          setProperties(data.slice(0, 4) as Property[]);
+          setLoading(false);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setError('Failed to load properties.');
+          setLoading(false);
+        }
+      }
+    };
+    fetchProperties();
+    return () => { isMounted = false; };
+  }, []);
 
   useGSAP(() => {
     let mm = gsap.matchMedia();
@@ -76,6 +97,13 @@ export const FeaturedProperties = () => {
 
         {loading ? (
           <LoadingSpinner />
+        ) : error ? (
+          <div className="text-center py-16 bg-background rounded-2xl border border-border">
+            <p className="text-muted-foreground text-lg mb-4">{error}</p>
+            <Link to="/property-listings" className="text-brand font-bold hover:underline">
+              Browse all properties →
+            </Link>
+          </div>
         ) : properties.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[30px]" style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
             {properties.map((property) => (
@@ -86,13 +114,17 @@ export const FeaturedProperties = () => {
           </div>
         ) : (
           <div className="text-center py-16 bg-background rounded-2xl border border-border">
-            <p className="text-muted-foreground text-lg">New listings coming soon. Check back shortly!</p>
+            <p className="text-muted-foreground text-lg mb-4">No featured listings at the moment.</p>
+            <Link to="/property-listings" className="text-brand font-bold hover:underline">
+              Browse all properties →
+            </Link>
           </div>
         )}
         
         <div className="mt-10 text-center md:hidden">
             <Link 
               to="/property-listings"
+              aria-label="View all property listings"
               className="inline-flex items-center gap-2 text-foreground font-bold hover:text-brand transition-colors rounded-lg px-4 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
             >
               View All Listings <ArrowRight size={20} />

@@ -25,69 +25,76 @@ export const PropertyDetailPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      if (id) {
-        // Fetch property
-        const data = await getPropertyById(id);
-        if (data) {
-          setProperty(data);
-          incrementPropertyView(id); // Increment view count
+      try {
+        if (id) {
+          // Fetch property
+          const data = await getPropertyById(id);
+          if (data) {
+            setProperty(data);
+            incrementPropertyView(id); // Increment view count
 
-          // Fetch similar
-          const allProps = await getProperties();
-          const similar = allProps
-            .filter(p => p.location === data.location && p.id !== data.id)
-            .slice(0, 3);
-          
-          if (similar.length < 3) {
-            const others = allProps.filter(p => p.id !== data.id && !similar.find(s => s.id === p.id)).slice(0, 3 - similar.length);
-            similar.push(...others);
-          }
-          setSimilarProperties(similar);
-
-          // SEO
-          updateSEO({
-            title: `${data.address} | Homes for Sale in ${data.city}, ${data.state}`,
-            description: `View details for ${data.address}. ${data.beds} Bed, ${data.baths} Bath, $${data.price.toLocaleString()}. ${data.description?.substring(0, 120)}...`,
-            image: data.images[0],
-            url: `https://lofton-psi.vercel.app/property-listings/${data.id}`,
-            type: 'article'
-          });
-
-          // JSON-LD
-          injectJSONLD({
-            "@context": "https://schema.org",
-            "@type": "SingleFamilyResidence",
-            "name": data.address,
-            "description": data.description,
-            "numberOfRooms": data.beds + data.baths, 
-            "occupancy": { "@type": "QuantitativeValue", "value": data.beds },
-            "floorSize": { "@type": "QuantitativeValue", "value": data.sqft.toString(), "unitCode": "FTK" },
-            "address": {
-              "@type": "PostalAddress",
-              "streetAddress": data.address,
-              "addressLocality": data.city,
-              "addressRegion": data.state,
-              "postalCode": data.zip,
-              "addressCountry": "US"
-            },
-            "image": data.images,
-            "offers": {
-              "@type": "Offer",
-              "price": data.price.toString(),
-              "priceCurrency": "USD",
-              "availability": data.status === 'Pending' ? "https://schema.org/Sold" : "https://schema.org/InStock"
+            // Fetch similar
+            const allProps = await getProperties();
+            const similar = allProps
+              .filter(p => p.location === data.location && p.id !== data.id)
+              .slice(0, 3);
+            
+            if (similar.length < 3) {
+              const others = allProps.filter(p => p.id !== data.id && !similar.find(s => s.id === p.id)).slice(0, 3 - similar.length);
+              similar.push(...others);
             }
-          });
+            setSimilarProperties(similar);
 
-          // Breadcrumbs
-          injectBreadcrumbJSONLD([
-            { name: "Home", item: "https://lofton-psi.vercel.app/" },
-            { name: "Properties", item: "https://lofton-psi.vercel.app/property-listings" },
-            { name: data.address, item: `https://lofton-psi.vercel.app/property-listings/${data.id}` }
-          ]);
+            // SEO
+            updateSEO({
+              title: `${data.address} | Homes for Sale in ${data.city}, ${data.state}`,
+              description: `View details for ${data.address}. ${data.beds} Bed, ${data.baths} Bath, $${data.price.toLocaleString()}. ${data.description?.substring(0, 120)}...`,
+              image: data.images[0],
+              url: `https://lofton-psi.vercel.app/property-listings/${data.id}`,
+              type: 'article'
+            });
+
+            // JSON-LD
+            injectJSONLD({
+              "@context": "https://schema.org",
+              "@type": "SingleFamilyResidence",
+              "name": data.address,
+              "description": data.description,
+              "numberOfRooms": data.beds + data.baths, 
+              "occupancy": { "@type": "QuantitativeValue", "value": data.beds },
+              "floorSize": { "@type": "QuantitativeValue", "value": data.sqft.toString(), "unitCode": "FTK" },
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": data.address,
+                "addressLocality": data.city,
+                "addressRegion": data.state,
+                "postalCode": data.zip,
+                "addressCountry": "US"
+              },
+              "image": data.images,
+              "offers": {
+                "@type": "Offer",
+                "price": data.price.toString(),
+                "priceCurrency": "USD",
+                "availability": data.status === 'Sold' || data.status === 'Pending'
+                  ? "https://schema.org/SoldOut"
+                  : "https://schema.org/InStock"
+              }
+            });
+
+            // Breadcrumbs
+            injectBreadcrumbJSONLD([
+              { name: "Home", item: "https://lofton-psi.vercel.app/" },
+              { name: "Properties", item: "https://lofton-psi.vercel.app/property-listings" },
+              { name: data.address, item: `https://lofton-psi.vercel.app/property-listings/${data.id}` }
+            ]);
+          }
         }
+      } catch (err) {
+        console.error('Failed to load property:', err);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     fetchData();
@@ -149,7 +156,7 @@ export const PropertyDetailPage = () => {
           <span className="text-gray-300">/</span>
           <Link to="/property-listings" className="hover:text-brand transition-colors">Properties</Link>
           <span className="text-gray-300">/</span>
-          <span className="hover:text-brand transition-colors cursor-pointer">{property.city}</span>
+          <span className="text-muted-foreground">{property.city}</span>
           <span className="text-gray-300">/</span>
           <span className="font-semibold text-foreground truncate">{property.address}</span>
         </div>
@@ -183,7 +190,16 @@ export const PropertyDetailPage = () => {
         {/* Hero Image Gallery */}
         <div className="grid lg:grid-cols-[2fr_1fr] gap-4 mb-12 h-[400px] md:h-[500px] lg:h-[600px]">
           {/* Main Image */}
-          <div className="relative rounded-2xl overflow-hidden bg-muted h-full group">
+          <div
+            className="relative rounded-2xl overflow-hidden bg-muted h-full group"
+            onKeyDown={(e) => {
+              if (e.key === 'ArrowLeft') handlePrevImage();
+              if (e.key === 'ArrowRight') handleNextImage();
+            }}
+            tabIndex={0}
+            role="region"
+            aria-label={`Property image gallery, image ${activeImage + 1} of ${property.images.length}`}
+          >
              
              {!mainImageLoaded && !imageError && (
                <div className="absolute inset-0 bg-muted animate-pulse z-10" />
@@ -291,14 +307,14 @@ export const PropertyDetailPage = () => {
             {/* Features */}
             <div className="mb-12">
                <h2 className="text-2xl font-bold text-foreground mb-6">Key Features & Amenities</h2>
-               <div className="grid md:grid-cols-2 gap-4">
+               <ul className="grid md:grid-cols-2 gap-4" aria-label="Key features and amenities">
                  {property.features?.map((feature, idx) => (
-                   <div key={idx} className="flex items-center gap-3 bg-background p-4 rounded-xl border border-border shadow-sm">
-                     <CheckCircle2 size={20} className="text-brand flex-shrink-0" />
+                   <li key={idx} className="flex items-center gap-3 bg-background p-4 rounded-xl border border-border shadow-sm">
+                     <CheckCircle2 size={20} className="text-brand flex-shrink-0" aria-hidden="true" />
                      <span className="text-foreground font-medium">{feature}</span>
-                   </div>
+                   </li>
                  ))}
-               </div>
+               </ul>
             </div>
           </div>
 
@@ -311,7 +327,7 @@ export const PropertyDetailPage = () => {
                      <div className="w-16 h-16 rounded-full bg-muted overflow-hidden border-2 border-brand">
                         <img 
                           src={getOptimizedImageUrl('https://images.unsplash.com/photo-1560250097-0b93528c311a', 200)} 
-                          alt="Agent" 
+                           alt="Jared Lofton, Listing Agent at Lofton Realty" 
                           className="w-full h-full object-cover"
                         />
                      </div>
@@ -327,10 +343,15 @@ export const PropertyDetailPage = () => {
                    </p>
 
                    <div className="space-y-3">
-                     <a href="tel:7132037661" className="flex items-center justify-center gap-2 w-full bg-primary text-primary-foreground py-3 rounded-lg font-bold hover:bg-brand-dark transition-colors shadow-lg shadow-brand/20">
+                      <a href="tel:7132037661" aria-label="Call listing agent at 713-203-7661" className="flex items-center justify-center gap-2 w-full bg-primary text-primary-foreground py-3 rounded-lg font-bold hover:bg-brand-dark transition-colors shadow-lg shadow-brand/20">
                        <Phone size={18} /> Call Agent
                      </a>
-                     <Link to="/contact-us" className="flex items-center justify-center gap-2 w-full bg-background border-2 border-charcoal text-foreground py-3 rounded-lg font-bold hover:bg-accent transition-colors">
+                      <Link 
+                        to="/contact-us"
+                        state={{ subject: `Inquiry about ${property.address}` }}
+                        aria-label="Send message to listing agent"
+                        className="flex items-center justify-center gap-2 w-full bg-background border-2 border-charcoal text-foreground py-3 rounded-lg font-bold hover:bg-accent transition-colors"
+                      >
                        <Mail size={18} /> Message Agent
                      </Link>
                    </div>
@@ -351,7 +372,7 @@ export const PropertyDetailPage = () => {
       </main>
 
       {/* Similar Properties */}
-      <section className="bg-background py-20 border-t border-border">
+      <section className="bg-background py-20 border-t border-border" aria-label="Similar properties">
          <div className="max-w-[1280px] mx-auto px-5 md:px-10">
             <h2 className="text-3xl font-extrabold text-foreground mb-8">Similar Properties You Might Like</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

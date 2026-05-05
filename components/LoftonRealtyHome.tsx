@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { Navbar } from './Navbar';
 import { Hero } from './Hero';
 import { SectionErrorBoundary } from './SectionErrorBoundary';
@@ -16,6 +16,7 @@ import { ContactFormSection } from './ContactFormSection';
 import { Footer } from './Footer';
 
 const LoftonRealtyHome = () => {
+  const shouldReduceMotion = useReducedMotion();
   useEffect(() => {
     updateSEO({
       title: "Lofton Realty | Premium Real Estate Broker Houston & Gulf Coast",
@@ -119,12 +120,12 @@ const LoftonRealtyHome = () => {
         </SectionErrorBoundary>
 
         {/* About Section Redesign - Split Layout */}
-        <section className="py-[100px] bg-white overflow-hidden" id="about">
+        <section className="py-[100px] bg-white overflow-hidden" id="about-us-section">
           <div className="max-w-[1280px] mx-auto px-5 md:px-10 lg:px-[40px]">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               {/* Image Side */}
               <motion.div 
-                initial={{ opacity: 0, x: -50 }}
+                initial={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
@@ -142,7 +143,7 @@ const LoftonRealtyHome = () => {
                 <div className="absolute -top-6 -left-6 w-48 h-48 bg-brand/10 rounded-full blur-2xl z-0" />
                 
                 {/* Stats Badge */}
-                <div className="absolute bottom-10 right-[-20px] bg-white p-6 rounded-2xl shadow-xl z-20 hidden md:block border border-gray-100">
+                <div className="absolute bottom-10 right-[-20px] bg-white p-6 rounded-2xl shadow-xl z-20 hidden md:block border border-gray-100" aria-label="Established in 2006">
                   <p className="text-4xl font-bold text-brand mb-1">2006</p>
                   <p className="text-sm font-bold text-gray-500 uppercase tracking-wider">Established</p>
                 </div>
@@ -150,7 +151,7 @@ const LoftonRealtyHome = () => {
 
               {/* Content Side */}
               <motion.div 
-                initial={{ opacity: 0, x: 50 }}
+                initial={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
@@ -173,11 +174,11 @@ const LoftonRealtyHome = () => {
 
                   <div className="grid grid-cols-2 gap-8 pt-8 border-t border-gray-100">
                     <div>
-                      <p className="text-3xl font-bold text-foreground mb-1">500+</p>
+                      <p className="text-3xl font-bold text-foreground mb-1" aria-label="Over 500 families served">500+</p>
                       <p className="text-sm font-medium text-muted-foreground">Families Trusted Us</p>
                     </div>
                     <div>
-                      <p className="text-3xl font-bold text-foreground mb-1">6</p>
+                      <p className="text-3xl font-bold text-foreground mb-1" aria-label="6 regions served">6</p>
                       <p className="text-sm font-medium text-muted-foreground">Regions Served</p>
                     </div>
                   </div>

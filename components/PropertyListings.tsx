@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useLayoutEffect, useCallback } from 'react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { PropertyCard } from './PropertyCard';
@@ -32,6 +32,7 @@ export const PropertyListings = () => {
   // --- State ---
   const [allProperties, setAllProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState<'newest' | 'price-asc' | 'price-desc' | 'sqft-desc'>('newest');
   const [currentPage, setCurrentPage] = useState(1);
@@ -88,7 +89,7 @@ export const PropertyListings = () => {
       case 'price-desc':
         return sorted.sort((a, b) => b.price - a.price);
       case 'sqft-desc':
-        return sorted.sort((a, b) => a.sqft - b.sqft);
+        return sorted.sort((a, b) => b.sqft - a.sqft);
       case 'newest':
       default:
         return sorted; 
@@ -111,26 +112,34 @@ export const PropertyListings = () => {
     });
   }, []);
 
-  useEffect(() => {
+  const fetchProps = useCallback(async () => {
+    setLoading(true);
+    setError(null);
     let isMounted = true;
-    const fetchProps = async () => {
-      setLoading(true);
+    try {
       const data = await getProperties({
         status: filters.status,
         location: filters.location
       });
       if (isMounted) {
         setAllProperties(data as Property[]);
+      }
+    } catch (err) {
+      if (isMounted) setError('Failed to load properties. Please try again.');
+    } finally {
+      if (isMounted) {
         setLoading(false);
         // Refresh ScrollTrigger after data loads to ensure correct trigger positions
         setTimeout(() => {
           ScrollTrigger.refresh();
         }, 100);
       }
-    };
-    fetchProps();
-    return () => { isMounted = false; };
+    }
   }, [filters.status, filters.location]);
+
+  useEffect(() => {
+    fetchProps();
+  }, [fetchProps]);
 
   useEffect(() => {
     const params: Record<string, string> = {};
@@ -215,7 +224,7 @@ export const PropertyListings = () => {
     <div className="space-y-8">
       <div className="flex items-center justify-between lg:hidden mb-6">
         <h3 className="text-xl font-bold text-foreground">Filters</h3>
-        <button onClick={() => setIsMobileFilterOpen(false)}><X size={24} /></button>
+        <button onClick={() => setIsMobileFilterOpen(false)} aria-label="Close filters"><X size={24} /></button>
       </div>
 
       {/* Status Tabs */}
@@ -360,8 +369,8 @@ export const PropertyListings = () => {
              </div>
              
              <div className="flex items-center gap-3">
-               <span className="text-muted-foreground font-medium hidden md:block">
-                 Found {sortedProperties.length} properties
+               <span className="text-muted-foreground font-medium text-sm md:text-base">
+                 Found {sortedProperties.length} {sortedProperties.length === 1 ? 'property' : 'properties'}
                </span>
              </div>
           </div>
@@ -395,6 +404,9 @@ export const PropertyListings = () => {
                   exit={{ x: '100%' }}
                   transition={{ type: 'spring', damping: 25, stiffness: 300 }}
                   className="fixed inset-y-0 right-0 w-[300px] bg-background z-50 shadow-2xl p-6 overflow-y-auto lg:hidden"
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label="Property filters"
                 >
                   <FilterSidebar />
                 </motion.div>
@@ -409,6 +421,8 @@ export const PropertyListings = () => {
             <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4 bg-background p-4 rounded-xl border border-border shadow-sm">
                <button 
                  onClick={() => setIsMobileFilterOpen(true)}
+                 aria-label="Open property filters"
+                 aria-expanded={isMobileFilterOpen}
                  className="lg:hidden flex items-center gap-2 text-foreground font-bold bg-muted px-4 py-2 rounded-lg hover:bg-muted w-full sm:w-auto justify-center"
                >
                  <SlidersHorizontal size={18} /> Filters
@@ -416,11 +430,12 @@ export const PropertyListings = () => {
 
                <div className="flex items-center gap-4 w-full sm:w-auto">
                  <div className="flex items-center gap-2 pl-4">
-                   <select 
-                     value={sortBy} 
-                     onChange={(e) => setSortBy(e.target.value as any)}
-                     className="bg-transparent text-sm font-semibold text-foreground outline-none cursor-pointer"
-                   >
+                    <select 
+                      value={sortBy} 
+                      onChange={(e) => setSortBy(e.target.value as any)}
+                      aria-label="Sort properties by"
+                      className="bg-transparent text-sm font-semibold text-foreground outline-none cursor-pointer"
+                    >
                      <option value="newest">Newest First</option>
                      <option value="price-asc">Price: Low to High</option>
                      <option value="price-desc">Price: High to Low</option>
@@ -430,20 +445,31 @@ export const PropertyListings = () => {
                </div>
 
                <div className="hidden sm:flex bg-muted rounded-lg p-1 gap-1">
-                 <button 
-                   onClick={() => setViewMode('grid')}
-                   className={`p-2 rounded-md transition-all ${viewMode === 'grid' ? 'bg-background shadow text-brand' : 'text-muted-foreground hover:text-foreground'}`}
-                 >
-                   <Grid size={18} />
-                 </button>
-                 <button 
-                   onClick={() => setViewMode('list')}
-                   className={`p-2 rounded-md transition-all ${viewMode === 'list' ? 'bg-background shadow text-brand' : 'text-muted-foreground hover:text-foreground'}`}
-                 >
+                  <button 
+                    onClick={() => setViewMode('grid')}
+                    aria-label="Grid view"
+                    aria-pressed={viewMode === 'grid'}
+                    className={`p-2 rounded-md transition-all ${viewMode === 'grid' ? 'bg-background shadow text-brand' : 'text-muted-foreground hover:text-foreground'}`}
+                  >
+                    <Grid size={18} />
+                  </button>
+                  <button 
+                    onClick={() => setViewMode('list')}
+                    aria-label="List view"
+                    aria-pressed={viewMode === 'list'}
+                    className={`p-2 rounded-md transition-all ${viewMode === 'list' ? 'bg-background shadow text-brand' : 'text-muted-foreground hover:text-foreground'}`}
+                  >
                    <List size={18} />
                  </button>
                </div>
             </div>
+
+            {error && (
+              <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 font-medium text-sm" role="alert">
+                {error}
+                <button onClick={() => fetchProps()} className="ml-2 underline font-bold">Retry</button>
+              </div>
+            )}
 
             {/* Content */}
             {loading ? (
@@ -481,11 +507,13 @@ export const PropertyListings = () => {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="mt-12 flex justify-center gap-2">
+              <nav aria-label="Properties pagination" className="mt-12 flex justify-center gap-2">
                 {Array.from({ length: totalPages }).map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setCurrentPage(idx + 1)}
+                    aria-label={`Page ${idx + 1}`}
+                    aria-current={currentPage === idx + 1 ? 'page' : undefined}
                     className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold transition-all ${
                       currentPage === idx + 1 
                         ? 'bg-primary text-primary-foreground shadow-lg shadow-brand/20' 
@@ -495,7 +523,7 @@ export const PropertyListings = () => {
                     {idx + 1}
                   </button>
                 ))}
-              </div>
+              </nav>
             )}
           </div>
         </div>

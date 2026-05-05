@@ -30,7 +30,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
     >
       <div className="relative h-48 overflow-hidden bg-muted">
         <div className="absolute top-4 left-4 z-10">
-          <span className="bg-background/90 backdrop-blur-sm text-brand-dark px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide shadow-sm">
+          <span aria-label={`Category: ${post.category}`} className="bg-background/90 backdrop-blur-sm text-brand-dark px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide shadow-sm">
             {post.category}
           </span>
         </div>

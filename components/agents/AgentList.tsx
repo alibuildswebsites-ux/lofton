@@ -17,7 +17,22 @@ gsap.registerPlugin(ScrollTrigger);
 export const AgentList = () => {
   const [agents, setAgents] = useState<Agent[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  const fetchAgentsFn = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await getAgents();
+      setAgents(data);
+      setTimeout(() => ScrollTrigger.refresh(), 100);
+    } catch (err) {
+      setError('Failed to load agents. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     updateSEO({
@@ -26,18 +41,7 @@ export const AgentList = () => {
       url: "https://lofton-psi.vercel.app/agents"
     });
 
-    const fetchAgents = async () => {
-      setLoading(true);
-      const data = await getAgents();
-      setAgents(data);
-      setLoading(false);
-      // Refresh ScrollTrigger after data loads
-      setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, 100);
-    };
-
-    fetchAgents();
+    fetchAgentsFn();
   }, []);
 
   useGSAP(() => {
@@ -85,7 +89,15 @@ export const AgentList = () => {
         </div>
       </div>
 
-      <main ref={sectionRef} className="max-w-[1280px] mx-auto px-5 md:px-10 py-16">
+      <main ref={sectionRef} id="main-content" className="max-w-[1280px] mx-auto px-5 md:px-10 py-16">
+        {/* Error State */}
+        {error && (
+          <div className="text-center py-16 bg-red-50 border border-red-200 rounded-2xl" role="alert">
+            <p className="text-red-700 font-medium">{error}</p>
+            <button onClick={fetchAgentsFn} className="mt-3 text-brand font-bold hover:underline">Try Again</button>
+          </div>
+        )}
+
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[...Array(6)].map((_, i) => (
@@ -100,7 +112,7 @@ export const AgentList = () => {
               </div>
             ))}
           </div>
-        ) : (
+        ) : !error ? (
           <div className="text-center py-20 bg-background rounded-2xl border border-border">
             <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
               <Search className="text-muted-foreground/60" size={24} />
@@ -108,13 +120,13 @@ export const AgentList = () => {
             <h3 className="text-xl font-bold text-foreground mb-2">No agents found</h3>
             <p className="text-muted-foreground">Check back soon to meet our growing team.</p>
             <button 
-              onClick={() => window.location.reload()}
+              onClick={fetchAgentsFn}
               className="mt-6 text-brand font-bold hover:underline"
             >
-              Reload Team
+              Try Again
             </button>
           </div>
-        )}
+        ) : null}
       </main>
 
       <Footer />
