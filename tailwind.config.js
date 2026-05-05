@@ -11,8 +11,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Outfit', 'sans-serif'],
-        serif: ['Cinzel', 'serif'],
+        sans: ['Inter', 'sans-serif'],
+        serif: ['Montserrat', 'serif'],
         mono: ['var(--font-mono)', 'monospace'],
       },
       colors: {

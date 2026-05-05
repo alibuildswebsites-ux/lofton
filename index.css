@@ -5,29 +5,30 @@
 @layer base {
   :root {
     --card: #ffffff;
-    --ring: #1da1f2;
+    --ring: #10B981;
     --input: #ffffff;
     --muted: #f9f9f9;
     --accent: #f9f9f9;
     --border: #f1f1f1;
     --radius: 1.3rem;
-    --chart-1: #1e9df1;
+    --chart-1: #10B981;
     --chart-2: #00b87a;
     --chart-3: #f7b928;
     --chart-4: #17bf63;
     --chart-5: #e0245e;
     --popover: #ffffff;
-    --primary: #1e9df1;
+    --primary: #10B981;
     --sidebar: #ffffff;
     --font-mono: 'JetBrains Mono', monospace;
-    --font-sans: 'Outfit', sans-serif;
-    --font-serif: 'Cinzel', serif;
+    --font-sans: 'Inter', sans-serif;
+    --font-serif: 'Montserrat', sans-serif;
     --secondary: #0f1419;
+    --background: #ffffff;
     --foreground: #000000;
     --destructive: #f4212e;
     --shadow-blur: 0px;
     --shadow-color: rgba(0, 0, 0, 0.05);
-    --sidebar-ring: #1da1f2;
+    --sidebar-ring: #10B981;
     --shadow-spread: 0px;
     --shadow-opacity: 0;
     --sidebar-accent: #f9f9f9;
@@ -35,7 +36,7 @@
     --card-foreground: #000000;
     --shadow-offset-x: 0px;
     --shadow-offset-y: 2px;
-    --sidebar-primary: #1e9df1;
+    --sidebar-primary: #10B981;
     --muted-foreground: #666666;
     --accent-foreground: #000000;
     --popover-foreground: #000000;
@@ -46,6 +47,8 @@
     --sidebar-accent-foreground: #000000;
     --sidebar-primary-foreground: #ffffff;
   }
+}
+
 
   .dark {
     --card: #000000;
@@ -188,13 +191,9 @@ body {
   }
 }
 
-/* Luxury UI Utilities */
+/* Professional Real Estate Utilities */
 .glass-card {
-  @apply bg-white/70 dark:bg-black/70 backdrop-blur-lg border border-white/20 dark:border-white/10 shadow-xl;
-}
-
-.text-gradient-gold {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-[#B8860B] via-[#FFD700] to-[#B8860B];
+  @apply bg-white/80 backdrop-blur-md border border-gray-100 shadow-lg;
 }
 
 .text-gradient-brand {
@@ -202,9 +201,9 @@ body {
 }
 
 .hover-lift {
-  @apply transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl;
+  @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
 }
 
 .heading-serif {
-  @apply font-serif tracking-wide uppercase;
+  @apply font-serif tracking-tight font-bold;
 }

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { motion } from 'motion/react';
 import { Navbar } from './Navbar';
 import { Hero } from './Hero';
 import { SectionErrorBoundary } from './SectionErrorBoundary';
@@ -117,14 +118,71 @@ const LoftonRealtyHome = () => {
           </div>
         </SectionErrorBoundary>
 
-        {/* AI SEO Definition Block */}
-        <section className="py-12 bg-muted/30 border-b border-border/10">
+        {/* About Section Redesign - Split Layout */}
+        <section className="py-[100px] bg-white overflow-hidden" id="about">
           <div className="max-w-[1280px] mx-auto px-5 md:px-10 lg:px-[40px]">
-            <div className="max-w-3xl">
-              <h2 className="heading-serif text-2xl mb-4">About Lofton Realty</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                Lofton Realty is a premier real estate brokerage founded in 2006. We specialize in residential property sales, luxury real estate marketing, and strategic investment consulting across the Gulf Coast. Our areas of expertise include the Houston metropolitan area, Galveston island, the Austin market, and expansive regions throughout Louisiana, Mississippi, and Florida. With a commitment to 24/7 personalized service, Lofton Realty bridges the gap between buyers, sellers, and investors through expert market analysis and dedicated representation.
-              </p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              {/* Image Side */}
+              <motion.div 
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="relative"
+              >
+                <div className="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl relative z-10">
+                  <img 
+                    src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80" 
+                    alt="Luxury Home Interior" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                {/* Decorative Elements */}
+                <div className="absolute -bottom-6 -right-6 w-64 h-64 bg-brand/5 rounded-full blur-3xl z-0" />
+                <div className="absolute -top-6 -left-6 w-48 h-48 bg-brand/10 rounded-full blur-2xl z-0" />
+                
+                {/* Stats Badge */}
+                <div className="absolute bottom-10 right-[-20px] bg-white p-6 rounded-2xl shadow-xl z-20 hidden md:block border border-gray-100">
+                  <p className="text-4xl font-bold text-brand mb-1">2006</p>
+                  <p className="text-sm font-bold text-gray-500 uppercase tracking-wider">Established</p>
+                </div>
+              </motion.div>
+
+              {/* Content Side */}
+              <motion.div 
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+              >
+                <span className="text-[13px] font-bold tracking-[3px] text-brand uppercase mb-4 block heading-serif">
+                  Established in 2006
+                </span>
+                <h2 className="text-4xl md:text-5xl heading-serif text-foreground mb-8 leading-tight">
+                  Bridging the Gap Between <br /> Dreams and Reality
+                </h2>
+                
+                <div className="space-y-6">
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    Lofton Realty is a premier real estate brokerage dedicated to providing a premium experience across the Gulf Coast. From the heart of Houston to the shores of Florida, we bring nearly two decades of expertise to every transaction.
+                  </p>
+                  
+                  <p className="text-lg text-muted-foreground leading-relaxed font-normal">
+                    Whether you're buying your first home, selling a luxury estate, or expanding an investment portfolio, our mission is to provide the expert guidance and personalized service you deserve—available 24/7 to ensure your success.
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-8 pt-8 border-t border-gray-100">
+                    <div>
+                      <p className="text-3xl font-bold text-foreground mb-1">500+</p>
+                      <p className="text-sm font-medium text-muted-foreground">Families Trusted Us</p>
+                    </div>
+                    <div>
+                      <p className="text-3xl font-bold text-foreground mb-1">6</p>
+                      <p className="text-sm font-medium text-muted-foreground">Regions Served</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </div>
         </section>

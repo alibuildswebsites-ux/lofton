@@ -7,7 +7,6 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { logOut } from '../lib/firebase/auth';
-import { ThemeToggle } from './ThemeToggle';
 
 interface NavbarProps {
   variant?: 'public' | 'dashboard';
@@ -238,8 +237,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
 
           {/* Desktop Right Side */}
           <div className="hidden lg:flex items-center gap-4">
-            <ThemeToggle />
-            {user ? (
+                        {user ? (
               <div className="relative">
                 <button
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
@@ -311,8 +309,7 @@ export const Navbar = ({ variant = 'public' }: NavbarProps) => {
           </div>
 
           <div className="flex lg:hidden items-center gap-2">
-            <ThemeToggle />
-            <button 
+                        <button 
               className={`p-2 z-[103] relative rounded-full active:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 ${navTextClass} ${isHomePage && !isScrolled ? 'hover:bg-white/10' : 'hover:bg-accent/80'}`}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
