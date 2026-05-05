@@ -90,7 +90,7 @@ export const ContactPage = () => {
             <span className="inline-block py-1 px-3 rounded-full bg-brand/20 border border-brand/40 text-brand font-bold text-sm tracking-widest uppercase mb-6">
               Contact Us
             </span>
-            <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight">
+            <h1 className="text-4xl md:text-6xl font-extrabold text-foreground mb-6 tracking-tight">
               Let's Start the Conversation
             </h1>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto font-light leading-relaxed">
@@ -278,7 +278,7 @@ export const ContactPage = () => {
                 <div className="text-brand mb-3">
                   <stat.icon size={32} />
                 </div>
-                <div className="text-3xl font-extrabold text-white mb-1">
+                <div className="text-3xl font-extrabold text-foreground mb-1">
                   {stat.value}{stat.suffix}
                 </div>
                 <div className="text-muted-foreground/60 text-sm uppercase tracking-wider font-medium">
@@ -291,7 +291,7 @@ export const ContactPage = () => {
           {/* Trust Badges */}
           <div className="flex flex-wrap justify-center gap-8 mt-16 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
              {['BBB Accredited', 'Realtor.com Partner', 'HAR.com Member', 'Equal Housing'].map((badge, i) => (
-               <div key={i} className="px-4 py-2 border border-white/30 rounded text-white text-xs font-bold uppercase tracking-widest">
+               <div key={i} className="px-4 py-2 border border-white/30 rounded text-foreground text-xs font-bold uppercase tracking-widest">
                  {badge}
                </div>
              ))}

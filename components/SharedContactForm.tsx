@@ -146,17 +146,17 @@ export const SharedContactForm: React.FC<SharedContactFormProps> = ({ variant = 
 
   // Styles
   const isDark = variant === 'dark';
-  const labelClass = `text-sm font-bold ${isDark ? 'text-white/90' : 'text-foreground'}`;
+  const labelClass = `text-sm font-bold ${isDark ? 'text-foreground/90' : 'text-foreground'}`;
   const inputBase = `w-full px-4 py-3 rounded-xl outline-none focus:ring-4 transition-all`;
   
   const getInputClass = (hasError: boolean) => {
     if (isDark) {
-      return `${inputBase} bg-background/10 text-white placeholder-gray-400 ${hasError ? 'border border-red-400 focus:ring-red-400/20' : 'border border-white/20 focus:border-brand focus:ring-brand/50'}`;
+      return `${inputBase} bg-background/10 text-foreground placeholder-gray-400 ${hasError ? 'border border-red-400 focus:ring-red-400/20' : 'border border-white/20 focus:border-brand focus:ring-brand/50'}`;
     }
     return `${inputBase} bg-background text-foreground placeholder-gray-400 ${hasError ? 'border border-red-300 focus:ring-red-100' : 'border border-border focus:border-brand focus:ring-brand/20'}`;
   };
 
-  const selectArrowClass = `absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none ${isDark ? 'text-white/50' : 'text-muted-foreground/60'}`;
+  const selectArrowClass = `absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none ${isDark ? 'text-foreground/50' : 'text-muted-foreground/60'}`;
 
   if (isSuccess) {
     return (
@@ -167,7 +167,7 @@ export const SharedContactForm: React.FC<SharedContactFormProps> = ({ variant = 
         <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 ${isDark ? 'bg-green-500/20 text-green-400' : 'bg-green-100 text-green-600'}`}>
           <CheckCircle2 size={32} />
         </div>
-        <h3 className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-foreground'}`}>Message Sent!</h3>
+        <h3 className={`text-2xl font-bold mb-2 ${isDark ? 'text-foreground' : 'text-foreground'}`}>Message Sent!</h3>
         <p className={`${isDark ? 'text-gray-300' : 'text-muted-foreground'}`}>We'll be in touch shortly.</p>
         <button 
           onClick={() => setIsSuccess(false)}

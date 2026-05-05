@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Home, Mail } from 'lucide-react';
 import { motion } from 'motion/react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export const Hero = () => {
+  const videoRef = useRef<HTMLDivElement>(null);
   const avatars = [
     'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&h=100&q=80',
     'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&h=100&q=80',
@@ -19,13 +24,28 @@ export const Hero = () => {
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 40 },
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const }
+      transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] as const }
     }
   };
+
+  useEffect(() => {
+    if (videoRef.current) {
+      gsap.to(videoRef.current, {
+        scale: 1.2,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#home",
+          start: "top top",
+          end: "bottom top",
+          scrub: true
+        }
+      });
+    }
+  }, []);
 
   return (
     <section 
@@ -33,7 +53,10 @@ export const Hero = () => {
       id="home"
     >
       {/* Background Video */}
-      <div className="absolute inset-0 z-0 w-full h-full overflow-hidden">
+      <div 
+        ref={videoRef}
+        className="absolute inset-0 z-0 w-full h-full overflow-hidden"
+      >
         <video
           autoPlay
           muted

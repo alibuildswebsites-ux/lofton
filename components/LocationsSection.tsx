@@ -8,6 +8,8 @@ import { SectionHeader } from './common/SectionHeader';
 gsap.registerPlugin(ScrollTrigger);
 
 export const LocationsSection = () => {
+  const rowRef = useRef<HTMLUListElement>(null);
+
   return (
     <section 
       className="py-16 bg-background" 
@@ -35,7 +37,7 @@ export const LocationsSection = () => {
             >
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-dark">Local Coverage</p>
               <h3 className="mt-2 text-lg font-semibold text-foreground">{location.name}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{trustProofByLocation[location.id] || location.description}</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{location.description}</p>
             </li>
           ))}
         </ul>

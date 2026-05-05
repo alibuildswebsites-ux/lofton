@@ -14,12 +14,12 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="bg-background text-white pt-16 pb-8 border-t border-border/50">
+    <footer className="bg-background text-foreground pt-16 pb-8 border-t border-border/50">
       <div className="max-w-[1400px] mx-auto px-5 md:px-10 lg:px-[40px] flex flex-col items-center text-center">
         
         {/* Brand Section */}
         <div className="mb-12 flex flex-col items-center">
-            <Link to="/" className="inline-block font-extrabold text-2xl text-white tracking-tight rounded-md focus:outline-none focus:ring-2 focus:ring-brand mb-6">
+            <Link to="/" className="inline-block font-extrabold text-2xl text-foreground tracking-tight rounded-md focus:outline-none focus:ring-2 focus:ring-brand mb-6">
               {COMPANY_INFO.NAME}
             </Link>
             <p className="text-muted-foreground/60 text-sm leading-relaxed max-w-md mb-8">
@@ -34,7 +34,7 @@ export const Footer = () => {
                    href={url} 
                    target="_blank"
                    rel="noopener noreferrer"
-                   className="w-10 h-10 rounded-full bg-background/5 flex items-center justify-center text-muted-foreground/60 hover:bg-brand hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-brand"
+                   className="w-10 h-10 rounded-full bg-background/5 flex items-center justify-center text-muted-foreground/60 hover:bg-brand hover:text-foreground transition-all focus:outline-none focus:ring-2 focus:ring-brand"
                  >
                    <Icon size={18} />
                  </a>
@@ -44,22 +44,22 @@ export const Footer = () => {
 
         {/* Account & Contact Section */}
         <div className="mb-12 flex flex-col items-center w-full max-w-md">
-            <h4 className="text-lg font-bold mb-6 text-white">Account & Contact</h4>
+            <h4 className="text-lg font-bold mb-6 text-foreground">Account & Contact</h4>
             
             {/* Account Links */}
             <div className="mb-8 p-4 rounded-xl bg-background/5 border border-white/10 w-full flex flex-col items-center">
               {user ? (
                 <>
-                  <p className="text-sm font-bold text-white mb-2">Welcome, {user.displayName || 'User'}</p>
-                  <Link to="/dashboard" className="flex items-center justify-center gap-2 text-brand hover:text-white transition-colors text-sm font-bold">
+                  <p className="text-sm font-bold text-foreground mb-2">Welcome, {user.displayName || 'User'}</p>
+                  <Link to="/dashboard" className="flex items-center justify-center gap-2 text-brand hover:text-foreground transition-colors text-sm font-bold">
                     Go to Dashboard <ArrowRight size={14} />
                   </Link>
                 </>
               ) : (
                 <div className="flex gap-4">
-                  <Link to="/login" className="text-sm font-bold text-white hover:text-brand transition-colors">Log In</Link>
+                  <Link to="/login" className="text-sm font-bold text-foreground hover:text-brand transition-colors">Log In</Link>
                   <span className="text-muted-foreground">|</span>
-                  <Link to="/signup" className="text-sm font-bold text-white hover:text-brand transition-colors">Sign Up</Link>
+                  <Link to="/signup" className="text-sm font-bold text-foreground hover:text-brand transition-colors">Sign Up</Link>
                 </div>
               )}
             </div>
@@ -85,8 +85,8 @@ export const Footer = () => {
         <div className="border-t border-border/50 pt-8 w-full flex flex-col items-center gap-4 text-muted-foreground text-xs">
            <p>© {new Date().getFullYear()} {COMPANY_INFO.NAME}. All rights reserved.</p>
            <div className="flex gap-6">
-             <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
-             <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+             <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
+             <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
            </div>
         </div>
 
