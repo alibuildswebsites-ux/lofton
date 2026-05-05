@@ -29,9 +29,29 @@ export const Hero = () => {
 
   return (
     <section 
-      className="relative flex items-center overflow-hidden bg-background h-screen min-h-[600px] w-full" 
+      className="relative flex items-center overflow-hidden bg-black h-screen min-h-[600px] w-full" 
       id="home"
     >
+      {/* Background Video */}
+      <div className="absolute inset-0 z-0 w-full h-full overflow-hidden">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover"
+          poster="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80"
+        >
+          <source 
+            src="https://player.vimeo.com/external/371433846.sd.mp4?s=231514893e374ceaf11fcf53397b55d14013470&profile_id=139&oauth2_token_id=57447761" 
+            type="video/mp4" 
+          />
+          Your browser does not support the video tag.
+        </video>
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-black/50 z-10" />
+      </div>
+
       <div className="max-w-[1280px] mx-auto px-5 md:px-10 lg:px-[40px] w-full h-full relative z-10 flex flex-col items-center justify-center text-center">
         <motion.div 
           variants={containerVariants}
@@ -42,7 +62,7 @@ export const Hero = () => {
           {/* Social Proof Badge */}
           <motion.div 
             variants={itemVariants}
-            className="inline-flex items-center gap-3 bg-muted/50 backdrop-blur-sm border border-border rounded-full px-4 py-2 w-fit mb-4 md:mb-8 hover:shadow-md transition-shadow cursor-default"
+            className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-2 w-fit mb-4 md:mb-8 hover:shadow-md transition-shadow cursor-default"
           >
             <div className="flex -space-x-3">
               {avatars.map((src, i) => (
@@ -50,17 +70,17 @@ export const Hero = () => {
                   key={i} 
                   src={src} 
                   alt={`Client ${i + 1}`}
-                  className="w-8 h-8 rounded-full border-2 border-background object-cover"
+                  className="w-8 h-8 rounded-full border-2 border-white/20 object-cover"
                 />
               ))}
             </div>
-            <span className="text-sm font-bold text-foreground">Trusted by 500+ families</span>
+            <span className="text-sm font-bold text-white">Trusted by 500+ families</span>
           </motion.div>
 
           {/* Main Headline */}
           <motion.h1 
             variants={itemVariants}
-            className="font-extrabold text-foreground leading-[1.1] mb-0 tracking-tight"
+            className="font-extrabold text-white leading-[1.1] mb-0 tracking-tight"
             style={{ fontSize: 'clamp(2.5rem, 6vw, 5.5rem)' }}
           >
             Your Dream Home <br /> Awaits
@@ -69,7 +89,7 @@ export const Hero = () => {
           {/* Subheadline */}
           <motion.p 
             variants={itemVariants}
-            className="text-[18px] md:text-[22px] lg:text-[24px] text-muted-foreground font-medium mt-3 md:mt-6 leading-snug"
+            className="text-[18px] md:text-[22px] lg:text-[24px] text-zinc-100 font-medium mt-3 md:mt-6 leading-snug"
           >
             Houston's trusted real estate partner
             <span className="block h-1 w-20 bg-primary mx-auto mt-2 rounded-full" />
@@ -78,7 +98,7 @@ export const Hero = () => {
           {/* Description */}
           <motion.p 
             variants={itemVariants}
-            className="text-[14px] md:text-[16px] lg:text-[18px] text-muted-foreground/80 max-w-[600px] mt-5 md:mt-8 leading-relaxed font-normal"
+            className="text-[14px] md:text-[16px] lg:text-[18px] text-zinc-200/90 max-w-[600px] mt-5 md:mt-8 leading-relaxed font-normal"
           >
             Serving Houston, Galveston, Austin, Louisiana, Mississippi, and Florida with expert guidance, 24/7 availability, and personalized service.
           </motion.p>
@@ -101,7 +121,7 @@ export const Hero = () => {
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Link 
                 to="/contact-us"
-                className="flex items-center justify-center gap-2 bg-background text-foreground border-2 border-border px-[32px] py-[14px] rounded-[8px] font-semibold text-[16px] hover:bg-accent transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                className="flex items-center justify-center gap-2 bg-white/10 text-white backdrop-blur-sm border-2 border-white/20 px-[32px] py-[14px] rounded-[8px] font-semibold text-[16px] hover:bg-white/20 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
                 <Mail size={20} />
                 Contact Us
