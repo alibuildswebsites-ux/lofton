@@ -68,14 +68,14 @@ export const AdminClientList = () => {
           <h1 className="text-3xl font-extrabold text-foreground">Client Management</h1>
           <p className="text-muted-foreground">View and manage registered users.</p>
         </div>
-        <div className="relative">
+        <div className="relative w-full sm:w-auto sm:min-w-[250px]">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/60" size={18} />
           <input 
             type="text"
             placeholder="Search clients..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 pr-4 py-2 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-brand"
+            className="w-full pl-10 pr-4 py-2 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-brand"
           />
         </div>
       </div>
@@ -107,10 +107,10 @@ export const AdminClientList = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right flex justify-end gap-2">
-                      <button onClick={() => handleViewDetails(user)} className="p-2 text-muted-foreground/60 hover:text-brand bg-accent hover:bg-brand-light rounded-lg transition-colors">
+                      <button onClick={() => handleViewDetails(user)} aria-label="View client details" className="p-2 text-muted-foreground/60 hover:text-brand bg-accent hover:bg-brand-light rounded-lg transition-colors">
                         <Eye size={18} />
                       </button>
-                      <button onClick={() => handleDelete(user.uid)} className="p-2 text-muted-foreground/60 hover:text-red-500 bg-accent hover:bg-red-50 rounded-lg transition-colors">
+                      <button onClick={() => handleDelete(user.uid)} aria-label="Delete client account" className="p-2 text-muted-foreground/60 hover:text-red-500 bg-accent hover:bg-red-50 rounded-lg transition-colors">
                         <Trash2 size={18} />
                       </button>
                     </td>
@@ -126,7 +126,7 @@ export const AdminClientList = () => {
               <button 
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage(p => p - 1)}
-                className="px-3 py-1 border rounded disabled:opacity-50"
+                className="px-3 py-1 text-sm border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 Prev
               </button>
@@ -134,7 +134,7 @@ export const AdminClientList = () => {
               <button 
                 disabled={currentPage === totalPages}
                 onClick={() => setCurrentPage(p => p + 1)}
-                className="px-3 py-1 border rounded disabled:opacity-50"
+                className="px-3 py-1 text-sm border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 Next
               </button>
@@ -146,10 +146,10 @@ export const AdminClientList = () => {
       {/* Detail Modal */}
       {selectedUser && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-background rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto flex flex-col">
+          <div className="bg-background rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto flex flex-col" role="dialog" aria-modal="true" aria-label="Client details">
             <div className="p-6 border-b border-border flex justify-between items-center sticky top-0 bg-background z-10">
               <h3 className="text-xl font-bold text-foreground">Client Details</h3>
-              <button onClick={() => setSelectedUser(null)} className="text-muted-foreground/60 hover:text-foreground"><X size={24}/></button>
+              <button aria-label="Close modal" onClick={() => setSelectedUser(null)} className="text-muted-foreground/60 hover:text-foreground"><X size={24}/></button>
             </div>
             
             <div className="p-6 space-y-6">
@@ -182,11 +182,11 @@ export const AdminClientList = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {userProperties.map(p => (
                       <div key={p.id} className="flex gap-3 p-3 border border-border rounded-xl hover:border-brand/30 transition-colors">
-                        <img src={p.images[0]} alt={p.title} className="w-16 h-16 rounded-lg object-cover bg-muted" />
+                        <img src={p.images?.[0] || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=400&q=80'} alt={p.title} className="w-16 h-16 rounded-lg object-cover bg-muted" />
                         <div className="min-w-0">
                           <h5 className="font-bold text-sm truncate">{p.title}</h5>
                           <p className="text-xs text-muted-foreground truncate">{p.address}</p>
-                          <a href={`#/property-listings/${p.id}`} target="_blank" className="text-xs text-brand hover:underline flex items-center gap-1 mt-1">
+                          <a href={`/property-listings/${p.id}`} target="_blank" rel="noopener noreferrer" className="text-xs text-brand hover:underline flex items-center gap-1 mt-1">
                             View Listing <Home size={10}/>
                           </a>
                         </div>

@@ -236,7 +236,8 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
                 name="price" 
                 value={formData.price} 
                 onChange={handleChange} 
-                required 
+                required
+                min="0"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand focus:border-transparent outline-none"
               />
             </div>
@@ -295,7 +296,7 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand outline-none"
                 />
              </div>
-             <div className="grid grid-cols-3 gap-4">
+             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                <div className="col-span-1">
                  <label className="block text-sm font-semibold text-foreground mb-1">City</label>
                  <input 
@@ -333,18 +334,18 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
         {/* Specs */}
         <section className="space-y-4">
           <h3 className="text-sm font-bold text-brand uppercase tracking-wider border-b border-border pb-2">Property Specs</h3>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
              <div>
                <label className="block text-sm font-semibold text-foreground mb-1">Bedrooms</label>
-               <input type="number" name="beds" value={formData.beds} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand outline-none" />
+               <input type="number" name="beds" value={formData.beds} onChange={handleChange} min="0" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand outline-none" />
              </div>
              <div>
                <label className="block text-sm font-semibold text-foreground mb-1">Bathrooms</label>
-               <input type="number" step="0.5" name="baths" value={formData.baths} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand outline-none" />
+               <input type="number" step="0.5" name="baths" value={formData.baths} onChange={handleChange} min="0" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand outline-none" />
              </div>
              <div>
                <label className="block text-sm font-semibold text-foreground mb-1">Sq Ft</label>
-               <input type="number" name="sqft" value={formData.sqft} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand outline-none" />
+               <input type="number" name="sqft" value={formData.sqft} onChange={handleChange} min="0" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand outline-none" />
              </div>
           </div>
         </section>
@@ -375,12 +376,12 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand outline-none"
                  placeholder="Add a feature (e.g. Pool, Fireplace)"
                />
-               <button type="button" onClick={handleFeatureAdd} className="bg-muted hover:bg-muted text-foreground px-3 rounded-lg"><Plus size={20}/></button>
+               <button type="button" onClick={handleFeatureAdd} aria-label="Add feature" className="bg-muted hover:bg-muted text-foreground px-3 rounded-lg"><Plus size={20}/></button>
              </div>
              <div className="flex flex-wrap gap-2">
                {formData.features.map((f, i) => (
                  <span key={i} className="bg-brand-light text-brand-dark px-2 py-1 rounded-md text-sm flex items-center gap-1">
-                   {f} <button type="button" onClick={() => handleFeatureRemove(i)}><X size={14} /></button>
+                    {f} <button type="button" onClick={() => handleFeatureRemove(i)} aria-label="Remove"><X size={14} /></button>
                  </span>
                ))}
              </div>
@@ -427,15 +428,16 @@ export const AdminPropertyForm: React.FC<AdminPropertyFormProps> = ({ initialDat
              
              {/* Image Previews */}
              {formData.images.length > 0 && (
-                <div className="grid grid-cols-4 sm:grid-cols-5 gap-3 mt-4">
+                 <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 mt-4">
                    {formData.images.map((img, i) => (
                       <div key={i} className="relative aspect-square rounded-lg overflow-hidden group border border-border bg-muted">
                          <img src={img} alt="" className="w-full h-full object-cover" />
-                         <button 
-                            type="button" 
-                            onClick={() => handleMediaRemove('images', i)}
-                            className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                         >
+                          <button 
+                             type="button" 
+                             onClick={() => handleMediaRemove('images', i)}
+                             aria-label="Remove"
+                             className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                          >
                             <X size={12} />
                          </button>
                       </div>

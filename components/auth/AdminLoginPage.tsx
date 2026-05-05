@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { signInWithEmail, checkIsAdmin, logOut } from '../../lib/firebase/auth';
 import { Mail, Lock, Loader2, AlertCircle, ShieldCheck, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -81,6 +81,7 @@ export const AdminLoginPage = () => {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         className="bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-xl flex items-start gap-3 text-sm mb-6"
+                        role="alert"
                     >
                         <AlertCircle size={18} className="flex-shrink-0 mt-0.5" />
                         <span>{error}</span>
@@ -89,10 +90,11 @@ export const AdminLoginPage = () => {
 
                 <form onSubmit={handleLogin} className="space-y-5">
                     <div className="space-y-2">
-                        <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider ml-1">Email Address</label>
+                    <label htmlFor="email" className="text-xs font-bold text-muted-foreground uppercase tracking-wider ml-1">Email Address</label>
                         <div className="relative group">
                             <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/60 group-focus-within:text-foreground transition-colors" size={20} />
                             <input
+                                id="email"
                                 type="email"
                                 name="email"
                                 value={formData.email}
@@ -105,10 +107,11 @@ export const AdminLoginPage = () => {
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider ml-1">Password</label>
+                    <label htmlFor="password" className="text-xs font-bold text-muted-foreground uppercase tracking-wider ml-1">Password</label>
                         <div className="relative group">
                             <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/60 group-focus-within:text-foreground transition-colors" size={20} />
                             <input
+                                id="password"
                                 type="password"
                                 name="password"
                                 value={formData.password}
@@ -125,7 +128,12 @@ export const AdminLoginPage = () => {
                         disabled={loading}
                         className="w-full bg-background text-white py-3.5 rounded-xl font-bold hover:bg-black transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-4"
                     >
-                        {loading ? <Loader2 className="animate-spin" size={20} /> : (
+                        {loading ? (
+                            <>
+                                <Loader2 className="animate-spin" size={20} />
+                                <span className="sr-only">Signing in...</span>
+                            </>
+                        ) : (
                             <>
                                 Authenticate <ArrowRight size={18} />
                             </>
@@ -134,17 +142,17 @@ export const AdminLoginPage = () => {
                 </form>
 
                 <div className="mt-8 text-center">
-                    <button 
-                        onClick={() => navigate('/')}
+                    <Link 
+                        to="/"
                         className="text-sm font-medium text-muted-foreground/60 hover:text-muted-foreground transition-colors"
                     >
                         Return to Website
-                    </button>
+                    </Link>
                 </div>
             </div>
             
             <div className="bg-accent px-8 py-4 border-t border-border flex justify-between items-center text-xs text-muted-foreground/60">
-                <span>&copy; 2024 Lofton Realty</span>
+                <span>&copy; {new Date().getFullYear()} Lofton Realty</span>
                 <span>Restricted Access</span>
             </div>
         </motion.div>

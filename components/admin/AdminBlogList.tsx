@@ -103,10 +103,14 @@ export const AdminBlogList: React.FC<AdminBlogListProps> = ({ onEdit, onAddNew }
                              <div className="w-full h-full flex items-center justify-center text-muted-foreground/60 text-xs">No Img</div>
                            )}
                          </div>
-                         <div>
-                           <h4 className="font-bold text-foreground line-clamp-1">{blog.title}</h4>
-                           <Link to={`/blog/${blog.slug}`} className="text-xs text-brand hover:underline" target="_blank">View Live</Link>
-                         </div>
+                          <div>
+                            <h4 className="font-bold text-foreground line-clamp-1">{blog.title}</h4>
+                            {blog.published ? (
+                              <Link to={`/blog/${blog.slug}`} target="_blank" rel="noopener noreferrer" className="text-xs text-brand hover:underline">View Live</Link>
+                            ) : (
+                              <span className="text-xs text-muted-foreground italic">Draft</span>
+                            )}
+                          </div>
                        </div>
                      </td>
                      <td className="px-6 py-4">
@@ -126,18 +130,20 @@ export const AdminBlogList: React.FC<AdminBlogListProps> = ({ onEdit, onAddNew }
                      </td>
                      <td className="px-6 py-4 text-right">
                        <div className="flex items-center justify-end gap-2">
-                         <button 
-                           onClick={() => onEdit(blog)}
-                           className="p-2 text-muted-foreground/60 hover:text-brand hover:bg-brand-light rounded-lg transition-all"
-                         >
-                           <Pencil size={18} />
-                         </button>
-                         <button 
-                           onClick={() => handleDelete(blog.id)}
-                           className="p-2 text-muted-foreground/60 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
-                         >
-                           <Trash2 size={18} />
-                         </button>
+                          <button 
+                            onClick={() => onEdit(blog)}
+                            aria-label="Edit blog post"
+                            className="p-2 text-muted-foreground/60 hover:text-brand hover:bg-brand-light rounded-lg transition-all"
+                          >
+                            <Pencil size={18} />
+                          </button>
+                          <button 
+                            onClick={() => handleDelete(blog.id)}
+                            aria-label="Delete blog post"
+                            className="p-2 text-muted-foreground/60 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                          >
+                            <Trash2 size={18} />
+                          </button>
                        </div>
                      </td>
                    </tr>

@@ -13,20 +13,27 @@ export const AdminOverview = () => {
   const [users, setUsers] = useState<UserProfile[]>([]);
   const [agents, setAgents] = useState<Agent[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const [pData, bData, uData, aData] = await Promise.all([
-        getProperties(),
-        getBlogs(false),
-        getAllUsers(),
-        getAgents()
-      ]);
-      setProperties(pData as Property[]);
-      setBlogs(bData);
-      setUsers(uData);
-      setAgents(aData);
-      setLoading(false);
+      try {
+        const [pData, bData, uData, aData] = await Promise.all([
+          getProperties(),
+          getBlogs(false),
+          getAllUsers(),
+          getAgents()
+        ]);
+        setProperties(pData as Property[]);
+        setBlogs(bData);
+        setUsers(uData);
+        setAgents(aData);
+      } catch (err) {
+        console.error('Failed to load overview data:', err);
+        setError('Failed to load dashboard data. Please refresh.');
+      } finally {
+        setLoading(false);
+      }
     };
     fetchData();
   }, []);
@@ -50,7 +57,11 @@ export const AdminOverview = () => {
     if (existing) existing.count++;
     else acc.push({ name: key, count: 1 });
     return acc;
-  }, []).sort((a, b) => new Date(a.name).getTime() - new Date(b.name).getTime());
+  }, []).sort((a, b) => {
+    const [aM, aY] = a.name.split('/').map(Number);
+    const [bM, bY] = b.name.split('/').map(Number);
+    return aY !== bY ? aY - bY : aM - bM;
+  });
 
   // 2. Blogs by Category
   const blogChartData = blogs.reduce((acc: any[], curr) => {
@@ -79,6 +90,7 @@ export const AdminOverview = () => {
   const topViewed = [...properties].sort((a, b) => (b.views || 0) - (a.views || 0)).slice(0, 5);
 
   if (loading) return <div className="p-8 text-center text-muted-foreground">Loading Dashboard...</div>;
+  if (error) return <div className="p-8 text-center text-red-500">{error}</div>;
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -167,7 +179,7 @@ export const AdminOverview = () => {
             <div className="space-y-4">
               {topViewed.map(p => (
                 <div key={p.id} className="flex items-center gap-3">
-                  <img src={p.images[0]} alt={p.title} className="w-12 h-12 rounded-lg object-cover bg-muted" />
+                  <img src={p.images?.[0] || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=400&q=80'} alt={p.title} className="w-12 h-12 rounded-lg object-cover bg-muted" />
                   <div className="flex-1 min-w-0">
                     <h4 className="text-sm font-bold text-foreground truncate">{p.title}</h4>
                     <p className="text-xs text-muted-foreground truncate">{p.address}</p>
@@ -185,7 +197,7 @@ export const AdminOverview = () => {
             <h3 className="font-bold text-foreground mb-4">Recent Activity</h3>
             <div className="space-y-4">
               {activityFeed.map((item, i) => (
-                <div key={i} className="flex gap-3 text-sm">
+                <div key={`${item.type}-${item.date}-${i}`} className="flex gap-3 text-sm">
                   <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${
                     item.type === 'property' ? 'bg-blue-500' :
                     item.type === 'blog' ? 'bg-purple-500' : 'bg-green-500'

@@ -39,10 +39,13 @@ export const AdminTestimonialList = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSaving(true);
-    if (editingId) {
-      await updateTestimonial(editingId, formData);
-    } else {
-      await addTestimonial(formData);
+    const result = await (editingId
+      ? updateTestimonial(editingId, formData)
+      : addTestimonial(formData));
+    if (!result.success) {
+      window.alert('Failed to save. Please try again.');
+      setIsSaving(false);
+      return;
     }
     await fetchTestimonials();
     setIsSaving(false);
@@ -98,6 +101,7 @@ export const AdminTestimonialList = () => {
         <div className="flex justify-center py-12"><Loader2 className="animate-spin text-brand" size={40}/></div>
       ) : (
         <div className="bg-background rounded-2xl border border-border overflow-hidden">
+          <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead className="bg-accent border-b border-border">
               <tr>
@@ -118,24 +122,25 @@ export const AdminTestimonialList = () => {
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex justify-end gap-2">
-                      <button onClick={() => handleEdit(t)} className="p-2 text-muted-foreground/60 hover:text-brand"><Pencil size={18}/></button>
-                      <button onClick={() => handleDelete(t.id)} className="p-2 text-muted-foreground/60 hover:text-red-500"><Trash2 size={18}/></button>
+                      <button onClick={() => handleEdit(t)} aria-label="Edit testimonial" className="p-2 text-muted-foreground/60 hover:text-brand"><Pencil size={18}/></button>
+                      <button onClick={() => handleDelete(t.id)} aria-label="Delete testimonial" className="p-2 text-muted-foreground/60 hover:text-red-500"><Trash2 size={18}/></button>
                     </div>
                   </td>
                 </Reorder.Item>
               ))}
             </Reorder.Group>
           </table>
+          </div>
         </div>
       )}
 
       {/* Edit Modal */}
       {isEditing && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-background rounded-2xl max-w-lg w-full p-6 space-y-4">
+        <div className="bg-background rounded-2xl max-w-lg w-full p-6 space-y-4" role="dialog" aria-modal="true" aria-labelledby="testimonial-modal-title">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-bold text-foreground">{editingId ? 'Edit Testimonial' : 'New Testimonial'}</h3>
-              <button onClick={() => setIsEditing(false)}><X size={24} className="text-muted-foreground/60"/></button>
+              <h3 id="testimonial-modal-title" className="text-xl font-bold text-foreground">{editingId ? 'Edit Testimonial' : 'New Testimonial'}</h3>
+              <button aria-label="Close modal" onClick={() => setIsEditing(false)}><X size={24} className="text-muted-foreground/60"/></button>
             </div>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
@@ -178,6 +183,14 @@ export const AdminTestimonialList = () => {
                 className="w-full bg-primary text-primary-foreground py-3 rounded-xl font-bold flex justify-center items-center gap-2 hover:bg-brand-dark transition-colors"
               >
                 {isSaving ? <Loader2 className="animate-spin"/> : 'Save Testimonial'}
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsEditing(false)}
+                disabled={isSaving}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                Cancel
               </button>
             </form>
           </div>

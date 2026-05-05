@@ -7,6 +7,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import App from './App';
 import './index.css';
 import { AuthProvider } from './components/auth/AuthProvider';
+import { ToastProvider } from './components/common/Toast';
 import { GlobalErrorBoundary } from './components/common/GlobalErrorBoundary';
 import { ThemeProvider } from './components/ThemeProvider';
 
@@ -22,11 +23,13 @@ root.render(
       <GlobalErrorBoundary>
         <AuthProvider>
           <ThemeProvider defaultTheme="light" storageKey="lofton-theme">
-            <BrowserRouter>
-              <App />
-              <Analytics />
-              <SpeedInsights debug={true} />
-            </BrowserRouter>
+            <ToastProvider>
+              <BrowserRouter>
+                <App />
+                <Analytics />
+                <SpeedInsights debug={true} />
+              </BrowserRouter>
+            </ToastProvider>
           </ThemeProvider>
         </AuthProvider>
       </GlobalErrorBoundary>

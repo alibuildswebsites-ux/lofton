@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { logOut } from '../../lib/firebase/auth';
 import { Loader2, ShieldAlert, LogOut } from 'lucide-react';
@@ -10,15 +10,16 @@ interface AdminRouteProps {
 
 export const AdminRoute: React.FC<AdminRouteProps> = ({ children }) => {
   const { user, isAdmin, loading } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     await logOut();
-    window.location.href = '/login';
+    navigate('/login');
   };
 
   if (loading) {
     return (
-      <div className="fixed inset-0 bg-background z-[9999] flex flex-col items-center justify-center">
+      <div className="fixed inset-0 bg-background z-[9999] flex flex-col items-center justify-center" aria-busy="true" role="status" aria-label="Verifying access...">
         <Loader2 className="w-10 h-10 text-brand animate-spin mb-4" />
         <p className="text-muted-foreground/60 text-sm font-medium tracking-widest uppercase animate-pulse">
           Verifying Access...
@@ -43,7 +44,7 @@ export const AdminRoute: React.FC<AdminRouteProps> = ({ children }) => {
         </p>
         <div className="flex gap-4">
           <button 
-            onClick={() => window.location.href = '/dashboard'}
+            onClick={() => navigate('/dashboard')}
             className="bg-foreground text-background px-6 py-3 rounded-xl font-bold hover:bg-black transition-colors"
           >
             Return to Dashboard

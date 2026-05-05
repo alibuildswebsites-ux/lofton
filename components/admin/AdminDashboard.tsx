@@ -46,10 +46,25 @@ export const AdminDashboard = () => {
   const handleEditProp = (p: Property) => { setEditingProperty(p); setViewMode('form'); };
   const handlePropSuccess = () => { setViewMode('list'); fetchProperties(); };
   const handleDeleteProp = async (id: string) => {
-    if (window.confirm("Are you sure you want to delete this property?")) {
+    if (!window.confirm('Delete this property? This cannot be undone.')) return;
+    try {
       await deleteProperty(id);
       setProperties(prev => prev.filter(p => p.id !== id));
+    } catch (err) {
+      window.alert('Failed to delete property. Please try again.');
     }
+  };
+
+  const getStatusBadge = (status: string) => {
+    const map: Record<string, string> = {
+      'For Sale': 'bg-green-100 text-green-700',
+      'Sold': 'bg-red-100 text-red-700',
+      'Pending': 'bg-yellow-100 text-yellow-700',
+      'For Rent': 'bg-blue-100 text-blue-700',
+      'Rented': 'bg-purple-100 text-purple-700',
+      'Price Drop': 'bg-orange-100 text-orange-700',
+    };
+    return map[status] || 'bg-gray-100 text-gray-700';
   };
 
   // Blog Handlers
@@ -71,23 +86,23 @@ export const AdminDashboard = () => {
     <div className="space-y-8">
       
       {/* Top Tab Navigation */}
-      <div className="flex gap-4 border-b border-border overflow-x-auto no-scrollbar pb-1">
-        <button onClick={() => setActiveTab('overview')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'overview' ? 'border-brand text-brand' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
+      <div role="tablist" className="flex gap-4 border-b border-border overflow-x-auto no-scrollbar pb-1">
+        <button role="tab" aria-selected={activeTab === 'overview'} onClick={() => setActiveTab('overview')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'overview' ? 'border-brand text-brand' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
           <BarChart3 size={18} /> Overview
         </button>
-        <button onClick={() => setActiveTab('properties')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'properties' ? 'border-brand text-brand' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
+        <button role="tab" aria-selected={activeTab === 'properties'} onClick={() => setActiveTab('properties')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'properties' ? 'border-brand text-brand' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
           <LayoutGrid size={18} /> Properties
         </button>
-        <button onClick={() => setActiveTab('clients')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'clients' ? 'border-brand text-brand' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
+        <button role="tab" aria-selected={activeTab === 'clients'} onClick={() => setActiveTab('clients')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'clients' ? 'border-brand text-brand' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
           <Users size={18} /> Clients
         </button>
-        <button onClick={() => setActiveTab('blogs')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'blogs' ? 'border-brand text-brand' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
+        <button role="tab" aria-selected={activeTab === 'blogs'} onClick={() => setActiveTab('blogs')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'blogs' ? 'border-brand text-brand' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
           <FileText size={18} /> Blog
         </button>
-        <button onClick={() => setActiveTab('agents')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'agents' ? 'border-brand text-brand' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
+        <button role="tab" aria-selected={activeTab === 'agents'} onClick={() => setActiveTab('agents')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'agents' ? 'border-brand text-brand' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
           <Briefcase size={18} /> Agents
         </button>
-        <button onClick={() => setActiveTab('testimonials')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'testimonials' ? 'border-brand text-brand' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
+        <button role="tab" aria-selected={activeTab === 'testimonials'} onClick={() => setActiveTab('testimonials')} className={`flex items-center gap-2 px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === 'testimonials' ? 'border-brand text-brand' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
           <MessageSquare size={18} /> Testimonials
         </button>
       </div>
@@ -137,7 +152,8 @@ export const AdminDashboard = () => {
               <div className="text-center py-12 bg-background rounded-2xl border border-border text-muted-foreground">No properties found.</div>
             ) : (
               <div className="bg-background rounded-2xl border border-border overflow-hidden">
-                <table className="w-full text-left">
+                <div className="overflow-x-auto">
+                <table className="w-full text-sm text-left">
                   <thead className="bg-accent border-b border-border">
                     <tr>
                       <th className="px-6 py-4 font-bold text-muted-foreground text-sm">Property</th>
@@ -153,7 +169,7 @@ export const AdminDashboard = () => {
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-4">
                             <div className="w-12 h-12 rounded-lg bg-muted overflow-hidden flex-shrink-0">
-                              {p.images[0] && <img src={p.images[0]} className="w-full h-full object-cover" />}
+                              <img src={p.images?.[0] || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=100&q=80'} alt={p.title || 'Property image'} className="w-full h-full object-cover" />
                             </div>
                             <div>
                               <div className="font-bold text-foreground">{p.title}</div>
@@ -162,7 +178,7 @@ export const AdminDashboard = () => {
                           </div>
                         </td>
                         <td className="px-6 py-4">
-                          <span className={`px-2 py-1 rounded text-xs font-bold uppercase ${p.status === 'Sold' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}>
+                          <span className={`px-2 py-1 rounded text-xs font-bold uppercase ${getStatusBadge(p.status)}`}>
                             {p.status}
                           </span>
                         </td>
@@ -172,14 +188,15 @@ export const AdminDashboard = () => {
                         <td className="px-6 py-4 font-bold">${p.price.toLocaleString()}</td>
                         <td className="px-6 py-4 text-right">
                           <div className="flex justify-end gap-2">
-                            <button onClick={() => handleEditProp(p)} className="p-2 text-muted-foreground/60 hover:text-brand"><Pencil size={18}/></button>
-                            <button onClick={() => handleDeleteProp(p.id)} className="p-2 text-muted-foreground/60 hover:text-red-500"><Trash2 size={18}/></button>
+                            <button aria-label="Edit property" onClick={() => handleEditProp(p)} className="p-2 text-muted-foreground/60 hover:text-brand"><Pencil size={18}/></button>
+                            <button aria-label="Delete property" onClick={() => handleDeleteProp(p.id)} className="p-2 text-muted-foreground/60 hover:text-red-500"><Trash2 size={18}/></button>
                           </div>
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
+                </div>
               </div>
             )}
           </div>

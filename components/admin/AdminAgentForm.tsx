@@ -107,7 +107,7 @@ export const AdminAgentForm: React.FC<AdminAgentFormProps> = ({ initialData, onS
     <div className="bg-background rounded-2xl shadow-sm border border-border overflow-hidden max-w-3xl mx-auto">
       <div className="px-6 py-4 border-b border-border flex justify-between items-center bg-accent">
         <div className="flex items-center gap-4">
-          <button onClick={onCancel} className="text-muted-foreground hover:text-foreground"><ArrowLeft size={20} /></button>
+          <button onClick={onCancel} aria-label="Go back" className="text-muted-foreground hover:text-foreground"><ArrowLeft size={20} /></button>
           <h2 className="text-lg font-bold text-foreground">{initialData ? 'Edit Agent' : 'New Agent'}</h2>
         </div>
       </div>
@@ -127,8 +127,9 @@ export const AdminAgentForm: React.FC<AdminAgentFormProps> = ({ initialData, onS
                )}
              </div>
              <label className="absolute bottom-0 right-0 bg-primary text-primary-foreground p-2 rounded-full cursor-pointer hover:bg-brand-dark transition-colors shadow-sm">
-                <Upload size={16} />
-                <input type="file" accept="image/jpeg, image/png" onChange={handleImageUpload} className="hidden" />
+                 <Upload size={16} />
+                 <span className="sr-only">Upload photo</span>
+                 <input type="file" accept="image/jpeg, image/png" onChange={handleImageUpload} className="hidden" />
              </label>
              {uploadingImage && (
                <div className="absolute inset-0 bg-background/80 rounded-full flex items-center justify-center">
@@ -197,6 +198,7 @@ export const AdminAgentForm: React.FC<AdminAgentFormProps> = ({ initialData, onS
               name="yearsOfExperience"
               value={formData.yearsOfExperience}
               onChange={handleChange}
+              min="0"
               className="w-full px-4 py-3 border border-border rounded-xl focus:ring-2 focus:ring-brand outline-none"
            />
         </div>
@@ -221,24 +223,27 @@ export const AdminAgentForm: React.FC<AdminAgentFormProps> = ({ initialData, onS
            <h3 className="text-sm font-bold text-foreground mb-4">Social Media Links (Optional)</h3>
            <div className="space-y-3">
              <input 
+                type="url"
                 name="social_facebook"
                 value={formData.socialLinks.facebook}
                 onChange={handleChange}
-                placeholder="Facebook URL"
+                placeholder="https://..."
                 className="w-full px-4 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-brand outline-none"
              />
              <input 
+                type="url"
                 name="social_instagram"
                 value={formData.socialLinks.instagram}
                 onChange={handleChange}
-                placeholder="Instagram URL"
+                placeholder="https://..."
                 className="w-full px-4 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-brand outline-none"
              />
              <input 
+                type="url"
                 name="social_linkedin"
                 value={formData.socialLinks.linkedin}
                 onChange={handleChange}
-                placeholder="LinkedIn URL"
+                placeholder="https://..."
                 className="w-full px-4 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-brand outline-none"
              />
            </div>
